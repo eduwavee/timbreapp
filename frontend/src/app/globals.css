@@ -1,0 +1,276 @@
+@import "tailwindcss";
+
+/*
+ * Timbre — mundo "liquidación de expensas":
+ * papel obra blanco, tinta, rail azul tinta, birome roja para la deuda,
+ * resaltador amarillo para lo que pide acción, sello violeta para lo cobrado.
+ */
+:root {
+  --paper: #f6f7f4;
+  --sheet: #ffffff;
+  --sheet-2: #eef0ec;
+  --ink: #1b1e22;
+  --ink-2: #4a5058;
+  --ink-3: #6b717a;
+  --rule: #d9dcd5;
+  --rule-strong: #b9bdb4;
+  --rail: #1f2b45;
+  --rail-2: #2a3857;
+  --rail-ink: #e9edf6;
+  --rail-ink-2: #a9b4cc;
+  --debt: #c42f26;
+  --debt-soft: #fbe9e6;
+  --marker: #f1df4a;
+  --stamp: #5e43b8;
+  --stamp-soft: #ece7fb;
+  --ok: #2f7a4f;
+  --ok-soft: #e3f1e8;
+  --warn: #8a5f00;
+  --warn-soft: #fbf3dc;
+  --whatsapp: #177f45;
+  --whatsapp-bubble: #e7f5ea;
+  --whatsapp-bubble-rule: #cfe3d4;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-sheet: var(--sheet);
+  --color-sheet-2: var(--sheet-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-rail: var(--rail);
+  --color-rail-2: var(--rail-2);
+  --color-rail-ink: var(--rail-ink);
+  --color-rail-ink-2: var(--rail-ink-2);
+  --color-debt: var(--debt);
+  --color-debt-soft: var(--debt-soft);
+  --color-marker: var(--marker);
+  --color-stamp: var(--stamp);
+  --color-stamp-soft: var(--stamp-soft);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-bubble: var(--whatsapp-bubble);
+  --color-whatsapp-bubble-rule: var(--whatsapp-bubble-rule);
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.45;
+  font-feature-settings: "ss01" on;
+}
+
+::selection {
+  background: var(--marker);
+  color: var(--ink);
+}
+
+input,
+textarea,
+select {
+  caret-color: var(--stamp);
+}
+
+:focus-visible {
+  outline: 2px solid var(--stamp);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* El buscador abierto ya es la señal de foco: su campo no lleva recuadro. */
+.palette-input:focus-visible {
+  outline: none;
+}
+
+a {
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule-strong) transparent;
+}
+
+/* Cifras: siempre tabulares, alineadas como en la liquidación. */
+.num {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" on, "lnum" on;
+  white-space: nowrap;
+}
+
+/* Rótulos de columna: Archivo en ancho condensado. */
+.label {
+  font-stretch: 82%;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* Movimiento distintivo 1: el resaltador se pasa sobre la fila vencida. */
+.marker {
+  /* El trazo desborda apenas la palabra, como una pasada real de resaltador. */
+  padding-inline: 0.22em;
+  margin-inline: -0.22em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  background-image: linear-gradient(
+    100deg,
+    color-mix(in srgb, var(--marker) 20%, transparent) 0,
+    color-mix(in srgb, var(--marker) 72%, transparent) 0.18em,
+    color-mix(in srgb, var(--marker) 64%, transparent) calc(100% - 0.18em),
+    color-mix(in srgb, var(--marker) 25%, transparent) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 72%;
+  background-position: 0 60%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .marker-draw {
+    animation: marker-draw 520ms var(--ease-out-expo) both;
+    animation-delay: calc(var(--i, 0) * 60ms);
+  }
+}
+
+@keyframes marker-draw {
+  from {
+    background-size: 0% 72%;
+  }
+  to {
+    background-size: 100% 72%;
+  }
+}
+
+/* Movimiento distintivo 2: el sello violeta cae sobre lo cobrado. */
+.stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  border: 2px solid var(--stamp);
+  color: var(--stamp);
+  border-radius: 3px;
+  padding: 0.05em 0.45em;
+  font-weight: 800;
+  font-stretch: 88%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+  mix-blend-mode: multiply;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .stamp-land {
+    animation: stamp-land 420ms var(--ease-out-expo) both;
+  }
+}
+
+@keyframes stamp-land {
+  0% {
+    opacity: 0;
+    transform: rotate(-12deg) scale(1.9);
+    filter: blur(2px);
+  }
+  60% {
+    opacity: 1;
+    transform: rotate(-3deg) scale(0.96);
+    filter: blur(0);
+  }
+  100% {
+    transform: rotate(-4deg) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sheet-in {
+    animation: sheet-in 260ms var(--ease-out-expo) both;
+  }
+  .fade-in {
+    animation: fade-in 200ms ease-out both;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Login: el timbre suena (ondas que salen del pulsador) y aparece lo que pasó. */
+@media (prefers-reduced-motion: no-preference) {
+  .ring-wave {
+    animation: ring-wave 1.4s var(--ease-out-expo) both;
+  }
+  .ring-note {
+    animation: ring-note 420ms var(--ease-out-expo) both;
+  }
+}
+
+@keyframes ring-wave {
+  from {
+    transform: scale(0.9);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+@keyframes ring-note {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(2px);
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--sheet-2) 0%, #f7f8f5 50%, var(--sheet-2) 100%);
+  background-size: 200% 100%;
+  animation: skeleton 1.2s linear infinite;
+  border-radius: 2px;
+}
+
+@keyframes skeleton {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body,
+  html {
+    background: #fff;
+  }
+}

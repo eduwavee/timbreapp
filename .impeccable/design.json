@@ -1,0 +1,671 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-09T21:00:00+00:00",
+  "title": "Design System: Timbre",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Papel obra",
+        "canonical": "oklch(97.5% 0.004 121.6)",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#252523",
+          "#414240",
+          "#61625f",
+          "#828380",
+          "#a4a5a3",
+          "#c8c9c7",
+          "#eeefec"
+        ]
+      },
+      "sheet": {
+        "role": "neutral",
+        "displayName": "Hoja",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "sheet-2": {
+        "role": "neutral",
+        "displayName": "Hoja gris",
+        "canonical": "oklch(95.2% 0.006 128.5)",
+        "tonalRamp": [
+          "#0a0c09",
+          "#242623",
+          "#41433f",
+          "#60625e",
+          "#81837f",
+          "#a4a6a2",
+          "#c8cac6",
+          "#edefeb"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "canonical": "oklch(23.4% 0.009 255.6)",
+        "tonalRamp": [
+          "#090b0f",
+          "#222529",
+          "#3f4247",
+          "#5e6266",
+          "#7f8388",
+          "#a1a5ab",
+          "#c5c9cf",
+          "#ebeff5"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Tinta media",
+        "canonical": "oklch(42.9% 0.015 255.6)",
+        "tonalRamp": [
+          "#070b12",
+          "#20252d",
+          "#3d434a",
+          "#5c626a",
+          "#7c838c",
+          "#9fa6af",
+          "#c3cad3",
+          "#e8eff9"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Tinta suave",
+        "canonical": "oklch(54.7% 0.016 258.4)",
+        "tonalRamp": [
+          "#070b12",
+          "#20252d",
+          "#3d424b",
+          "#5c626a",
+          "#7d838c",
+          "#9fa6af",
+          "#c3cad4",
+          "#e8eff9"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Filete",
+        "canonical": "oklch(89.0% 0.010 125.7)",
+        "tonalRamp": [
+          "#0a0c08",
+          "#242621",
+          "#41433d",
+          "#60625c",
+          "#81837d",
+          "#a3a6a0",
+          "#c7cac3",
+          "#edf0e9"
+        ]
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "Filete fuerte",
+        "canonical": "oklch(79.3% 0.013 126.4)",
+        "tonalRamp": [
+          "#0a0c07",
+          "#23261f",
+          "#40433c",
+          "#5f635b",
+          "#80847b",
+          "#a3a79e",
+          "#c7cbc2",
+          "#ecf0e7"
+        ]
+      },
+      "rail": {
+        "role": "primary",
+        "displayName": "Azul tinta del rail",
+        "canonical": "oklch(29.2% 0.051 264.6)",
+        "tonalRamp": [
+          "#030920",
+          "#19243e",
+          "#35425d",
+          "#53617f",
+          "#7382a1",
+          "#95a5c6",
+          "#b9c9eb",
+          "#e7efff"
+        ]
+      },
+      "rail-2": {
+        "role": "primary",
+        "displayName": "Azul tinta claro",
+        "canonical": "oklch(34.4% 0.058 265.0)",
+        "tonalRamp": [
+          "#020823",
+          "#172441",
+          "#334161",
+          "#516183",
+          "#7182a6",
+          "#93a5ca",
+          "#b7c9f0",
+          "#e7efff"
+        ]
+      },
+      "rail-ink": {
+        "role": "primary",
+        "displayName": "Texto del rail",
+        "canonical": "oklch(94.6% 0.013 266.7)",
+        "tonalRamp": [
+          "#090b11",
+          "#22252b",
+          "#3f4249",
+          "#5e6169",
+          "#7f828a",
+          "#a1a5ad",
+          "#c5c9d2",
+          "#eaeef7"
+        ]
+      },
+      "rail-ink-2": {
+        "role": "primary",
+        "displayName": "Texto del rail en reposo",
+        "canonical": "oklch(76.9% 0.036 265.9)",
+        "tonalRamp": [
+          "#050a1a",
+          "#1d2537",
+          "#394256",
+          "#576177",
+          "#788299",
+          "#9aa5bd",
+          "#bec9e2",
+          "#e7efff"
+        ]
+      },
+      "debt": {
+        "role": "secondary",
+        "displayName": "Rojo birome",
+        "canonical": "oklch(54.0% 0.187 28.6)",
+        "tonalRamp": [
+          "#1f0000",
+          "#4d0102",
+          "#800405",
+          "#b31a15",
+          "#dc473b",
+          "#fd7566",
+          "#fdb4a9",
+          "#fee9e5"
+        ]
+      },
+      "debt-soft": {
+        "role": "secondary",
+        "displayName": "Rosado de aviso",
+        "canonical": "oklch(94.8% 0.020 28.9)",
+        "tonalRamp": [
+          "#130807",
+          "#2e211f",
+          "#4c3e3c",
+          "#6c5d5b",
+          "#8e7e7b",
+          "#b1a19e",
+          "#d6c5c2",
+          "#fceae7"
+        ]
+      },
+      "marker": {
+        "role": "tertiary",
+        "displayName": "Resaltador amarillo",
+        "canonical": "oklch(89.3% 0.163 102.3)",
+        "tonalRamp": [
+          "#0e0b00",
+          "#2a2600",
+          "#4a4300",
+          "#6d6302",
+          "#918405",
+          "#b7a715",
+          "#decc30",
+          "#fff28a"
+        ]
+      },
+      "stamp": {
+        "role": "tertiary",
+        "displayName": "Sello violeta",
+        "canonical": "oklch(47.9% 0.176 288.6)",
+        "tonalRamp": [
+          "#0d002c",
+          "#290067",
+          "#452297",
+          "#6247bd",
+          "#816be3",
+          "#a293fd",
+          "#c6c1fe",
+          "#edecff"
+        ]
+      },
+      "stamp-soft": {
+        "role": "tertiary",
+        "displayName": "Violeta lavado",
+        "canonical": "oklch(93.8% 0.027 297.3)",
+        "tonalRamp": [
+          "#0c0915",
+          "#262231",
+          "#433f4f",
+          "#635e6f",
+          "#847f91",
+          "#a7a2b4",
+          "#cbc6d9",
+          "#f0ebfe"
+        ]
+      },
+      "ok": {
+        "role": "status",
+        "displayName": "Verde resuelto",
+        "canonical": "oklch(52.1% 0.101 155.2)",
+        "tonalRamp": [
+          "#000f05",
+          "#012e17",
+          "#03502c",
+          "#267247",
+          "#4b9468",
+          "#6eb889",
+          "#92ddad",
+          "#c5ffd8"
+        ]
+      },
+      "ok-soft": {
+        "role": "status",
+        "displayName": "Verde lavado",
+        "canonical": "oklch(94.5% 0.019 157.9)",
+        "tonalRamp": [
+          "#050e08",
+          "#1d2821",
+          "#3a453e",
+          "#59655d",
+          "#79867e",
+          "#9ca9a0",
+          "#c0cdc4",
+          "#e5f3ea"
+        ]
+      },
+      "warn": {
+        "role": "status",
+        "displayName": "Ámbar parcial",
+        "canonical": "oklch(51.8% 0.108 77.9)",
+        "tonalRamp": [
+          "#120900",
+          "#322001",
+          "#553a03",
+          "#7b5507",
+          "#a07425",
+          "#c3964a",
+          "#ebbb70",
+          "#ffeccf"
+        ]
+      },
+      "warn-soft": {
+        "role": "status",
+        "displayName": "Crema parcial",
+        "canonical": "oklch(96.4% 0.031 91.0)",
+        "tonalRamp": [
+          "#100a00",
+          "#2a2312",
+          "#463f2d",
+          "#645d4a",
+          "#847d68",
+          "#a69e89",
+          "#ccc4ae",
+          "#f6eed7"
+        ]
+      },
+      "whatsapp": {
+        "role": "channel",
+        "displayName": "Verde WhatsApp",
+        "canonical": "oklch(52.6% 0.128 152.8)",
+        "tonalRamp": [
+          "#001004",
+          "#012d14",
+          "#034d26",
+          "#08703a",
+          "#329257",
+          "#58b577",
+          "#7fdc9c",
+          "#c6ffd5"
+        ]
+      },
+      "whatsapp-bubble": {
+        "role": "channel",
+        "displayName": "Burbuja de WhatsApp",
+        "canonical": "oklch(95.7% 0.021 152.2)",
+        "tonalRamp": [
+          "#050e07",
+          "#1d271f",
+          "#38433a",
+          "#556158",
+          "#758177",
+          "#95a298",
+          "#bbc8be",
+          "#e5f3e8"
+        ]
+      },
+      "whatsapp-bubble-rule": {
+        "role": "channel",
+        "displayName": "Filete de la burbuja",
+        "canonical": "oklch(89.7% 0.029 153.3)",
+        "tonalRamp": [
+          "#020f06",
+          "#19281d",
+          "#344438",
+          "#516356",
+          "#708375",
+          "#91a496",
+          "#b6cabb",
+          "#e0f5e5"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "wordmark": {
+        "displayName": "Wordmark",
+        "purpose": "Solo la palabra Timbre junto a su marca."
+      },
+      "headline": {
+        "displayName": "Título de página",
+        "purpose": "Un título por pantalla."
+      },
+      "figure": {
+        "displayName": "Cifra grande",
+        "purpose": "Totales del mes y monto del portal."
+      },
+      "title": {
+        "displayName": "Título de hoja",
+        "purpose": "Hojas laterales y emisor del recibo."
+      },
+      "section": {
+        "displayName": "Sección",
+        "purpose": "Títulos de sección."
+      },
+      "body": {
+        "displayName": "Cuerpo",
+        "purpose": "Texto corriente e inputs."
+      },
+      "table": {
+        "displayName": "Tabla",
+        "purpose": "Celdas de la planilla."
+      },
+      "meta": {
+        "displayName": "Meta",
+        "purpose": "Subtítulos de fila, etiquetas, ayudas, botones chicos."
+      },
+      "label": {
+        "displayName": "Rótulo de columna",
+        "purpose": "Encabezados de columna y nombres de cifras; nunca encabezado decorativo."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sheet-edge",
+        "value": "-12px 0 32px -12px rgba(27,30,34,0.25)",
+        "purpose": "Borde de la hoja lateral sobre velo de tinta al 35%."
+      },
+      {
+        "name": "toast",
+        "value": "0 8px 24px -8px rgba(27,30,34,0.35)",
+        "purpose": "Avisos flotantes."
+      },
+      {
+        "name": "palette",
+        "value": "0 24px 60px -20px rgba(27,30,34,0.45)",
+        "purpose": "Buscador Ctrl+K sobre velo de tinta al 40%."
+      },
+      {
+        "name": "rail-active",
+        "value": "inset 2px 0 0 #fff",
+        "purpose": "Ítem activo del rail, solo dentro del rail."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Curva de los movimientos propios y de las hojas."
+      },
+      {
+        "name": "marker-draw",
+        "value": "520ms ease-out-expo, +60ms por fila",
+        "purpose": "El resaltador se dibuja sobre las unidades morosas."
+      },
+      {
+        "name": "stamp-land",
+        "value": "420ms ease-out-expo",
+        "purpose": "El sello cae de 1.9x y -12° a -4° al registrar un cobro."
+      },
+      {
+        "name": "sheet-in",
+        "value": "260ms ease-out-expo",
+        "purpose": "Hoja lateral y cajón móvil entran 24px desde el costado."
+      },
+      {
+        "name": "fade-in",
+        "value": "200ms ease-out",
+        "purpose": "Velos y toasts."
+      },
+      {
+        "name": "color-transition",
+        "value": "150ms",
+        "purpose": "Hover de botones, inputs y filtros."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón primario",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción principal: Cobrar en una fila morosa, enviar formularios.",
+      "html": "<button class=\"ds-btn-primary\">Cobrar</button>",
+      "css": ".ds-btn-primary { font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif; display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px; font-size: 14px; font-weight: 600; border-radius: 2px; border: 1px solid var(--ink, #1b1e22); background: var(--ink, #1b1e22); color: #fff; cursor: pointer; transition: background-color 150ms, border-color 150ms, color 150ms; } .ds-btn-primary:hover { background: #33383f; } .ds-btn-primary:focus-visible { outline: 2px solid var(--stamp, #5e43b8); outline-offset: 2px; } .ds-btn-primary:active { background: #000; }"
+    },
+    {
+      "name": "Botón sello",
+      "kind": "button",
+      "refersTo": "button-stamp",
+      "description": "Confirma un cobro; único botón violeta.",
+      "html": "<button class=\"ds-btn-stamp\">Cobrar <span style=\"font-variant-numeric: tabular-nums;\">$ 3.152.400,00</span></button>",
+      "css": ".ds-btn-stamp { font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif; display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px; font-size: 14px; font-weight: 600; border-radius: 2px; border: 1px solid var(--stamp, #5e43b8); background: var(--stamp, #5e43b8); color: #fff; cursor: pointer; transition: background-color 150ms, border-color 150ms, color 150ms; } .ds-btn-stamp:hover { background: #5038a3; } .ds-btn-stamp:focus-visible { outline: 2px solid var(--stamp, #5e43b8); outline-offset: 2px; }"
+    },
+    {
+      "name": "Botón secundario",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Acciones de apoyo y navegación de período.",
+      "html": "<button class=\"ds-btn-secondary\">Este mes</button>",
+      "css": ".ds-btn-secondary { font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif; display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px; font-size: 14px; font-weight: 600; border-radius: 2px; border: 1px solid var(--rule-strong, #b9bdb4); background: var(--sheet, #fff); color: var(--ink, #1b1e22); cursor: pointer; transition: background-color 150ms, border-color 150ms, color 150ms; } .ds-btn-secondary:hover { background: var(--paper, #f6f7f4); border-color: var(--ink, #1b1e22); } .ds-btn-secondary:focus-visible { outline: 2px solid var(--stamp, #5e43b8); outline-offset: 2px; }"
+    },
+    {
+      "name": "Botón WhatsApp",
+      "kind": "button",
+      "refersTo": "button-whatsapp",
+      "description": "Abre wa.me con el mensaje armado: avisar o derivar.",
+      "html": "<a class=\"ds-btn-wa\" href=\"#\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\"/></svg>Derivar</a>",
+      "css": ".ds-btn-wa { font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif; display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 10px; font-size: 13px; gap: 6px; text-decoration: none; font-weight: 600; border-radius: 2px; border: 1px solid var(--whatsapp, #177f45); background: var(--whatsapp, #177f45); color: #fff; cursor: pointer; transition: background-color 150ms, border-color 150ms, color 150ms; } .ds-btn-wa:hover { background: #136a39; } .ds-btn-wa:focus-visible { outline: 2px solid var(--stamp, #5e43b8); outline-offset: 2px; }"
+    },
+    {
+      "name": "Campo de monto",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Input con etiqueta arriba y el monto formateado debajo.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Monto de la cuota</span><input class=\"ds-input\" type=\"number\" inputmode=\"decimal\" value=\"2960000\"><span class=\"ds-field-hint\">$ 2.960.000,00</span></label>",
+      "css": ".ds-field { font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif; display: flex; flex-direction: column; gap: 6px; max-width: 240px; } .ds-field-label { font-size: 13px; font-weight: 600; color: var(--ink-2, #4a5058); } .ds-field-hint { font-size: 13px; color: var(--ink-3, #6b717a); } .ds-input { font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif; height: 40px; padding: 0 12px; font-size: 15px; color: var(--ink, #1b1e22); background: var(--sheet, #fff); border: 1px solid var(--rule-strong, #b9bdb4); border-radius: 2px; font-variant-numeric: tabular-nums; caret-color: var(--stamp, #5e43b8); transition: border-color 150ms; } .ds-input:hover { border-color: var(--ink-3, #6b717a); } .ds-input:focus { outline: none; border-color: var(--stamp, #5e43b8); box-shadow: 0 0 0 2px rgba(94,67,184,0.2); }"
+    },
+    {
+      "name": "Navegación del rail",
+      "kind": "nav",
+      "refersTo": "rail",
+      "description": "Rail azul tinta de 232px con ítem activo y contador amarillo.",
+      "html": "<nav class=\"ds-rail\"><a class=\"ds-rail-item is-active\" href=\"#\">Liquidación</a><a class=\"ds-rail-item\" href=\"#\">Cobros</a><a class=\"ds-rail-item\" href=\"#\">Reclamos<span class=\"ds-rail-count\">2</span></a></nav>",
+      "css": ".ds-rail { font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif; width: 232px; background: var(--rail, #1f2b45); padding: 12px; display: flex; flex-direction: column; gap: 2px; } .ds-rail-item { display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 2px; font-size: 14.5px; color: var(--rail-ink-2, #a9b4cc); text-decoration: none; transition: background-color 150ms, color 150ms; } .ds-rail-item:hover { background: rgba(42,56,87,0.6); color: #fff; } .ds-rail-item.is-active { background: var(--rail-2, #2a3857); color: #fff; font-weight: 600; box-shadow: inset 2px 0 0 #fff; } .ds-rail-item:focus-visible { outline: 2px solid var(--stamp, #5e43b8); outline-offset: 2px; } .ds-rail-count { margin-left: auto; min-width: 20px; height: 20px; padding: 0 6px; display: inline-flex; align-items: center; justify-content: center; border-radius: 2px; background: var(--marker, #f1df4a); color: var(--ink, #1b1e22); font-size: 11.5px; font-weight: 700; font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Enlace secundario",
+      "kind": "custom",
+      "refersTo": "text-link",
+      "description": "Tinta subrayada con filete fuerte; nunca violeta.",
+      "html": "<a class=\"ds-textlink\" href=\"#\">Todos los reclamos</a>",
+      "css": ".ds-textlink { font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif; font-size: 13px; font-weight: 600; color: var(--ink, #1b1e22); text-decoration: underline; text-decoration-color: var(--rule-strong, #b9bdb4); text-decoration-thickness: 1px; text-underline-offset: 4px; transition: text-decoration-color 150ms; } .ds-textlink:hover { text-decoration-color: var(--ink, #1b1e22); } .ds-textlink:focus-visible { outline: 2px solid var(--stamp, #5e43b8); outline-offset: 2px; border-radius: 2px; }"
+    },
+    {
+      "name": "Buscador Ctrl+K",
+      "kind": "input",
+      "refersTo": "command-palette",
+      "description": "Paleta de búsqueda global; el campo no lleva anillo de foco.",
+      "html": "<div class=\"ds-palette\"><div class=\"ds-palette-head\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/></svg><input class=\"ds-palette-input\" placeholder=\"Buscá una unidad (AZC-8), un inquilino o un reclamo\"><kbd>Esc</kbd></div><p class=\"ds-palette-group\">Unidades</p><button class=\"ds-palette-opt is-active\"><b>PIN-1290</b><span>Pinzón 1290 · Juan Pereyra</span></button><button class=\"ds-palette-opt\"><b>AZC-8</b><span>Azcuénaga 8</span></button><div class=\"ds-palette-foot\"><span>↑ ↓ para moverte</span><span>Enter para abrir</span></div></div>",
+      "css": ".ds-palette { font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif; width: 600px; max-width: 100%; background: var(--sheet, #fff); border: 1px solid var(--rule-strong, #b9bdb4); border-radius: 2px; box-shadow: 0 24px 60px -20px rgba(27,30,34,0.45); overflow: hidden; color: var(--ink, #1b1e22); } .ds-palette-head { display: flex; align-items: center; gap: 12px; padding: 0 16px; border-bottom: 1px solid var(--rule, #d9dcd5); color: var(--ink-3, #6b717a); } .ds-palette-input { flex: 1; height: 56px; border: 0; background: transparent; font: inherit; font-size: 16px; color: var(--ink, #1b1e22); outline: none; caret-color: var(--stamp, #5e43b8); } .ds-palette-head kbd { font: inherit; font-size: 11px; border: 1px solid var(--rule-strong, #b9bdb4); border-radius: 2px; padding: 2px 6px; } .ds-palette-group { margin: 0; padding: 10px 16px 4px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-stretch: 82%; color: var(--ink-3, #6b717a); } .ds-palette-opt { display: flex; flex-direction: column; width: 100%; padding: 8px 16px; border: 0; background: transparent; text-align: left; font: inherit; color: inherit; cursor: pointer; } .ds-palette-opt span { font-size: 12.5px; color: var(--ink-3, #6b717a); } .ds-palette-opt.is-active, .ds-palette-opt:hover { background: var(--paper, #f6f7f4); } .ds-palette-foot { display: flex; gap: 16px; padding: 8px 16px; border-top: 1px solid var(--rule, #d9dcd5); background: var(--paper, #f6f7f4); font-size: 12px; color: var(--ink-3, #6b717a); }"
+    },
+    {
+      "name": "Cápsulas de etapa",
+      "kind": "chip",
+      "refersTo": "pill-vencida",
+      "description": "Estados planos de cuota y reclamo; la espera ajena va neutra.",
+      "html": "<span class=\"ds-pill ds-pill-vencida\">Vencida</span> <span class=\"ds-pill ds-pill-parcial\">Parcial</span> <span class=\"ds-pill ds-pill-pagada\">Pagada</span> <span class=\"ds-pill ds-pill-abierto\">Abierto</span> <span class=\"ds-pill\">Esperando confirmación</span>",
+      "css": ".ds-pill { font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif; display: inline-flex; align-items: center; height: 24px; padding: 0 8px; border-radius: 2px; border: 1px solid var(--rule-strong, #b9bdb4); background: var(--sheet, #fff); color: var(--ink-2, #4a5058); font-size: 12px; font-weight: 600; white-space: nowrap; } .ds-pill-vencida { background: var(--debt, #c42f26); border-color: var(--debt, #c42f26); color: #fff; } .ds-pill-pagada { background: var(--stamp-soft, #ece7fb); border-color: rgba(94,67,184,0.4); color: var(--stamp, #5e43b8); } .ds-pill-abierto { background: var(--marker, #f1df4a); border-color: #d9c637; color: var(--ink, #1b1e22); } .ds-pill-parcial { background: var(--warn-soft, #fbf3dc); border-color: rgba(138,95,0,0.4); color: var(--warn, #8a5f00); }"
+    },
+    {
+      "name": "Franja de totales",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Totales del mes en celdas separadas por filetes, no tarjetas sueltas.",
+      "html": "<dl class=\"ds-totals\"><div><dt>Esperado del mes</dt><dd>$ 44.810.000</dd></div><div><dt>Cobrado del mes</dt><dd class=\"is-stamp\">$ 24.600.000</dd></div><div><dt>Adeudado vencido</dt><dd class=\"is-debt\">$ 14.425.074</dd></div></dl>",
+      "css": ".ds-totals { font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif; display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; background: var(--sheet, #fff); border: 1px solid var(--rule, #d9dcd5); border-radius: 2px; } .ds-totals > div { padding: 12px 16px; border-right: 1px solid var(--rule, #d9dcd5); } .ds-totals > div:last-child { border-right: 0; } .ds-totals dt { font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-stretch: 82%; color: var(--ink-3, #6b717a); } .ds-totals dd { margin: 4px 0 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; font-variant-numeric: tabular-nums lining-nums; color: var(--ink, #1b1e22); white-space: nowrap; } .ds-totals dd.is-stamp { color: var(--stamp, #5e43b8); } .ds-totals dd.is-debt { color: var(--debt, #c42f26); }"
+    },
+    {
+      "name": "Fila de liquidación con resaltador",
+      "kind": "custom",
+      "refersTo": "table-cell",
+      "description": "Fila morosa: código resaltado, cifras tabulares en rojo, doble filete en el total.",
+      "html": "<table class=\"ds-ledger\"><thead><tr><th>Unidad</th><th class=\"r\">Cuota</th><th class=\"r\">Saldo</th></tr></thead><tbody><tr><td><span class=\"ds-marker\">PIN-1290</span></td><td class=\"r\">$ 2.960.000</td><td class=\"r debt\">$ 9.184.880</td></tr><tr><td><b>AZC-3</b></td><td class=\"r\">$ 810.000</td><td class=\"r muted\">—</td></tr></tbody><tfoot><tr><td>Total</td><td class=\"r\">$ 3.770.000</td><td class=\"r\">$ 9.184.880</td></tr></tfoot></table>",
+      "css": ".ds-ledger { font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif; width: 100%; border-collapse: collapse; font-size: 14px; background: var(--sheet, #fff); color: var(--ink, #1b1e22); } .ds-ledger th { height: 36px; padding: 0 12px; text-align: left; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-stretch: 82%; color: var(--ink-3, #6b717a); border-bottom: 1px solid var(--rule-strong, #b9bdb4); } .ds-ledger td { padding: 10px 12px; border-bottom: 1px solid var(--rule, #d9dcd5); } .ds-ledger tbody tr:hover { background: rgba(246,247,244,0.7); } .ds-ledger .r { text-align: right; font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; } .ds-ledger .debt { color: var(--debt, #c42f26); font-weight: 700; } .ds-ledger .muted { color: var(--ink-3, #6b717a); } .ds-ledger tfoot td { font-weight: 600; border-top: 3px double var(--ink, #1b1e22); border-bottom: 0; } .ds-marker { font-weight: 700; padding-inline: 0.22em; margin-inline: -0.22em; background-image: linear-gradient(100deg, rgba(241,223,74,0.2) 0, rgba(241,223,74,0.72) 0.18em, rgba(241,223,74,0.64) calc(100% - 0.18em), rgba(241,223,74,0.25) 100%); background-repeat: no-repeat; background-size: 100% 72%; background-position: 0 60%; }"
+    },
+    {
+      "name": "Sello",
+      "kind": "custom",
+      "refersTo": "stamp-mark",
+      "description": "Sello violeta torcido para lo cobrado.",
+      "html": "<span class=\"ds-stamp\">Pagado</span>",
+      "css": ".ds-stamp { font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif; display: inline-flex; align-items: center; border: 2px solid var(--stamp, #5e43b8); color: var(--stamp, #5e43b8); border-radius: 3px; padding: 0.05em 0.45em; font-size: 20px; font-weight: 800; font-stretch: 88%; letter-spacing: 0.08em; text-transform: uppercase; transform: rotate(-4deg); mix-blend-mode: multiply; }"
+    },
+    {
+      "name": "Fichas de agenda",
+      "kind": "chip",
+      "refersTo": "agenda-chip",
+      "description": "Ícono y código de unidad; tinta para lo que viene, rojo solo para lo vencido, violeta lavado para lo cobrado.",
+      "html": "<span class=\"ds-agchip\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" aria-hidden=\"true\"><path d=\"M3 12a9 9 0 0 1 15-6.7L21 8\"/><path d=\"M21 3v5h-5\"/><path d=\"M21 12a9 9 0 0 1-15 6.7L3 16\"/><path d=\"M8 16H3v5\"/></svg>PIN-1290</span> <span class=\"ds-agchip is-debt\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"6\"/><path d=\"M18.09 10.37A6 6 0 1 1 10.34 18\"/></svg>6 cuotas</span> <span class=\"ds-agchip is-paid\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"6\"/><path d=\"M18.09 10.37A6 6 0 1 1 10.34 18\"/></svg>4 cuotas</span>",
+      "css": ".ds-agchip { font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif; display: inline-flex; align-items: center; gap: 4px; padding: 2px 6px; border-radius: 2px; border: 1px solid var(--rule-strong, #b9bdb4); background: var(--sheet, #fff); color: var(--ink, #1b1e22); font-size: 11.5px; font-weight: 600; line-height: 1.375; white-space: nowrap; text-decoration: none; } .ds-agchip:hover { filter: brightness(0.95); } .ds-agchip.is-debt { background: var(--debt-soft, #fbe9e6); border-color: rgba(196,47,38,0.3); color: var(--debt, #c42f26); } .ds-agchip.is-paid { background: var(--stamp-soft, #ece7fb); border-color: rgba(94,67,184,0.3); color: var(--stamp, #5e43b8); }"
+    },
+    {
+      "name": "Línea de tiempo de actividad",
+      "kind": "custom",
+      "refersTo": "activity-node",
+      "description": "Nodos cuadrados de 26px colgados de un filete vertical.",
+      "html": "<ol class=\"ds-feed\"><li><span class=\"ds-node is-stamp\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"/></svg></span><span class=\"ds-feed-body\"><span class=\"ds-feed-top\"><b>Distribuidora Mitre SA pagó $ 750.000</b><time>ayer</time></span><span class=\"ds-feed-detail\">URU-2 · Octubre 2026 · recibo N° 00378</span></span></li><li><span class=\"ds-node is-debt\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9\"/><path d=\"M10.3 21a1.94 1.94 0 0 0 3.4 0\"/></svg></span><span class=\"ds-feed-body\"><span class=\"ds-feed-top\"><b>Aviso de deuda a Martín Sosa</b><time>hace 5 días</time></span><span class=\"ds-feed-detail\">Recordatorio de saldo pendiente.</span></span></li></ol>",
+      "css": ".ds-feed { font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif; position: relative; list-style: none; margin: 0; padding: 0; background: var(--sheet, #fff); border: 1px solid var(--rule, #d9dcd5); border-radius: 2px; color: var(--ink, #1b1e22); } .ds-feed::before { content: ''; position: absolute; top: 12px; bottom: 12px; left: 27px; width: 1px; background: var(--rule, #d9dcd5); } .ds-feed li { display: flex; gap: 12px; padding: 10px 14px; } .ds-feed li:hover { background: var(--paper, #f6f7f4); } .ds-node { position: relative; z-index: 1; flex: none; display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; margin-top: 2px; border: 1px solid var(--rule, #d9dcd5); border-radius: 2px; background: var(--sheet, #fff); color: var(--ink, #1b1e22); } .ds-node.is-stamp { color: var(--stamp, #5e43b8); } .ds-node.is-debt { color: var(--debt, #c42f26); } .ds-feed-body { flex: 1; min-width: 0; } .ds-feed-top { display: flex; justify-content: space-between; gap: 12px; } .ds-feed-top time { font-size: 12px; color: var(--ink-3, #6b717a); white-space: nowrap; } .ds-feed-detail { display: block; font-size: 13px; color: var(--ink-2, #4a5058); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "La liquidación del hall",
+    "overview": "Timbre se lee como la hoja de liquidación de expensas que se pega en el hall del edificio: papel obra blanco frío, tinta casi negra, filetes de un pixel y columnas de cifras alineadas a la derecha. Cada unidad es una fila con su código corto (AZC-8, PIN-1290), y la plata manda: saldo anterior, cuota, pagado, intereses y saldo, con la deuda en su propia columna. La densidad es la de una planilla de trabajo, no la de un dashboard: muchas filas a la vista, poco aire decorativo, todo a un clic de la acción.\n\nSobre ese papel actúan tres instrumentos de oficina, cada uno con un solo trabajo. La birome roja marca la deuda y lo vencido. El resaltador amarillo se pasa por detrás de lo que pide acción (la unidad morosa, el reclamo sin derivar, el texto seleccionado). El sello violeta cae, apenas torcido, sobre lo que se cobró. Un rail azul tinta sostiene la navegación y la marca, como la tapa de la carpeta.\n\nEl sistema rechaza el dashboard SaaS de tarjetas con métricas sueltas y gráficos decorativos: los totales van en una franja de celdas separadas por filetes, y las tablas son la superficie principal.",
+    "keyCharacteristics": [
+      "Papel, tinta y filetes de 1px; casi sin sombras.",
+      "Una sola familia, Archivo, jugando con su eje de ancho: condensada en rótulos y sello, normal en el cuerpo.",
+      "Cifras siempre tabulares y alineadas a la derecha; el total cierra con doble filete.",
+      "Tres acentos con función fija: rojo deuda, amarillo acción, violeta cobrado.",
+      "Radios casi rectos (2px); estados en cápsulas planas con borde.",
+      "Dos movimientos propios: el resaltador que se dibuja y el sello que cae."
+    ],
+    "rules": [
+      {
+        "name": "The Tres Instrumentos Rule",
+        "body": "Rojo, amarillo y violeta tienen un trabajo cada uno: deuda, acción y cobrado. Un acento que aparece sin esa función es ruido.",
+        "section": "colors"
+      },
+      {
+        "name": "The Violeta No Es Link Rule",
+        "body": "Los enlaces secundarios son tinta subrayada con filete fuerte; el violeta queda para lo cobrado y para el foco.",
+        "section": "colors"
+      },
+      {
+        "name": "The WhatsApp Es Canal Rule",
+        "body": "El verde WhatsApp marca el canal, no el éxito: solo va en controles que abren una conversación de WhatsApp y en la burbuja que previsualiza el mensaje.",
+        "section": "colors"
+      },
+      {
+        "name": "The Espera Neutral Rule",
+        "body": "Un pendiente que quien mira no puede resolver (el \"Esperando confirmación\" del inquilino) va en cápsula neutra: hoja, filete fuerte, tinta media. El resaltador queda para lo que esa persona sí puede hacer, como el \"Mandó comprobante\" que ve el administrador.",
+        "section": "colors"
+      },
+      {
+        "name": "The Cifra Tabular Rule",
+        "body": "Todo monto, fecha numérica, contador y número de recibo lleva la clase de cifras tabulares, sin cortes de línea, y se alinea a la derecha en columnas. Los pesos van enteros en planillas, resúmenes, agenda, actividad y rentabilidad. Los centavos aparecen donde el monto funciona como comprobante: la hoja de cobro, el listado de cobros y el reporte de cobros, la revisión de comprobantes, los formularios de montos, las condiciones del contrato (alquiler y depósito), las cuotas del portal y el recibo.",
+        "section": "typography"
+      },
+      {
+        "name": "The Rótulo Es Columna Rule",
+        "body": "El estilo condensado en mayúsculas es para nombrar columnas y cifras, como en una liquidación. No se usa como encabezado decorativo arriba de un título.",
+        "section": "typography"
+      },
+      {
+        "name": "The Deuda Primero Rule",
+        "body": "Las listas de unidades se ordenan con los morosos arriba, y el total adeudado ocupa su propia celda en la franja de totales. En la agenda del mes, lo vencido sin cobrar encabeza la lista de lo que viene.",
+        "section": "layout"
+      },
+      {
+        "name": "The Filete Antes Que Sombra Rule",
+        "body": "Paneles, tarjetas de reclamo, franjas de totales y tablas se separan con filetes, nunca con sombra. Si algo no flota, no tiene sombra.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Doble Filete Rule",
+        "body": "La fila de totales de una tabla de dinero cierra con un filete doble de 3px en tinta, como el pie de una liquidación. La planilla, la tabla de gastos y la cabecera del reporte mensual lo usan.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** usar rojo birome solo para deuda, atraso y errores, y el resaltador solo detrás de lo que pide acción.",
+      "**Do** poner toda cifra con cifras tabulares, alineada a la derecha y sin cortes de línea.",
+      "**Do** separar superficies con filetes de 1px y tonos de papel; reservar la sombra para hojas laterales y toasts.",
+      "**Do** mantener las esquinas en 2px (3px solo en el sello).",
+      "**Do** usar el botón violeta solo para confirmar un cobro o un comprobante (registrar un pago), y el sello para marcar lo cobrado.",
+      "**Do** poner los pendientes que el usuario no puede resolver en la cápsula neutra.",
+      "**Do** mostrar pesos enteros, salvo en la hoja de cobro, los montos de cuota del portal y el recibo.",
+      "**Do** respetar `prefers-reduced-motion`: el resaltador, el sello y las hojas solo se animan sin esa preferencia."
+    ],
+    "donts": [
+      "**Don't** armar tarjetas de métricas sueltas ni gráficos decorativos: los totales son celdas de una franja con filetes.",
+      "**Don't** usar el violeta para enlaces o navegación; los enlaces son tinta subrayada.",
+      "**Don't** usar el verde WhatsApp para estados de éxito; lo resuelto usa el verde ok.",
+      "**Don't** poner texto sobre el amarillo que no sea tinta.",
+      "**Don't** pintar de rojo lo que solo está por venir: en la agenda lo próximo va en tinta y el rojo es para lo vencido o expirado.",
+      "**Don't** usar el rótulo condensado en mayúsculas como encabezado decorativo encima de un título.",
+      "**Don't** agregar una segunda familia tipográfica; las variaciones salen del eje de ancho de Archivo."
+    ]
+  }
+}
