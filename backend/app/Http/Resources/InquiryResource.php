@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Inquiry;
+use App\Services\WhatsApp;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -38,7 +39,8 @@ class InquiryResource extends JsonResource
                 'status' => EnumValue::of($this->property->status),
                 'cover_url' => $this->property->relationLoaded('photos') ? $this->property->photos->first()?->url : null,
             ]),
-            'listing' => $this->whenLoaded('listing', fn () => $this->listingSummary()),        ];
+            'listing' => $this->whenLoaded('listing', fn () => $this->listingSummary()),
+            'reply_url' => $this->whenLoaded('listing', fn () => app(WhatsApp::class)->inquiryReply($this->resource)['url']),        ];
     }
 
     /**

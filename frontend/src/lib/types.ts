@@ -211,7 +211,7 @@ export type ContractDocument = {
 
 export type Photo = { id: number; url: string; caption: string | null };
 
-export type ActivityEvent = { kind: "pago" | "aviso" | "derivacion" | "reclamo" | "resuelto" | "comprobante"; at: string; title: string; detail: string; href: string | null };
+export type ActivityEvent = { kind: "pago" | "aviso" | "derivacion" | "reclamo" | "resuelto" | "comprobante" | "consulta"; at: string; title: string; detail: string; href: string | null };
 
 export type AgendaEvent = { date: string; kind: "vencimiento" | "fin_contrato" | "ajuste" | "documento"; title: string; detail: string; tone: "ok" | "debt" | "ink" | "stamp"; href: string; units: string[] };
 
@@ -232,4 +232,69 @@ export const DOCUMENT_KINDS: Enum[] = [
   { value: "recibo_sueldo", label: "Recibo de sueldo" },
   { value: "seguro", label: "Seguro" },
   { value: "otro", label: "Otro" },
+];
+
+/* ───────────── La Choza (web pública) ───────────── */
+
+export type Listing = {
+  id: number;
+  property_id: number;
+  slug: string;
+  headline: string;
+  description: string | null;
+  neighborhood: string | null;
+  for_sale: boolean;
+  sale_price: number | null;
+  for_rent: boolean;
+  rent_price: number | null;
+  expenses: number | null;
+  bathrooms: number | null;
+  garage: boolean;
+  age_years: number | null;
+  amenities: string[];
+  published: boolean;
+  published_at: string | null;
+  reserved: boolean;
+  public_url: string;
+  open_inquiries_count?: number;
+};
+
+export type Colleague = {
+  id: number;
+  name: string;
+  agency: string | null;
+  phone: string;
+  zone: string | null;
+  notes: string | null;
+  active: boolean;
+  open_inquiries_count?: number;
+};
+
+export type InquiryStatus = "nueva" | "atendiendo" | "derivada" | "cerrada";
+
+export type Inquiry = {
+  id: number;
+  operation: Enum<"venta" | "alquiler">;
+  status: Enum<InquiryStatus>;
+  outcome: Enum<"concretada" | "descartada"> | null;
+  name: string;
+  phone: string;
+  email: string | null;
+  message: string | null;
+  notes: string | null;
+  created_at: string;
+  contacted_at: string | null;
+  derived_at: string | null;
+  closed_at: string | null;
+  colleague?: Colleague | null;
+  property?: { id: number; code: string; address: string; city: string; type: Enum; status: Enum; cover_url: string | null };
+  listing?: { id: number; slug: string; headline: string; place: string; price_label: string; reserved: boolean; public_url: string };
+  reply_url?: string;
+};
+
+export const INQUIRY_STATUSES: { value: InquiryStatus; label: string }[] = [
+  { value: "nueva", label: "Nuevas" },
+  { value: "atendiendo", label: "Las atendés vos" },
+  { value: "derivada", label: "Derivadas" },
+  { value: "cerrada", label: "Cerradas" },
 ];

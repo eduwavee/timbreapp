@@ -52,6 +52,7 @@ class InquiryController extends Controller
 
         return response()->json([
             'data' => InquiryResource::make($inquiry),
+            'suggested_colleague_id' => $this->suggestColleague($inquiry)?->id,
             'reply' => $this->whatsApp->inquiryReply($inquiry),
             'same_person' => InquiryResource::collection($others),
         ]);
@@ -116,5 +117,30 @@ class InquiryController extends Controller
             'data' => InquiryResource::make($inquiry->load(['listing.property', 'property.photos', 'colleague'])),
             'whatsapp' => $link,
         ]);
+    }
+
+    /**
+     * El colega que mejor calza: el que ya la tiene, o el que trabaja ese barrio, ciudad o tipo de propiedad.
+     */
+    private function suggestColleague(Inquiry $inquiry): ?Colleague
+    {
+        if ($inquiry->colleague) {
+            return $inquiry->colleague;
+        }
+
+        $property = $inquiry->listing->property;
+        $words = array_filter([
+            $inquiry->listing->neighborhood,
+            $property->city,
+            $property->type->value === 'galpon' ? 'galp' : null,
+        ]);
+
+        return Colleague::query()->where('active', true)->get()
+            ->sortByDesc(function (Colleague $colleague) use ($words): int {
+                $haystack = mb_strtolower($colleague->zone.' '.$colleague->notes.' '.$colleague->agency);
+
+                return collect($words)->filter(fn (string $word) => str_contains($haystack, mb_strtolower($word)))->count();
+            })
+            ->first(fn (Colleague $colleague) => true);
     }
 }

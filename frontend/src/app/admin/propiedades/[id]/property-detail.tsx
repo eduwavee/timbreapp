@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Pencil, Plus } from "lucide-react";
 import { PropertyForm } from "@/components/forms/property-form";
+import { ListingPanel } from "@/components/listing-panel";
 import { PhotoGallery } from "@/components/photo-gallery";
 import { useToast } from "@/components/toast";
 import { Button, ButtonLink, Empty, ErrorState, Money, PageHeader, Panel, PriorityMark, Section, StatusTag, Table, Td, Th, TicketPill } from "@/components/ui";
@@ -154,6 +155,7 @@ export function PropertyDetail() {
         </div>
 
         <div className="flex flex-col gap-8">
+        <ListingPanel property={p} photoCount={detail.data.photos.length} />
         <Section title={`Resultado ${detail.data.year.year}`} actions={<Link href="/admin/gastos?tab=rentabilidad" className="text-[13px] font-semibold text-ink underline decoration-rule-strong underline-offset-4 hover:decoration-ink">Rentabilidad</Link>}>
           <Panel>
             <dl className="divide-y divide-rule text-sm">

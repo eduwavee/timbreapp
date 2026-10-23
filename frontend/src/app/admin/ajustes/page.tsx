@@ -6,9 +6,11 @@ import { Button, ErrorState, Field, FormError, Input, PageHeader, Panel, Section
 import { api, ApiError } from "@/lib/api";
 import { useApi } from "@/lib/use-api";
 
-type Settings = { owner_name: string; owner_phone: string; bank_alias: string; reminder_template: string; derivation_template: string };
+type Settings = { owner_name: string; owner_phone: string; bank_alias: string; reminder_template: string; derivation_template: string; site_name: string; inquiry_reply_template: string; inquiry_derivation_template: string };
 
 const reminderVars = ["nombre", "administracion", "propiedad", "saldo", "periodo", "dias", "alias"];
+const replyVars = ["nombre", "administracion", "sitio", "titulo", "direccion", "operacion", "precio", "codigo", "mensaje"];
+const inquiryDerivationVars = ["colega", "nombre", "telefono", "email", "sitio", "titulo", "direccion", "operacion", "precio", "codigo", "mensaje"];
 const derivationVars = ["proveedor", "administracion", "rubro", "direccion", "inquilino", "telefono_inquilino", "titulo", "descripcion", "prioridad", "ticket"];
 
 const sample: Record<string, string> = {
@@ -30,7 +32,23 @@ const sample: Record<string, string> = {
   ticket: "1",
 };
 
-const fill = (tpl: string) => tpl.replace(/\{(\w+)\}/g, (m, k) => sample[k] ?? m);
+/** Ejemplo para las consultas que llegan desde La Choza. */
+const inquirySample: Record<string, string> = {
+  nombre: "Florencia",
+  administracion: "Administración Timbre",
+  sitio: "La Choza",
+  titulo: "Tres ambientes en piso alto con vista abierta",
+  direccion: "Juncal 2410, depto 9A, Recoleta",
+  operacion: "venta",
+  precio: "USD 235.000",
+  codigo: "JUN-9A",
+  mensaje: "¿Acepta crédito hipotecario?",
+  colega: "Marta Iglesias",
+  telefono: "11 0000-9201",
+  email: ", mail flor.arias@example.com",
+};
+
+const fill = (tpl: string, values: Record<string, string> = sample) => tpl.replace(/\{(\w+)\}/g, (m, k) => values[k] ?? m);
 
 export default function SettingsPage() {
   const remote = useApi<Settings>("settings");
@@ -61,7 +79,7 @@ function SettingsForm({ initial }: { initial: Settings }) {
     }
   }
 
-  const template = (key: "reminder_template" | "derivation_template", title: string, vars: string[]) => (
+  const template = (key: "reminder_template" | "derivation_template" | "inquiry_reply_template" | "inquiry_derivation_template", title: string, vars: string[], values?: Record<string, string>) => (
     <Section title={title}>
       <Panel className="grid gap-4 p-4 lg:grid-cols-2">
         <Field label="Mensaje" error={error?.field(key)} hint={`Variables: ${vars.map((v) => `{${v}}`).join(" ")}`}>
@@ -69,7 +87,7 @@ function SettingsForm({ initial }: { initial: Settings }) {
         </Field>
         <div>
           <p className="mb-1.5 text-[13px] font-semibold text-ink-2">Así le llega por WhatsApp</p>
-          <div className="rounded-sm border border-whatsapp-bubble-rule bg-whatsapp-bubble p-3 text-[14px] leading-relaxed whitespace-pre-line">{fill(form[key])}</div>
+          <div className="rounded-sm border border-whatsapp-bubble-rule bg-whatsapp-bubble p-3 text-[14px] leading-relaxed whitespace-pre-line">{fill(form[key], values)}</div>
         </div>
       </Panel>
     </Section>
@@ -103,6 +121,15 @@ function SettingsForm({ initial }: { initial: Settings }) {
         </Section>
         {template("reminder_template", "Aviso de deuda al inquilino", reminderVars)}
         {template("derivation_template", "Derivación de reclamo al proveedor", derivationVars)}
+        <Section title="La Choza (web de propiedades)">
+          <Panel className="grid gap-4 p-4 sm:grid-cols-3">
+            <Field label="Nombre de la web" error={error?.field("site_name")} hint="Aparece en los mensajes como {sitio}.">
+              {(id, d) => <Input id={id} aria-describedby={d} value={form.site_name} onChange={set("site_name")} required />}
+            </Field>
+          </Panel>
+        </Section>
+        {template("inquiry_reply_template", "Respuesta a quien consultó en la web", replyVars, inquirySample)}
+        {template("inquiry_derivation_template", "Derivación de una consulta a un colega", inquiryDerivationVars, inquirySample)}
       </div>
     </form>
   );

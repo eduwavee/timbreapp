@@ -97,6 +97,10 @@ class LaChozaTest extends TestCase
 
         $this->postJson("/api/site/listings/{$listing->slug}/inquiries", ['operation' => 'venta', 'name' => 'Ana', 'phone' => '11 6123-4499'])
             ->assertUnprocessable();
+
+        $listing->update(['reserved_at' => now(), 'for_sale' => true]);
+        $this->postJson("/api/site/listings/{$listing->slug}/inquiries", ['operation' => 'alquiler', 'name' => 'Ana', 'phone' => '11 6123-4499'])
+            ->assertUnprocessable()->assertJsonPath('message', 'Esta propiedad ya está reservada.');
     }
 
     public function test_owner_attends_an_inquiry_or_derives_it_to_a_colleague_by_whatsapp(): void
@@ -106,7 +110,11 @@ class LaChozaTest extends TestCase
         $inquiry = Inquiry::factory()->create(['name' => 'Lucía', 'phone' => '11 6123-4499']);
         $colleague = Colleague::factory()->create(['name' => 'Marta', 'phone' => '11 5555-0101']);
 
+        Colleague::factory()->create(['name' => 'Otro', 'zone' => 'Zona norte']);
+        $colleague->update(['zone' => 'Villa Crespo y Almagro']);
+
         $this->getJson('/api/inquiries?status=nueva')->assertJsonCount(1, 'data');
+        $this->getJson("/api/inquiries/{$inquiry->id}")->assertJsonPath('suggested_colleague_id', $colleague->id);
 
         $contact = $this->postJson("/api/inquiries/{$inquiry->id}/contact")->assertOk()
             ->assertJsonPath('data.status.value', 'atendiendo');
@@ -123,7 +131,7 @@ class LaChozaTest extends TestCase
         $this->patchJson("/api/inquiries/{$inquiry->id}", ['outcome' => 'concretada'])->assertOk()
             ->assertJsonPath('data.status.value', 'cerrada');
         $this->assertNotNull($inquiry->fresh()->closed_at);
-        $this->getJson('/api/colleagues')->assertJsonPath('data.0.open_inquiries_count', 0);
+        $this->assertSame(0, Colleague::query()->withCount(['inquiries' => fn ($q) => $q->open()])->find($colleague->id)->inquiries_count);
     }
 
     public function test_tenants_cannot_see_inquiries(): void

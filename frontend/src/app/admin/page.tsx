@@ -8,7 +8,8 @@ import { useToast } from "@/components/toast";
 import { Button, cx, Empty, ErrorState, Input, Money, Panel, PriorityMark, Section, SkeletonRows, StagePill, Table, Td, TextLink, Th, TicketPill, WhatsAppLink } from "@/components/ui";
 import { api } from "@/lib/api";
 import { ars, currentPeriod, fecha, fechaCorta, hace, periodo, shiftPeriod, today } from "@/lib/format";
-import type { ActivityEvent, Contract, ContractDocument, Ledger, LedgerRow, Proof, Ticket } from "@/lib/types";
+import type { ActivityEvent, Contract, ContractDocument, Inquiry, Ledger, LedgerRow, Proof, Ticket } from "@/lib/types";
+import { OperationTag } from "@/components/inquiry-sheet";
 import { ActivityFeed } from "@/components/activity-feed";
 import { ProofReview } from "@/components/proof-review";
 import { useApi } from "@/lib/use-api";
@@ -41,6 +42,7 @@ export default function LedgerPage() {
   const ledger = useApi<Ledger>(`ledger?period=${period}`);
   const dash = useApi<Dashboard>("dashboard");
   const activity = useApi<{ data: ActivityEvent[] }>("activity?limit=7");
+  const inquiries = useApi<{ data: Inquiry[] }>("inquiries?status=nueva");
   const [reviewing, setReviewing] = useState<Proof | null>(null);
   const toast = useToast();
   const [filter, setFilter] = useState<(typeof filters)[number]["key"]>("todas");
@@ -72,6 +74,16 @@ export default function LedgerPage() {
       toast(`Aviso a ${row.tenant.name} registrado`);
     } catch {
       toast("No se pudo registrar el aviso", "error");
+    }
+  }
+
+  async function attendInquiry(inquiry: Inquiry) {
+    try {
+      await api(`inquiries/${inquiry.id}/contact`, { method: "POST" });
+      inquiries.setData((d) => (d ? { ...d, data: d.data.filter((i) => i.id !== inquiry.id) } : d));
+      toast(`Le escribiste a ${inquiry.name}`);
+    } catch {
+      toast("No se pudo registrar la respuesta", "error");
     }
   }
 
@@ -168,6 +180,46 @@ export default function LedgerPage() {
                   </span>
                   <span className="shrink-0 rounded-sm bg-ink px-2.5 py-1.5 text-[13px] font-semibold text-white">Revisar</span>
                 </button>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
+      {/* Consultas de la web: alguien tocó "Me interesa" en La Choza. */}
+      {!!inquiries.data?.data.length && (
+        <Section className="no-print mb-6" title={`Consultas nuevas de La Choza (${inquiries.data.data.length})`} actions={<TextLink href="/admin/consultas">Todas las consultas</TextLink>}>
+          <ul className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            {inquiries.data.data.slice(0, 6).map((iq) => (
+              <li key={iq.id} className="flex flex-col justify-between gap-3 rounded-sm border border-rule bg-sheet p-3">
+                <div className="flex gap-3">
+                  {iq.property?.cover_url && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={iq.property.cover_url} alt="" className="size-12 shrink-0 rounded-sm border border-rule object-cover" />
+                  )}
+                  <div className="min-w-0">
+                    <p className="flex flex-wrap items-center gap-2">
+                      <Link href={`/admin/consultas?id=${iq.id}`} className="marker font-semibold hover:underline">
+                        {iq.name}
+                      </Link>
+                      <OperationTag operation={iq.operation} />
+                    </p>
+                    <p className="mt-1 text-[12.5px] text-ink-3">
+                      <span className="font-bold text-ink">{iq.property?.code}</span> · <span className="num">{iq.listing?.price_label}</span> · {hace(iq.created_at)}
+                    </p>
+                    {iq.message && <p className="mt-1 line-clamp-2 text-[13px] text-ink-2">{iq.message}</p>}
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  {iq.reply_url && (
+                    <WhatsAppLink href={iq.reply_url} onSent={() => attendInquiry(iq)}>
+                      La atiendo yo
+                    </WhatsAppLink>
+                  )}
+                  <TextLink href={`/admin/consultas?id=${iq.id}`} className="ml-auto">
+                    Derivar a un colega
+                  </TextLink>
+                </div>
               </li>
             ))}
           </ul>

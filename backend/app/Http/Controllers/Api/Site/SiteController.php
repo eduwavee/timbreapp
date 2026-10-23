@@ -109,6 +109,7 @@ class SiteController extends Controller
             'website.max' => 'No se pudo enviar la consulta.',
         ], ['name' => 'nombre', 'phone' => 'WhatsApp', 'message' => 'mensaje']);
 
+        abort_if($listing->reserved_at !== null, 422, 'Esta propiedad ya está reservada.');
         $operation = ListingOperation::from($data['operation']);
         abort_unless($listing->offers($operation), 422, 'Esta propiedad no está en '.mb_strtolower($operation->label()).'.');
 

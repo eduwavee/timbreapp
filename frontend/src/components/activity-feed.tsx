@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BellRing, CheckCheck, ClipboardList, FileCheck2, HandCoins, Send } from "lucide-react";
+import { BellRing, CheckCheck, ClipboardList, FileCheck2, HandCoins, Megaphone, Send } from "lucide-react";
 import { hace } from "@/lib/format";
 import type { ActivityEvent } from "@/lib/types";
 import { cx } from "./ui";
@@ -11,6 +11,7 @@ const kinds: Record<ActivityEvent["kind"], { icon: typeof HandCoins; tone: strin
   derivacion: { icon: Send, tone: "text-ink", label: "Derivación" },
   reclamo: { icon: ClipboardList, tone: "text-ink", label: "Reclamo" },
   resuelto: { icon: CheckCheck, tone: "text-ok", label: "Resuelto" },
+  consulta: { icon: Megaphone, tone: "text-ink", label: "Consulta en La Choza" },
 };
 
 /** Línea de tiempo con un filete vertical: cada evento cuelga de la misma columna. */

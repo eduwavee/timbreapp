@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
-import { Activity, Building2, CalendarDays, ClipboardList, FileText, HandCoins, LogOut, Menu, ReceiptText, Search, Settings, TrendingUp, Users, Wrench, X } from "lucide-react";
+import { Activity, Building2, CalendarDays, ClipboardList, FileText, HandCoins, LogOut, Megaphone, Menu, ReceiptText, Search, Settings, TrendingUp, Users, Wrench, X } from "lucide-react";
 import { CommandPalette } from "./command-palette";
 import { api } from "@/lib/api";
 import { ToastProvider } from "./toast";
@@ -14,6 +14,7 @@ const nav = [
   { href: "/admin/agenda", label: "Agenda", icon: CalendarDays },
   { href: "/admin/cobros", label: "Cobros", icon: HandCoins, badge: "proofs" as const },
   { href: "/admin/reclamos", label: "Reclamos", icon: ClipboardList, badge: "tickets" as const },
+  { href: "/admin/consultas", label: "Consultas", icon: Megaphone, badge: "inquiries" as const },
   { href: "/admin/propiedades", label: "Propiedades", icon: Building2 },
   { href: "/admin/inquilinos", label: "Inquilinos", icon: Users },
   { href: "/admin/contratos", label: "Contratos", icon: FileText },
@@ -31,6 +32,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const setOpen = (v: boolean) => setMenuPath(v ? pathname : null);
   const [openTickets, setOpenTickets] = useState<number | null>(null);
   const [pendingProofs, setPendingProofs] = useState<number | null>(null);
+  const [newInquiries, setNewInquiries] = useState<number | null>(null);
   const [palette, setPalette] = useState(false);
 
   useEffect(() => {
@@ -50,6 +52,9 @@ export function AdminShell({ children }: { children: ReactNode }) {
       .catch(() => null);
     api<{ data: unknown[] }>("proofs?status=pendiente")
       .then((r) => setPendingProofs(r.data.length))
+      .catch(() => null);
+    api<{ data: unknown[] }>("inquiries?status=nueva")
+      .then((r) => setNewInquiries(r.data.length))
       .catch(() => null);
   }, [pathname]);
 
@@ -97,6 +102,11 @@ export function AdminShell({ children }: { children: ReactNode }) {
                 {item.badge === "proofs" && !!pendingProofs && (
                   <span className="num inline-flex h-5 min-w-5 items-center justify-center rounded-sm bg-marker px-1.5 text-[11.5px] font-bold text-ink" aria-label={`${pendingProofs} comprobantes para confirmar`}>
                     {pendingProofs}
+                  </span>
+                )}
+                {item.badge === "inquiries" && !!newInquiries && (
+                  <span className="num inline-flex h-5 min-w-5 items-center justify-center rounded-sm bg-marker px-1.5 text-[11.5px] font-bold text-ink" aria-label={`${newInquiries} consultas nuevas`}>
+                    {newInquiries}
                   </span>
                 )}
                 {item.badge === "tickets" && !!openTickets && (
