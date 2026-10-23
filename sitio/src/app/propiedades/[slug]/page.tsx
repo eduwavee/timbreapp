@@ -51,8 +51,8 @@ export default async function ListingPage({ params, searchParams }: PageProps<"/
           </Link>
         </div>
 
-        <div className="mx-auto grid max-w-[1440px] gap-8 px-3 pt-4 pb-16 sm:px-6 lg:grid-cols-[minmax(0,1fr)_420px]">
-          <div className="flex min-w-0 flex-col gap-8">
+        <div className="mx-auto grid max-w-[1440px] gap-8 px-3 pt-4 pb-16 sm:px-6 lg:grid-cols-[minmax(0,1fr)_420px] lg:grid-rows-[auto_1fr]">
+          <div className="flex min-w-0 flex-col gap-8 lg:col-start-1">
             <Gallery photos={listing.photos} title={listing.headline} reserved={listing.reserved} />
 
             <header className="flex flex-col gap-3 border-b-2 border-tinta pb-6">
@@ -69,6 +69,13 @@ export default async function ListingPage({ params, searchParams }: PageProps<"/
                 ))}
               </ul>
             </header>
+          </div>
+
+          <aside className="lg:sticky lg:top-6 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start" aria-label="Precio y consulta">
+            <InquiryPanel listing={listing} initialOp={op} ownerPhone={meta.owner_phone} />
+          </aside>
+
+          <div className="flex min-w-0 flex-col gap-8 lg:col-start-1">
 
             {paragraphs.length > 0 && (
               <section aria-labelledby="desc-titulo" className="max-w-[68ch]">
@@ -99,10 +106,6 @@ export default async function ListingPage({ params, searchParams }: PageProps<"/
               </section>
             )}
           </div>
-
-          <aside className="lg:sticky lg:top-6 lg:self-start" aria-label="Precio y consulta">
-            <InquiryPanel listing={listing} initialOp={op} ownerPhone={meta.owner_phone} />
-          </aside>
         </div>
 
         {more.length > 0 && (

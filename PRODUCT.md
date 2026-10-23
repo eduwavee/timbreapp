@@ -43,6 +43,13 @@ Módulos: autenticación con roles (admin / inquilino), propiedades, inquilinos,
 
 No hay datos reales todavía. Los datos de prueba (seeders) son ficticios y no se presentan como reales.
 
+## La Choza (web pública)
+
+- Web de propiedades en `sitio/` (Next.js, puerto 3001) con marca propia: **La Choza** ("vení a la choza"), elegida por el usuario. Voz rioplatense con humor de barrio.
+- Publica casas, departamentos y galpones en venta (USD) y/o alquiler (ARS). Las publicaciones, precios y fotos se cargan desde la ficha de cada propiedad en Timbre.
+- Quien toca "Me interesa" deja nombre y WhatsApp; la consulta cae en Timbre (Consultas) y el dueño la atiende él o la deriva a un colega o vendedor, todo por links `wa.me`.
+- Visitantes: gente que busca para comprar o alquilar, mayormente desde el celular.
+
 ## Product Principles
 
 1. **Un clic hasta la acción:** cobrar, avisar y derivar tienen que estar a un toque desde donde aparece el problema.

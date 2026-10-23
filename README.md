@@ -4,7 +4,7 @@
 
 **Gestión de alquileres para dueños que administran sus propias casas, departamentos y galpones.**
 
-Cobranzas, morosidad con aviso por WhatsApp, reclamos derivados al plomero en un clic y un portal para cada inquilino.
+Cobranzas, morosidad con aviso por WhatsApp, reclamos derivados al plomero en un clic, un portal para cada inquilino y **La Choza**, la web pública donde se venden y alquilan las propiedades.
 
 ![Login de Timbre](docs/screenshots/login.png)
 
@@ -30,6 +30,7 @@ El panel está pensado como la **liquidación de expensas** que se pega en el ha
 ## Índice
 
 - [Funcionalidades](#funcionalidades)
+- [La Choza: la web de propiedades](#la-choza-la-web-de-propiedades)
 - [Capturas](#capturas)
 - [Stack y arquitectura](#stack-y-arquitectura)
 - [Instalación](#instalación)
@@ -54,7 +55,8 @@ El panel está pensado como la **liquidación de expensas** que se pega en el ha
 | **Reclamos** | Tablero Abierto → Derivado → En curso → Resuelto, con fotos, prioridad y una conversación con el inquilino. |
 | **Derivación al proveedor** | **Derivar** abre WhatsApp al plomero, gasista o electricista con la dirección, el inquilino, la falla y la prioridad ya escritos, y marca el reclamo como derivado. |
 | **Comprobantes de pago** | El inquilino sube la captura de la transferencia y vos la revisás. **Confirmar y emitir recibo** registra el pago; si pagó de más, la diferencia queda como mora. También podés rechazarlo con un motivo. |
-| **Propiedades** | Casas, departamentos y galpones con código corto (`AZC-8`), galería de fotos con portada y el resultado del año de cada unidad. |
+| **Propiedades** | Casas, departamentos y galpones con código corto (`AZC-8`), galería de fotos con portada, el resultado del año de cada unidad y su **publicación en La Choza**. |
+| **Consultas de La Choza** | Lo que entra por el "Me interesa" de la web: lo atendés vos por WhatsApp o se lo derivás a un colega con un clic. |
 | **Inquilinos** | Ficha con contratos, cuotas, avisos enviados, reclamos y acceso al portal. |
 | **Contratos** | Vigencia, día de vencimiento, ajuste ICL/IPC/fijo, depósito y mora. Al crearlo se generan las cuotas solas, y el ajuste por porcentaje actualiza las cuotas futuras. |
 | **Documentos** | Contrato firmado, DNI, garantía y recibos de sueldo en disco privado. Avisa cuando vence una garantía. |
@@ -76,6 +78,53 @@ El panel está pensado como la **liquidación de expensas** que se pega en el ha
 ### Tareas automáticas
 
 Todos los días a las 06:00, `cuotas:generar` crea las cuotas del mes de cada contrato vigente y marca las vencidas.
+
+---
+
+## La Choza: la web de propiedades
+
+<div align="center">
+
+![La Choza](docs/screenshots/la-choza-home.png)
+
+</div>
+
+**La Choza** ("vení a la choza") es la web pública de propiedades que vive en `sitio/` y está unida a Timbre. Se lee como el cartel **VENDE / ALQUILA** que cuelga del balcón: el verbo enorme es el selector de operación y, donde iría el teléfono del cartel, va el buscador.
+
+### Cómo se une con Timbre
+
+```mermaid
+flowchart LR
+    V[Visitante<br/>La Choza :3001] -->|elige propiedad<br/>toca Me interesa| S[Next.js sitio<br/>/api/consultas]
+    S -->|POST /api/site/listings/slug/inquiries| L[Laravel API]
+    L --> I[(Consulta<br/>estado: nueva)]
+    I --> T[Timbre :3000<br/>aviso en la liquidación<br/>y bandeja Consultas]
+    T -->|La atiendo yo| W1[WhatsApp al interesado]
+    T -->|Derivar| W2[WhatsApp al colega<br/>con los datos ya escritos]
+```
+
+1. **Publicás desde Timbre.** En la ficha de cada propiedad, *Publicación en La Choza*: venta (USD), alquiler (ARS) o las dos, título, descripción, barrio, expensas, baños, antigüedad, características, *visible en la web* y *reservada*. Las fotos son las mismas de la ficha (la portada es la primera).
+2. **El visitante busca y consulta.** Listado con filtros (barrio, tipo, ambientes, precio máximo y orden), ficha con galería y el panel-cartel con el formulario *Me interesa*. Al enviarlo se pega la faja amarilla **¡CONSULTA ENVIADA!**.
+3. **Te aparece en Timbre.** Las consultas nuevas salen arriba de la liquidación y en el menú *Consultas* con su contador. Desde ahí:
+   - **La atiendo yo:** abre WhatsApp con la respuesta ya escrita y la consulta queda a tu cargo.
+   - **Derivar a un colega:** elegís un vendedor o colega (Timbre sugiere el que trabaja esa zona) y se abre WhatsApp con el nombre, el teléfono y el mensaje del interesado y los datos de la propiedad.
+   - **Se concretó / No avanzó:** cierra la consulta. Las notas internas quedan guardadas.
+4. **Colegas:** un ABM de vendedores e inmobiliarias amigas con su WhatsApp y la zona que trabajan.
+5. **Mensajes editables** en *Ajustes y mensajes*, con vista previa, igual que los avisos de deuda.
+
+La web nunca muestra datos del inquilino ni el número exacto: solo la altura de la calle ("Azcuénaga al 1200").
+
+| Ficha con el panel-cartel | Consulta enviada | En el celular |
+|---|---|---|
+| ![](docs/screenshots/la-choza-ficha.png) | ![](docs/screenshots/la-choza-consulta-enviada.png) | ![](docs/screenshots/la-choza-mobile.png) |
+
+| Aviso en la liquidación | Bandeja de consultas | Derivar a un colega |
+|---|---|---|
+| ![](docs/screenshots/timbre-aviso-consultas.png) | ![](docs/screenshots/timbre-consultas.png) | ![](docs/screenshots/timbre-consulta-derivar.png) |
+
+![Publicación desde la ficha](docs/screenshots/timbre-publicacion.png)
+
+> Las fotos de demo son de [Pexels](https://www.pexels.com/license/) (uso libre) y están en `backend/database/seeders/photos/`. Son ilustrativas: no muestran las propiedades de los datos de demo.
 
 ---
 
@@ -219,7 +268,15 @@ npm install
 cp .env.example .env.local
 ```
 
-### 4. Levantar todo
+### 4. Web La Choza (Next.js)
+
+```bash
+cd ../sitio
+npm install
+cp .env.example .env.local
+```
+
+### 5. Levantar todo
 
 Desde la raíz:
 
@@ -227,7 +284,7 @@ Desde la raíz:
 ./dev.sh
 ```
 
-Arranca la API en `:8000`, el scheduler y el frontend en `:3000`. Abrí **http://localhost:3000**.
+Arranca la API en `:8000`, el scheduler, Timbre en `:3000` y La Choza en `:3001`. Abrí **http://localhost:3000** para el panel y **http://localhost:3001** para la web.
 
 Para volver a los datos de demo: `cd backend && php artisan migrate:fresh --seed`.
 
@@ -272,6 +329,11 @@ timbreapp/
 │       ├── components/           sistema de componentes
 │       ├── lib/                  cliente de API, formatos es-AR y tipos
 │       └── proxy.ts              redirección por sesión y rol
+├── sitio/                        La Choza, la web pública (Next.js 16)
+│   └── src/
+│       ├── app/                  inicio, /propiedades, /propiedades/[slug] y /api/consultas
+│       ├── components/           cartel, buscador, tarjetas, galería y panel de consulta
+│       └── lib/                  cliente de la API pública y formatos
 ├── docs/screenshots/
 ├── DESIGN.md                     sistema de diseño (tokens, reglas, componentes)
 ├── PRODUCT.md                    contexto de producto
@@ -312,6 +374,20 @@ Todas las rutas van bajo `/api`, con autenticación Sanctum (Bearer).
 | GET | `/agenda?month=`, `/activity`, `/search?q=`, `/profitability?year=` | |
 | GET | `/exports/month?month=YYYY-MM` | Excel del mes |
 | GET/PUT | `/settings` | |
+| GET/PUT | `/properties/{id}/listing` | publicación en La Choza |
+| GET/PATCH | `/inquiries`, `/inquiries/{id}` | consultas de la web (estado, cierre, notas) |
+| POST | `/inquiries/{id}/contact` | "la atiendo yo": link de WhatsApp al interesado |
+| POST | `/inquiries/{id}/derive` | deriva a un colega y devuelve el link de WhatsApp |
+| CRUD | `/colleagues` | colegas y vendedores |
+
+**Web pública La Choza** (sin sesión, con límite de pedidos)
+
+| Método | Ruta | |
+|---|---|---|
+| GET | `/site/meta` | nombre, contacto, cantidades y barrios |
+| GET | `/site/listings?op=venta\|alquiler&place=&type=&rooms=&max_price=&sort=` | listado publicado |
+| GET | `/site/listings/{slug}` | ficha con fotos y características |
+| POST | `/site/listings/{slug}/inquiries` | "Me interesa": crea la consulta en Timbre (6 por minuto) |
 
 **Portal** (rol `inquilino`, siempre acotado a su contrato)
 
@@ -333,10 +409,11 @@ createdb gestoria_test   # solo la primera vez
 php artisan test
 ```
 
-Hay 18 tests de feature (75 aserciones) que cubren:
+Hay 24 tests de feature (121 aserciones) que cubren:
 - **Cobranza:** generación de cuotas, pagos parciales, numeración de recibos y mora diaria.
 - **Liquidación:** totales vencidos sin las cuotas que todavía no vencieron y los links de WhatsApp.
 - **Reclamos:** derivación al proveedor.
+- **La Choza:** publicación con slug y precios, filtros de la web pública, "Me interesa" sin duplicados ni spam, propiedades reservadas, atención y derivación de consultas por WhatsApp con el colega sugerido.
 - **Permisos del inquilino:** solo ve lo suyo, no entra a rutas de administración y no puede ver archivos ajenos.
 - **Comprobantes:** el flujo completo de comprobante → confirmación → recibo.
 - **Gastos:** el costo de un reclamo se convierte en gasto.
@@ -356,6 +433,8 @@ El diseño se documenta en [`DESIGN.md`](DESIGN.md). Lo esencial:
 - **Construcción:** filetes de 1px y esquinas de 2px, con doble filete sobre los totales.
 - **Una sola familia tipográfica** (Archivo), con rótulos condensados para las columnas.
 - **WhatsApp verde** solo para los botones que abren `wa.me`.
+
+**La Choza** tiene su propio sistema en [`sitio/DESIGN.md`](sitio/DESIGN.md): pared gris fría, chapas blancas, **rojo para la venta y azul para el alquiler** (la variable `--op` cambia con la operación), amarillo solo para las fajas cruzadas, y letra de cartel en Sofia Sans Extra Condensed servida desde el proyecto.
 
 ---
 

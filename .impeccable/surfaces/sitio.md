@@ -14,7 +14,7 @@ Marca: La Choza ("vení a la choza"), voseo, humor de barrio. Hermana de Timbre,
 
 THESIS: La web es el cartel VENDE / ALQUILA que cuelga del balcón: un verbo enorme, el dato justo y una sola forma de contactar. Rechaza el portal de fotos con filtros grises y banners.
 
-OWN-WORLD: Chapa esmaltada blanca fría #F4F5F1, letra negra #141414, rojo cartel #D52B1E para VENDE, azul cartel #1A43A8 para ALQUILA, amarillo faja #FFD21F solo para las fajas cruzadas (RESERVADO, CONSULTA ENVIADA). Letras de cartel en Sofia Sans Extra Condensed 800-900 en mayúsculas; texto en Sofia Sans. Chapas de esquinas rectas con agujeros de remache y precintos de alambre en las cuatro puntas; filetes de 2px negros; cero sombras difusas y cero gradientes.
+OWN-WORLD: Pared de revoque gris frío #E6E7E2 de fondo, chapas esmaltadas blancas #FBFBF8, letra negra #141414, rojo cartel #D52B1E para VENDE, azul cartel #1A43A8 para ALQUILA, amarillo faja #FFD21F solo para las fajas cruzadas (RESERVADO, CONSULTA ENVIADA). Letras de cartel en Sofia Sans Extra Condensed 800-900 en mayúsculas; texto en Sofia Sans. Chapas de esquinas rectas con agujeros de remache y precintos de alambre en las cuatro puntas; filetes de 2px negros; cero sombras difusas y cero gradientes.
 
 STORY: El visitante ve el cartel, elige VENDE o ALQUILA, busca por barrio y ambientes, abre una propiedad, mira fotos y datos, toca "Me interesa", deja su WhatsApp y ve caer la faja CONSULTA ENVIADA.
 

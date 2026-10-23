@@ -70,13 +70,10 @@ export function CartelHero({ meta }: { meta: Meta }) {
         <span className="remache bottom-3 left-3" />
         <span className="remache right-3 bottom-3" />
 
-        <div className="flex flex-col gap-6 px-5 pt-9 pb-6 sm:px-10 sm:pt-10 sm:pb-9">
-          <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-            <h1 id="cartel-titulo" className="rotulo text-[17px] tracking-[0.08em]">
-              La Choza · casas, deptos y galpones
-            </h1>
-            <p className="rotulo text-[15px] tracking-[0.08em] text-chapa/80">{cities.join(" · ")}</p>
-          </div>
+        <div className="flex flex-col gap-6 px-5 pt-8 pb-9 sm:px-10 sm:pt-9 sm:pb-7">
+          <h1 id="cartel-titulo" className="sr-only">
+            La Choza: casas, departamentos y galpones en venta y alquiler
+          </h1>
 
           <div role="tablist" aria-label="Operación" className="-ml-1 flex flex-wrap items-end gap-x-[0.18em] text-[clamp(84px,13.4vw,212px)]">
             {VERBS.map((v, i) => {
@@ -108,6 +105,11 @@ export function CartelHero({ meta }: { meta: Meta }) {
           </p>
 
           <SearchStrip key={op} op={op} meta={meta} />
+
+          <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t-2 border-chapa/35 pt-4">
+            <p className="rotulo text-[17px] tracking-[0.08em]">La Choza · casas, deptos y galpones</p>
+            <p className="rotulo text-[15px] tracking-[0.08em] text-chapa/85">{cities.join(" · ")}</p>
+          </div>
         </div>
       </div>
     </section>

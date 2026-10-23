@@ -14,7 +14,7 @@ export function PlacesList({ meta, op }: { meta: Meta; op: Op }) {
             className="group flex items-baseline gap-2 border-2 border-tinta bg-chapa px-3 pt-2 pb-1.5 transition-colors hover:bg-tinta hover:text-chapa"
           >
             <span className="cartel text-[34px] sm:text-[40px]">{p.name}</span>
-            <span className="rotulo text-[14px] text-op group-hover:text-faja">{p[op]}</span>
+            <span className="cartel text-[24px] text-op group-hover:text-faja">{p[op]}</span>
           </Link>
         </li>
       ))}

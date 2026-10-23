@@ -105,14 +105,14 @@ textarea {
   line-height: 1;
 }
 
-/* Remache de la chapa: agujero con su arandela. */
+/* Remache de la chapa: el agujero por donde pasa el alambre, plano y honesto. */
 .remache {
   position: absolute;
-  width: 12px;
-  height: 12px;
+  width: 11px;
+  height: 11px;
   border-radius: 999px;
-  background: radial-gradient(circle at 40% 35%, #fff 0 18%, #b9bbb5 19% 45%, #7d8079 46% 60%, rgba(0, 0, 0, 0.55) 61% 100%);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+  background: var(--pared);
+  box-shadow: inset 0 0 0 2px var(--tinta);
 }
 
 /* Faja amarilla pegada en diagonal: RESERVADO, CONSULTA ENVIADA. */
