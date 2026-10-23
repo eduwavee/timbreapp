@@ -268,6 +268,8 @@ class DatabaseSeeder extends Seeder
             'phone' => $properties[3]->activeContract->tenant->phone,
             'message' => 'Recordatorio de saldo pendiente.',
         ])->forceFill(['created_at' => $today->copy()->subDays(4)])->save();
+
+        $this->call(LaChozaSeeder::class);
     }
 
     /**

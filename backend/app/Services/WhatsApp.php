@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\Colleague;
+use App\Models\Inquiry;
 use App\Models\Installment;
 use App\Models\Provider;
 use App\Models\Setting;
@@ -104,5 +106,56 @@ class WhatsApp
         ]);
 
         return ['phone' => $provider->phone, 'message' => $message, 'url' => static::link($provider->phone, $message)];
+    }
+
+    /**
+     * Respuesta del dueño a quien consultó en La Choza.
+     *
+     * @return array{phone: string, message: string, url: string}
+     */
+    public function inquiryReply(Inquiry $inquiry): array
+    {
+        $message = static::fill(Setting::get('inquiry_reply_template'), $this->inquiryValues($inquiry));
+
+        return ['phone' => $inquiry->phone, 'message' => $message, 'url' => static::link($inquiry->phone, $message)];
+    }
+
+    /**
+     * Derivación de una consulta a un colega o vendedor, con los datos del interesado y la propiedad.
+     *
+     * @return array{phone: string, message: string, url: string}
+     */
+    public function inquiryDerivation(Inquiry $inquiry, Colleague $colleague): array
+    {
+        $message = static::fill(Setting::get('inquiry_derivation_template'), [
+            ...$this->inquiryValues($inquiry),
+            'colega' => $colleague->name,
+        ]);
+
+        return ['phone' => $colleague->phone, 'message' => $message, 'url' => static::link($colleague->phone, $message)];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function inquiryValues(Inquiry $inquiry): array
+    {
+        $inquiry->loadMissing('listing.property');
+        $listing = $inquiry->listing;
+        $property = $listing->property;
+
+        return [
+            'nombre' => $inquiry->name,
+            'telefono' => $inquiry->phone,
+            'email' => $inquiry->email ? ", mail {$inquiry->email}" : '',
+            'mensaje' => trim((string) $inquiry->message) ?: 'sin mensaje',
+            'administracion' => Setting::get('owner_name'),
+            'sitio' => Setting::get('site_name'),
+            'titulo' => $listing->headline,
+            'direccion' => $property->address.', '.$listing->place(),
+            'codigo' => $property->code,
+            'operacion' => mb_strtolower($inquiry->operation->label()),
+            'precio' => $listing->priceLabel($inquiry->operation),
+        ];
     }
 }

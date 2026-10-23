@@ -6,6 +6,7 @@ use App\Enums\ContactKind;
 use App\Enums\TicketStatus;
 use App\Http\Controllers\Controller;
 use App\Models\ContactLog;
+use App\Models\Inquiry;
 use App\Models\Payment;
 use App\Models\PaymentProof;
 use App\Models\Ticket;
@@ -69,8 +70,26 @@ class ActivityController extends Controller
                 'href' => '/admin/cobros?tab=comprobantes',
             ]);
 
+        $inquiries = Inquiry::query()->with('property', 'colleague')->latest()->limit($limit)->get()
+            ->flatMap(fn (Inquiry $i) => array_filter([
+                [
+                    'kind' => 'consulta',
+                    'at' => $i->created_at->toIso8601String(),
+                    'title' => "{$i->name} consultó por {$i->property->code} en La Choza",
+                    'detail' => $i->operation->label().' · '.str((string) $i->message)->limit(90)->toString(),
+                    'href' => '/admin/consultas?id='.$i->id,
+                ],
+                $i->derived_at && $i->colleague ? [
+                    'kind' => 'derivacion',
+                    'at' => $i->derived_at->toIso8601String(),
+                    'title' => "Consulta de {$i->name} derivada a {$i->colleague->name}",
+                    'detail' => $i->property->code.' · '.$i->operation->label(),
+                    'href' => '/admin/consultas?id='.$i->id,
+                ] : null,
+            ]));
+
         /** @var Collection<int, array<string, mixed>> $events */
-        $events = collect()->concat($payments)->concat($contacts)->concat($tickets)->concat($proofs)
+        $events = collect()->concat($payments)->concat($contacts)->concat($tickets)->concat($proofs)->concat($inquiries)
             ->sortByDesc('at')->take($limit)->values();
 
         return response()->json(['data' => $events]);

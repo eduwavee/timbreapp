@@ -22,6 +22,9 @@ class SettingController extends Controller
             'bank_alias' => ['nullable', 'string', 'max:60'],
             'reminder_template' => ['required', 'string', 'max:1500'],
             'derivation_template' => ['required', 'string', 'max:1500'],
+            'site_name' => ['sometimes', 'required', 'string', 'max:60'],
+            'inquiry_reply_template' => ['sometimes', 'required', 'string', 'max:1500'],
+            'inquiry_derivation_template' => ['sometimes', 'required', 'string', 'max:1500'],
         ]);
 
         foreach ($data as $key => $value) {

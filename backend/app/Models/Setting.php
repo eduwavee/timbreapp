@@ -14,6 +14,9 @@ class Setting extends Model
         'bank_alias' => '',
         'reminder_template' => 'Hola {nombre}, ¿cómo estás? Te escribo de {administracion} por el alquiler de {propiedad}. Figura un saldo de {saldo} del período {periodo}, vencido hace {dias} días. Si ya lo abonaste, avisame así lo registro. Alias para transferir: {alias}. ¡Gracias!',
         'derivation_template' => 'Hola {proveedor}, te escribo de {administracion}. Tenemos un trabajo de {rubro} en {direccion}. Inquilino: {inquilino} ({telefono_inquilino}). Problema: {titulo}. {descripcion} Prioridad: {prioridad}. ¿Podés pasar a verlo? Reclamo #{ticket}.',
+        'site_name' => 'La Choza',
+        'inquiry_reply_template' => 'Hola {nombre}, ¿cómo estás? Te escribo de {administracion} por tu consulta en {sitio} sobre {titulo} ({direccion}), en {operacion} a {precio}. ¿Cuándo te queda bien para verla?',
+        'inquiry_derivation_template' => 'Hola {colega}, te paso un interesado que entró por {sitio}: {nombre}, WhatsApp {telefono}{email}. Consulta por {titulo} en {direccion}, {operacion} a {precio} (código {codigo}). Mensaje: "{mensaje}". ¿Lo tomás vos? Contame cómo sigue.',
     ];
 
     protected $primaryKey = 'key';

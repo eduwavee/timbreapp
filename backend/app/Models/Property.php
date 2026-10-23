@@ -48,6 +48,16 @@ class Property extends Model
         return $this->hasMany(PropertyPhoto::class)->orderBy('position')->orderBy('id');
     }
 
+    public function listing(): HasOne
+    {
+        return $this->hasOne(Listing::class);
+    }
+
+    public function inquiries(): HasMany
+    {
+        return $this->hasMany(Inquiry::class);
+    }
+
     public function expenses(): HasMany
     {
         return $this->hasMany(Expense::class);

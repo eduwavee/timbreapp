@@ -3,13 +3,16 @@
 use App\Http\Controllers\Api\ActivityController;
 use App\Http\Controllers\Api\AgendaController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ColleagueController;
 use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\ContractDocumentController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\ExpenseController;
 use App\Http\Controllers\Api\ExportController;
+use App\Http\Controllers\Api\InquiryController;
 use App\Http\Controllers\Api\InstallmentController;
 use App\Http\Controllers\Api\LedgerController;
+use App\Http\Controllers\Api\ListingController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PaymentProofController;
 use App\Http\Controllers\Api\Portal\PortalController;
@@ -20,11 +23,22 @@ use App\Http\Controllers\Api\ProviderController;
 use App\Http\Controllers\Api\ReminderController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\SettingController;
+use App\Http\Controllers\Api\Site\SiteController;
 use App\Http\Controllers\Api\TenantController;
 use App\Http\Controllers\Api\TicketController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:10,1')->name('login');
+
+// La Choza: web pública. Solo lectura de lo publicado y el "Me interesa".
+Route::prefix('site')->group(function () {
+    Route::middleware('throttle:240,1')->group(function () {
+        Route::get('/meta', [SiteController::class, 'meta']);
+        Route::get('/listings', [SiteController::class, 'index']);
+        Route::get('/listings/{slug}', [SiteController::class, 'show']);
+    });
+    Route::post('/listings/{slug}/inquiries', [SiteController::class, 'inquire'])->middleware('throttle:6,1');
+});
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
@@ -74,6 +88,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/contracts/{contract}/documents', [ContractDocumentController::class, 'store']);
         Route::get('/documents/{document}/file', [ContractDocumentController::class, 'download']);
         Route::delete('/documents/{document}', [ContractDocumentController::class, 'destroy']);
+
+        Route::get('/properties/{property}/listing', [ListingController::class, 'show']);
+        Route::put('/properties/{property}/listing', [ListingController::class, 'update']);
+        Route::apiResource('colleagues', ColleagueController::class)->except('show');
+        Route::get('/inquiries', [InquiryController::class, 'index']);
+        Route::get('/inquiries/{inquiry}', [InquiryController::class, 'show']);
+        Route::patch('/inquiries/{inquiry}', [InquiryController::class, 'update']);
+        Route::post('/inquiries/{inquiry}/contact', [InquiryController::class, 'contact']);
+        Route::post('/inquiries/{inquiry}/derive', [InquiryController::class, 'derive']);
 
         Route::get('/exports/month', [ExportController::class, 'month']);
 
