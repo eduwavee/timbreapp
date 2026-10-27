@@ -30,6 +30,8 @@ class TenantResource extends JsonResource
             'has_portal_access' => $this->whenLoaded('user', fn () => $this->user !== null),
             'active_contract' => ContractResource::make($this->whenLoaded('activeContract')),
             'balance' => $this->when(isset($this->balance), fn () => round((float) $this->balance, 2)),
+            'created_at' => $this->created_at?->toIso8601String(),
+            'updated_at' => $this->updated_at?->toIso8601String(),
         ];
     }
 }

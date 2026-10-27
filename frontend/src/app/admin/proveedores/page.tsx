@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { Pencil, Plus } from "lucide-react";
 import { useToast } from "@/components/toast";
-import { Button, Empty, ErrorState, Field, FormError, Input, PageHeader, Panel, Select, Sheet, SkeletonRows, Textarea, WhatsAppLink } from "@/components/ui";
+import { Button, Empty, ErrorState, Field, FormError, Input, LastChange, PageHeader, Panel, SearchBox, Select, Sheet, SkeletonRows, Textarea, WhatsAppLink } from "@/components/ui";
 import { api, ApiError } from "@/lib/api";
+import { matches, recentFirst } from "@/lib/search";
 import { TRADES, type Provider } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 
@@ -17,10 +18,11 @@ function waLink(phone: string) {
 export default function ProvidersPage() {
   const list = useApi<{ data: Provider[] }>("providers");
   const [editing, setEditing] = useState<Provider | "new" | null>(null);
+  const [q, setQ] = useState("");
   const toast = useToast();
 
   const providers = list.data?.data ?? [];
-  const groups = TRADES.map((t) => ({ trade: t, items: providers.filter((p) => p.trade.value === t.value) })).filter((g) => g.items.length);
+  const groups = TRADES.map((t) => ({ trade: t, items: recentFirst(providers.filter((p) => p.trade.value === t.value && matches(q, p.name, p.phone, p.notes, t.label))) })).filter((g) => g.items.length);
 
   return (
     <>
@@ -33,7 +35,17 @@ export default function ProvidersPage() {
           </Button>
         }
       />
+      {providers.length > 0 && (
+        <div className="mb-4 flex">
+          <SearchBox value={q} onChange={setQ} placeholder="Nombre, rubro o teléfono" className="ml-auto sm:w-72" />
+        </div>
+      )}
       {list.error && <ErrorState message={list.error.message} onRetry={list.reload} />}
+      {providers.length > 0 && groups.length === 0 && (
+        <Panel>
+          <Empty title="Ningún proveedor coincide con la búsqueda">Probá con el rubro, por ejemplo “plomero” o “gas”.</Empty>
+        </Panel>
+      )}
       {list.loading && !list.data && (
         <Panel>
           <SkeletonRows rows={6} cols={4} />
@@ -62,6 +74,7 @@ export default function ProvidersPage() {
                       <p className="num text-[13px] text-ink-2">{p.phone}</p>
                       {p.notes && <p className="text-[12.5px] text-ink-3">{p.notes}</p>}
                       {!!p.open_tickets_count && <p className="mt-0.5 text-[12.5px] font-semibold text-stamp">{p.open_tickets_count} trabajos abiertos</p>}
+                      <LastChange item={p} className="mt-0.5 block text-[12px]" />
                     </div>
                     <div className="flex shrink-0 gap-1.5">
                       <WhatsAppLink href={waLink(p.phone)} compact />

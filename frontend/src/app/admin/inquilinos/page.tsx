@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { Plus, Search } from "lucide-react";
+import { Plus } from "lucide-react";
 import { TenantForm } from "@/components/forms/tenant-form";
 import { useToast } from "@/components/toast";
-import { Button, cx, Empty, ErrorState, Input, Money, PageHeader, Panel, SkeletonRows, Table, Td, Th, WhatsAppLink } from "@/components/ui";
+import { Button, cx, Empty, ErrorState, LastChange, Money, PageHeader, Panel, SearchBox, Select, SkeletonRows, Table, Td, Th, WhatsAppLink } from "@/components/ui";
+import { matches, recentFirst } from "@/lib/search";
 import type { Tenant } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 
@@ -13,14 +14,15 @@ export default function TenantsPage() {
   const list = useApi<{ data: Tenant[] }>("tenants");
   const [q, setQ] = useState("");
   const [onlyDebt, setOnlyDebt] = useState(false);
+  const [order, setOrder] = useState<"recientes" | "apellido">("recientes");
   const [creating, setCreating] = useState(false);
   const toast = useToast();
 
   const all = useMemo(() => list.data?.data ?? [], [list.data]);
   const rows = useMemo(() => {
-    const term = q.trim().toLowerCase();
-    return all.filter((t) => (!onlyDebt || (t.balance ?? 0) > 0) && (!term || `${t.full_name} ${t.document} ${t.phone} ${t.active_contract?.property?.code ?? ""}`.toLowerCase().includes(term)));
-  }, [all, q, onlyDebt]);
+    const shown = all.filter((t) => (!onlyDebt || (t.balance ?? 0) > 0) && matches(q, t.full_name, t.document, t.phone, t.active_contract?.property?.code, t.active_contract?.property?.address));
+    return order === "recientes" ? recentFirst(shown) : shown;
+  }, [all, q, onlyDebt, order]);
 
   return (
     <>
@@ -41,10 +43,11 @@ export default function TenantsPage() {
         >
           Solo con deuda
         </button>
-        <div className="relative ml-auto w-full sm:w-72">
-          <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-ink-3" aria-hidden />
-          <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nombre, DNI, teléfono o unidad" aria-label="Buscar" className="h-8 pl-9 text-sm" />
-        </div>
+        <Select value={order} onChange={(e) => setOrder(e.target.value as typeof order)} aria-label="Orden" className="h-8 w-auto text-sm">
+          <option value="recientes">Últimos cambios primero</option>
+          <option value="apellido">Por apellido</option>
+        </Select>
+        <SearchBox value={q} onChange={setQ} placeholder="Nombre, DNI, teléfono o unidad" className="ml-auto sm:w-72" />
       </div>
       <Panel>
         {list.error && (
@@ -64,6 +67,7 @@ export default function TenantsPage() {
                 <Th>WhatsApp</Th>
                 <Th align="right">Deuda vencida</Th>
                 <Th>Portal</Th>
+                <Th>Último cambio</Th>
               </tr>
             </thead>
             <tbody>
@@ -86,6 +90,9 @@ export default function TenantsPage() {
                     <Money value={t.balance} tone="debt" />
                   </Td>
                   <Td className="text-[13px]">{t.has_portal_access ? <span className="text-stamp">Activo</span> : <span className="text-ink-3">—</span>}</Td>
+                  <Td>
+                    <LastChange item={t} />
+                  </Td>
                 </tr>
               ))}
             </tbody>

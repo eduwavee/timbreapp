@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Pencil, Plus } from "lucide-react";
 import { useToast } from "@/components/toast";
-import { Button, Empty, ErrorState, Field, FormError, Input, PageHeader, Panel, Sheet, SkeletonRows, Textarea, WhatsAppLink } from "@/components/ui";
+import { Button, Empty, ErrorState, Field, FormError, Input, LastChange, PageHeader, Panel, SearchBox, Sheet, SkeletonRows, Textarea, WhatsAppLink } from "@/components/ui";
 import { api, ApiError } from "@/lib/api";
+import { matches, recentFirst } from "@/lib/search";
 import type { Colleague } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 
@@ -19,7 +20,15 @@ export default function ColleaguesPage() {
   const list = useApi<{ data: Colleague[] }>("colleagues");
   const [editing, setEditing] = useState<Colleague | "new" | null>(null);
   const toast = useToast();
-  const colleagues = list.data?.data ?? [];
+  const [q, setQ] = useState("");
+  const colleagues = useMemo(() => list.data?.data ?? [], [list.data]);
+  const shown = useMemo(
+    () =>
+      recentFirst(colleagues.filter((c) => matches(q, c.name, c.agency, c.zone, c.phone, c.notes)))
+        // los inactivos siguen al final, como los manda la API
+        .sort((a, b) => Number(b.active) - Number(a.active)),
+    [colleagues, q],
+  );
 
   return (
     <>
@@ -33,6 +42,11 @@ export default function ColleaguesPage() {
           </Button>
         }
       />
+      {colleagues.length > 0 && (
+        <div className="mb-3 flex">
+          <SearchBox value={q} onChange={setQ} placeholder="Nombre, inmobiliaria o zona" className="ml-auto sm:w-72" />
+        </div>
+      )}
       {list.error && <ErrorState message={list.error.message} onRetry={list.reload} />}
       <Panel>
         {list.loading && !list.data && <SkeletonRows rows={5} cols={4} />}
@@ -41,8 +55,9 @@ export default function ColleaguesPage() {
             Cargá a quien te ayuda a vender o alquilar, con su WhatsApp y la zona que trabaja, y vas a poder derivarle cada consulta.
           </Empty>
         )}
+        {colleagues.length > 0 && shown.length === 0 && <Empty title="Ningún colega coincide con la búsqueda">Probá con la zona que trabaja, por ejemplo “Lanús”.</Empty>}
         <ul className="divide-y divide-rule">
-          {colleagues.map((c) => (
+          {shown.map((c) => (
             <li key={c.id} className="flex items-center justify-between gap-3 px-4 py-3">
               <div className="min-w-0">
                 <p className="font-semibold">
@@ -56,6 +71,7 @@ export default function ColleaguesPage() {
                 </p>
                 {c.notes && <p className="text-[12.5px] text-ink-3">{c.notes}</p>}
                 {!!c.open_inquiries_count && <p className="mt-0.5 text-[12.5px] font-semibold text-stamp">{c.open_inquiries_count} consultas en curso</p>}
+                <LastChange item={c} className="mt-0.5 block text-[12px]" />
               </div>
               <div className="flex shrink-0 gap-1.5">
                 <WhatsAppLink href={waLink(c.phone)} compact />

@@ -6,8 +6,9 @@ import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { ExpenseForm } from "@/components/forms/expense-form";
 import { useToast } from "@/components/toast";
-import { Button, cx, Empty, ErrorState, Money, PageHeader, Panel, Section, Select, SkeletonRows, Table, Td, Th } from "@/components/ui";
+import { Button, cx, Empty, ErrorState, Money, PageHeader, Panel, SearchBox, Section, Select, SkeletonRows, Table, Td, Th } from "@/components/ui";
 import { ars, currentPeriod, fecha, periodo, shiftPeriod } from "@/lib/format";
+import { matches } from "@/lib/search";
 import { EXPENSE_CATEGORIES, type Expense } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 
@@ -26,11 +27,13 @@ export function ExpensesView() {
   const [month, setMonth] = useState(currentPeriod());
   const [year, setYear] = useState(new Date().getFullYear());
   const [category, setCategory] = useState("");
+  const [q, setQ] = useState("");
   const [editing, setEditing] = useState<Expense | "new" | null>(params.get("nuevo") ? "new" : null);
   const list = useApi<{ data: Expense[] }>(tab === "gastos" ? `expenses?month=${month}` : null);
   const profit = useApi<Profit>(tab === "rentabilidad" ? `profitability?year=${year}` : null);
 
-  const expenses = useMemo(() => (list.data?.data ?? []).filter((e) => !category || e.category.value === category), [list.data, category]);
+  const expenses = useMemo(() => (list.data?.data ?? []).filter((e) => (!category || e.category.value === category) && matches(q, e.property.code, e.description, e.category.label, e.ticket_id && `#${e.ticket_id}`)), [list.data, category, q]);
+  const units = useMemo(() => (profit.data?.properties ?? []).filter((r) => matches(q, r.property.code, r.property.address, r.property.type)), [profit.data, q]);
   const total = expenses.reduce((a, e) => a + e.amount, 0);
   const byCategory = useMemo(() => {
     const m = new Map<string, number>();
@@ -63,7 +66,8 @@ export function ExpensesView() {
             </button>
           ))}
         </div>
-        <div className="ml-auto flex items-center gap-1">
+        <SearchBox value={q} onChange={setQ} placeholder={tab === "gastos" ? "Unidad o detalle del gasto" : "Unidad o calle"} className="ml-auto" />
+        <div className="flex items-center gap-1">
           <Button size="sm" className="w-8 px-0" onClick={() => (tab === "gastos" ? setMonth((m) => shiftPeriod(m, -1)) : setYear((y) => y - 1))} aria-label="Anterior">
             <ChevronLeft className="size-4" />
           </Button>
@@ -96,7 +100,8 @@ export function ExpensesView() {
               </div>
             )}
             {list.loading && !list.data && <SkeletonRows rows={8} cols={5} />}
-            {list.data && expenses.length === 0 && <Empty title="Sin gastos este mes" action={<Button onClick={() => setEditing("new")}>Registrar un gasto</Button>}>Cargá ABL, expensas, seguros y arreglos para saber cuánto te deja cada unidad. El costo que ponés en un reclamo se carga solo.</Empty>}
+            {list.data && expenses.length === 0 && (q || category) && list.data.data.length > 0 && <Empty title="Ningún gasto coincide con el filtro">Probá con el código de la unidad o parte del detalle.</Empty>}
+            {list.data && list.data.data.length === 0 && <Empty title="Sin gastos este mes" action={<Button onClick={() => setEditing("new")}>Registrar un gasto</Button>}>Cargá ABL, expensas, seguros y arreglos para saber cuánto te deja cada unidad. El costo que ponés en un reclamo se carga solo.</Empty>}
             {expenses.length > 0 && (
               <Table>
                 <thead>
@@ -130,7 +135,7 @@ export function ExpensesView() {
                 </tbody>
                 <tfoot>
                   <tr className="font-semibold [&>td]:border-t-[3px] [&>td]:border-double [&>td]:border-t-ink">
-                    <Td colSpan={4}>Total {category ? EXPENSE_CATEGORIES.find((c) => c.value === category)?.label.toLowerCase() : "del mes"}</Td>
+                    <Td colSpan={4}>Total {q ? "de la búsqueda" : category ? EXPENSE_CATEGORIES.find((c) => c.value === category)?.label.toLowerCase() : "del mes"}</Td>
                     <Td align="right" className="num">
                       {ars(total, { short: true })}
                     </Td>
@@ -174,7 +179,7 @@ export function ExpensesView() {
             <Section title="Por unidad, de la que más deja a la que menos">
               <Panel>
                 {!profit.data && <SkeletonRows rows={10} cols={5} />}
-                {profit.data && (
+                {profit.data && units.length > 0 && (
                   <Table>
                     <thead>
                       <tr>
@@ -187,7 +192,7 @@ export function ExpensesView() {
                       </tr>
                     </thead>
                     <tbody>
-                      {profit.data.properties.map((r) => (
+                      {units.map((r) => (
                         <tr key={r.property.id} className="hover:bg-paper/70">
                           <Td>
                             <Link href={`/admin/propiedades/${r.property.id}`} className="font-bold hover:underline">
@@ -213,6 +218,7 @@ export function ExpensesView() {
                     </tbody>
                   </Table>
                 )}
+                {profit.data && units.length === 0 && <Empty title="Ninguna unidad coincide con la búsqueda" />}
               </Panel>
               <p className="mt-2 text-[13px] text-ink-3">Cobrado incluye intereses por mora. Las unidades vacías o en arreglo aparecen con neto negativo.</p>
             </Section>

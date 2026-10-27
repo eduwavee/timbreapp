@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { forwardRef, useEffect, useId, useRef, type ComponentProps, type ReactNode } from "react";
-import { ArrowLeft, Loader2, MessageCircle, X } from "lucide-react";
-import { ars } from "@/lib/format";
+import { ArrowLeft, Loader2, MessageCircle, Search, X } from "lucide-react";
+import { ars, esReciente, ultimoCambio } from "@/lib/format";
 import type { Enum, InstallmentStatus, TicketStatus } from "@/lib/types";
 
 export function cx(...c: (string | false | null | undefined)[]) {
@@ -112,6 +112,39 @@ export function Field({ label, error, hint, children, className }: { label: stri
 export const Input = forwardRef<HTMLInputElement, ComponentProps<"input">>(function Input({ className, ...props }, ref) {
   return <input ref={ref} className={cx(control, "h-10", className)} {...props} />;
 });
+
+/** Último cambio de una fila: lo tocado en las últimas 24 h se destaca. */
+export function LastChange({ item, className }: { item: { created_at: string; updated_at: string }; className?: string }) {
+  const fresh = esReciente(item.updated_at);
+  return (
+    <span className={cx("text-[13px] whitespace-nowrap", fresh ? "font-semibold text-ink" : "text-ink-3", className)} title={new Date(item.updated_at).toLocaleString("es-AR", { dateStyle: "short", timeStyle: "short" })}>
+      {ultimoCambio(item)}
+    </span>
+  );
+}
+
+/** La lupita de los listados: filtra lo que ya está en pantalla. Escape o la cruz la borran. */
+export function SearchBox({ value, onChange, placeholder, className }: { value: string; onChange: (value: string) => void; placeholder: string; className?: string }) {
+  return (
+    <div className={cx("relative w-full sm:w-64", className)}>
+      <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-ink-3" aria-hidden />
+      <Input
+        type="search"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onKeyDown={(e) => e.key === "Escape" && value && (e.stopPropagation(), onChange(""))}
+        placeholder={placeholder}
+        aria-label="Buscar"
+        className="h-8 pr-8 pl-9 text-sm [&::-webkit-search-cancel-button]:hidden"
+      />
+      {value && (
+        <button type="button" onClick={() => onChange("")} aria-label="Borrar búsqueda" className="absolute top-1/2 right-1 grid size-6 -translate-y-1/2 place-items-center rounded-sm text-ink-3 hover:bg-paper hover:text-ink">
+          <X className="size-3.5" />
+        </button>
+      )}
+    </div>
+  );
+}
 
 export function Select({ className, children, ...props }: ComponentProps<"select">) {
   return (

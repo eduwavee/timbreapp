@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
-import { Search, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import { InquiryPill, InquirySheet, OperationTag } from "@/components/inquiry-sheet";
-import { ButtonLink, cx, Empty, ErrorState, Input, PageHeader, Panel, SkeletonRows, Table, Td, Th } from "@/components/ui";
+import { ButtonLink, cx, Empty, ErrorState, PageHeader, Panel, SearchBox, SkeletonRows, Table, Td, Th } from "@/components/ui";
 import { hace } from "@/lib/format";
+import { matches } from "@/lib/search";
 import { INQUIRY_STATUSES, type Inquiry, type InquiryStatus } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 
@@ -26,12 +27,7 @@ export function InquiriesBoard() {
   const all = useMemo(() => list.data?.data ?? [], [list.data]);
   const count = (s: InquiryStatus) => all.filter((i) => i.status.value === s).length;
   const rows = useMemo(() => {
-    const term = q.trim().toLowerCase();
-    return all.filter(
-      (i) =>
-        (tab === "todas" || i.status.value === tab) &&
-        (!term || `${i.name} ${i.phone} ${i.property?.code} ${i.property?.address} ${i.listing?.headline}`.toLowerCase().includes(term)),
-    );
+    return all.filter((i) => (tab === "todas" || i.status.value === tab) && matches(q, i.name, i.phone, i.property?.code, i.property?.address, i.listing?.headline));
   }, [all, tab, q]);
 
   function open(id: number | null) {
@@ -67,10 +63,7 @@ export function InquiriesBoard() {
             </button>
           ))}
         </div>
-        <div className="relative ml-auto w-full sm:w-64">
-          <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-ink-3" aria-hidden />
-          <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nombre, teléfono o código" aria-label="Buscar" className="h-8 pl-9 text-sm" />
-        </div>
+        <SearchBox value={q} onChange={setQ} placeholder="Nombre, teléfono o código" className="ml-auto" />
       </div>
 
       <Panel>

@@ -31,6 +31,8 @@ class PropertyResource extends JsonResource
             'open_tickets_count' => $this->whenCounted('tickets'),
             'cover_url' => $this->whenLoaded('photos', fn () => $this->photos->first()?->url),
             'balance' => $this->when(isset($this->balance), fn () => round((float) $this->balance, 2)),
+            'created_at' => $this->created_at?->toIso8601String(),
+            'updated_at' => $this->updated_at?->toIso8601String(),
         ];
     }
 }

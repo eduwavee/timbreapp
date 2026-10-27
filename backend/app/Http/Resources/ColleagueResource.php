@@ -23,6 +23,8 @@ class ColleagueResource extends JsonResource
             'notes' => $this->notes,
             'active' => $this->active,
             'open_inquiries_count' => $this->whenCounted('inquiries'),
+            'created_at' => $this->created_at?->toIso8601String(),
+            'updated_at' => $this->updated_at?->toIso8601String(),
         ];
     }
 }

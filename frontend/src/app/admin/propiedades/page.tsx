@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { Plus, Search } from "lucide-react";
+import { Plus } from "lucide-react";
 import { PropertyForm } from "@/components/forms/property-form";
 import { useToast } from "@/components/toast";
-import { Button, cx, Empty, ErrorState, Input, Money, PageHeader, Panel, Select, SkeletonRows, StatusTag, Table, Td, Th } from "@/components/ui";
+import { Button, cx, Empty, ErrorState, LastChange, Money, PageHeader, Panel, SearchBox, Select, SkeletonRows, StatusTag, Table, Td, Th } from "@/components/ui";
 import { ars } from "@/lib/format";
+import { matches, recentFirst } from "@/lib/search";
 import type { Property } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 
@@ -21,20 +22,16 @@ export default function PropertiesPage() {
   const [type, setType] = useState("");
   const [status, setStatus] = useState("");
   const [q, setQ] = useState("");
+  const [order, setOrder] = useState<"recientes" | "codigo">("recientes");
   const [creating, setCreating] = useState(false);
   const list = useApi<{ data: Property[] }>("properties");
   const toast = useToast();
 
   const all = useMemo(() => list.data?.data ?? [], [list.data]);
   const rows = useMemo(() => {
-    const term = q.trim().toLowerCase();
-    return all.filter(
-      (p) =>
-        (!type || p.type.value === type) &&
-        (!status || p.status.value === status) &&
-        (!term || `${p.code} ${p.address} ${p.city} ${p.active_contract?.tenant?.full_name ?? ""}`.toLowerCase().includes(term)),
-    );
-  }, [all, type, status, q]);
+    const shown = all.filter((p) => (!type || p.type.value === type) && (!status || p.status.value === status) && matches(q, p.code, p.address, p.city, p.active_contract?.tenant?.full_name));
+    return order === "recientes" ? recentFirst(shown) : shown;
+  }, [all, type, status, q, order]);
 
   const count = (t: string) => (t ? all.filter((p) => p.type.value === t).length : all.length);
 
@@ -70,10 +67,11 @@ export default function PropertiesPage() {
           <option value="disponible">Disponibles</option>
           <option value="mantenimiento">En mantenimiento</option>
         </Select>
-        <div className="relative ml-auto w-full sm:w-64">
-          <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-ink-3" aria-hidden />
-          <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Código, calle o inquilino" aria-label="Buscar" className="h-8 pl-9 text-sm" />
-        </div>
+        <Select value={order} onChange={(e) => setOrder(e.target.value as typeof order)} aria-label="Orden" className="h-8 w-auto text-sm">
+          <option value="recientes">Últimos cambios primero</option>
+          <option value="codigo">Por código</option>
+        </Select>
+        <SearchBox value={q} onChange={setQ} placeholder="Código, calle o inquilino" className="ml-auto" />
       </div>
 
       <Panel>
@@ -100,6 +98,7 @@ export default function PropertiesPage() {
                 <Th align="right">Deuda vencida</Th>
                 <Th>Estado</Th>
                 <Th align="center">Reclamos</Th>
+                <Th>Último cambio</Th>
               </tr>
             </thead>
             <tbody>
@@ -133,6 +132,9 @@ export default function PropertiesPage() {
                     <StatusTag status={p.status} />
                   </Td>
                   <Td align="center">{p.open_tickets_count ? <span className="num inline-flex h-6 min-w-6 items-center justify-center rounded-sm bg-marker px-1.5 text-[12px] font-bold">{p.open_tickets_count}</span> : <span className="text-ink-3">—</span>}</Td>
+                  <Td>
+                    <LastChange item={p} />
+                  </Td>
                 </tr>
               ))}
             </tbody>

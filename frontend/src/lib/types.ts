@@ -17,6 +17,8 @@ export type Property = {
   cover_url?: string | null;
   open_tickets_count?: number;
   balance?: number;
+  created_at: string;
+  updated_at: string;
 };
 
 export type Tenant = {
@@ -34,6 +36,8 @@ export type Tenant = {
   has_portal_access?: boolean;
   active_contract?: Contract | null;
   balance?: number;
+  created_at: string;
+  updated_at: string;
 };
 
 export type Contract = {
@@ -55,6 +59,8 @@ export type Contract = {
   notes: string | null;
   installments?: Installment[];
   documents?: ContractDocument[];
+  created_at: string;
+  updated_at: string;
 };
 
 export type InstallmentStatus = "pendiente" | "parcial" | "vencida" | "pagada";
@@ -96,6 +102,8 @@ export type Provider = {
   notes: string | null;
   active: boolean;
   open_tickets_count?: number;
+  created_at: string;
+  updated_at: string;
 };
 
 export type TicketStatus = "abierto" | "derivado" | "en_curso" | "resuelto";
@@ -268,6 +276,8 @@ export type Colleague = {
   notes: string | null;
   active: boolean;
   open_inquiries_count?: number;
+  created_at: string;
+  updated_at: string;
 };
 
 export type InquiryStatus = "nueva" | "atendiendo" | "derivada" | "cerrada";

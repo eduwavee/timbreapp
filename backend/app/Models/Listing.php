@@ -6,6 +6,7 @@ use App\Enums\ListingOperation;
 use App\Enums\PropertyType;
 use Database\Factories\ListingFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Touches;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,7 @@ use Illuminate\Support\Str;
  * Publicación de una propiedad en La Choza: venta (USD), alquiler (ARS) o las dos.
  */
 #[Fillable(['property_id', 'slug', 'headline', 'description', 'neighborhood', 'for_sale', 'sale_price', 'for_rent', 'rent_price', 'expenses', 'bathrooms', 'garage', 'age_years', 'amenities', 'published_at', 'reserved_at'])]
+#[Touches('property')]
 class Listing extends Model
 {
     /** @use HasFactory<ListingFactory> */

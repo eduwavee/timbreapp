@@ -6,8 +6,9 @@ import { useMemo, useState } from "react";
 import { Plus } from "lucide-react";
 import { ContractForm } from "@/components/forms/contract-form";
 import { useToast } from "@/components/toast";
-import { Button, cx, Empty, ErrorState, PageHeader, Panel, SkeletonRows, Table, Td, Th } from "@/components/ui";
+import { Button, cx, Empty, ErrorState, LastChange, PageHeader, Panel, SearchBox, Select, SkeletonRows, Table, Td, Th } from "@/components/ui";
 import { ars, fecha } from "@/lib/format";
+import { matches, recentFirst } from "@/lib/search";
 import type { Contract } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 
@@ -23,20 +24,22 @@ export function ContractsList() {
   const router = useRouter();
   const nuevo = params.get("nuevo");
   const [tab, setTab] = useState("vigente");
+  const [q, setQ] = useState("");
+  const [order, setOrder] = useState<"recientes" | "vencimiento">("recientes");
   const [creating, setCreating] = useState(nuevo !== null);
   const list = useApi<{ data: Contract[] }>("contracts");
   const toast = useToast();
 
   const all = useMemo(() => list.data?.data ?? [], [list.data]);
-  const rows = useMemo(
-    () =>
-      all.filter((c) => {
-        if (tab === "vencer") return c.status.value === "vigente" && c.days_to_end <= 90;
-        if (tab === "finalizado") return c.status.value !== "vigente";
-        return !tab || c.status.value === tab;
-      }),
-    [all, tab],
-  );
+  const rows = useMemo(() => {
+    const shown = all.filter((c) => {
+      if (!matches(q, c.property?.code, c.property?.address, c.tenant?.full_name, c.tenant?.document)) return false;
+      if (tab === "vencer") return c.status.value === "vigente" && c.days_to_end <= 90;
+      if (tab === "finalizado") return c.status.value !== "vigente";
+      return !tab || c.status.value === tab;
+    });
+    return order === "recientes" ? recentFirst(shown) : shown;
+  }, [all, tab, q, order]);
 
   return (
     <>
@@ -49,12 +52,19 @@ export function ContractsList() {
           </Button>
         }
       />
-      <div className="mb-3 flex flex-wrap gap-1" role="tablist" aria-label="Filtrar contratos">
-        {tabs.map((t) => (
-          <button key={t.key} role="tab" aria-selected={tab === t.key} onClick={() => setTab(t.key)} className={cx("h-8 rounded-sm border px-3 text-[13px] font-semibold", tab === t.key ? "border-ink bg-ink text-white" : "border-rule-strong bg-sheet text-ink-2 hover:border-ink")}>
-            {t.label}
-          </button>
-        ))}
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap gap-1" role="tablist" aria-label="Filtrar contratos">
+          {tabs.map((t) => (
+            <button key={t.key} role="tab" aria-selected={tab === t.key} onClick={() => setTab(t.key)} className={cx("h-8 rounded-sm border px-3 text-[13px] font-semibold", tab === t.key ? "border-ink bg-ink text-white" : "border-rule-strong bg-sheet text-ink-2 hover:border-ink")}>
+              {t.label}
+            </button>
+          ))}
+        </div>
+        <Select value={order} onChange={(e) => setOrder(e.target.value as typeof order)} aria-label="Orden" className="ml-auto h-8 w-auto text-sm">
+          <option value="recientes">Últimos cambios primero</option>
+          <option value="vencimiento">Por vencimiento</option>
+        </Select>
+        <SearchBox value={q} onChange={setQ} placeholder="Unidad, calle, inquilino o DNI" className="sm:w-72" />
       </div>
       <Panel>
         {list.error && (
@@ -63,7 +73,7 @@ export function ContractsList() {
           </div>
         )}
         {list.loading && !list.data && <SkeletonRows rows={8} cols={6} />}
-        {list.data && rows.length === 0 && <Empty title="No hay contratos en esta vista" />}
+        {list.data && rows.length === 0 && (q ? <Empty title="Ningún contrato coincide con la búsqueda">{tab ? "Probá en «Todos», puede estar en otra pestaña." : "Probá con el código de la unidad o el DNI."}</Empty> : <Empty title="No hay contratos en esta vista" />)}
         {rows.length > 0 && (
           <Table>
             <thead>
@@ -74,6 +84,7 @@ export function ContractsList() {
                 <Th>Ajuste</Th>
                 <Th>Vigencia</Th>
                 <Th align="right">Quedan</Th>
+                <Th>Último cambio</Th>
               </tr>
             </thead>
             <tbody>
@@ -97,6 +108,9 @@ export function ContractsList() {
                   </Td>
                   <Td align="right" className={cx("num whitespace-nowrap", c.status.value === "vigente" && c.days_to_end < 60 && "font-semibold text-debt")}>
                     {c.status.value !== "vigente" ? c.status.label : c.days_to_end < 0 ? "vencido" : `${c.days_to_end} días`}
+                  </Td>
+                  <Td>
+                    <LastChange item={c} />
                   </Td>
                 </tr>
               ))}

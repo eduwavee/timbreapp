@@ -49,6 +49,17 @@ export function hace(date: string | null | undefined): string {
   return fecha(date);
 }
 
+/** true si pasó hace menos de 24 h. */
+export function esReciente(date: string): boolean {
+  return Date.now() - parse(date).getTime() < 86_400_000;
+}
+
+/** "Agregado hace 5 min" o "Editado ayer". */
+export function ultimoCambio(item: { created_at: string; updated_at: string }): string {
+  const edited = parse(item.updated_at).getTime() - parse(item.created_at).getTime() > 60_000;
+  return `${edited ? "Editado" : "Agregado"} ${hace(item.updated_at)}`;
+}
+
 export function currentPeriod(): string {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;

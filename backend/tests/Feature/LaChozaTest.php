@@ -11,7 +11,9 @@ use App\Models\Property;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -139,5 +141,27 @@ class LaChozaTest extends TestCase
         Sanctum::actingAs(User::factory()->create(['role' => UserRole::Tenant]));
 
         $this->getJson('/api/inquiries')->assertForbidden();
+    }
+
+    public function test_editing_the_listing_or_photos_counts_as_a_change_to_the_property(): void
+    {
+        $this->actingAsAdmin();
+        Storage::fake('public');
+        $property = Property::factory()->create(['code' => 'AZC-8']);
+
+        $this->getJson('/api/properties')
+            ->assertOk()
+            ->assertJsonPath('data.0.created_at', '2026-10-23T10:00:00-03:00')
+            ->assertJsonPath('data.0.updated_at', '2026-10-23T10:00:00-03:00');
+
+        Carbon::setTestNow('2026-10-23 11:30:00');
+        $this->putJson("/api/properties/{$property->id}/listing", [
+            'headline' => 'Dos ambientes con balcón', 'for_sale' => false, 'for_rent' => true, 'rent_price' => 720000, 'published' => true,
+        ])->assertOk();
+        $this->assertSame('2026-10-23 11:30:00', $property->fresh()->updated_at->toDateTimeString());
+
+        Carbon::setTestNow('2026-10-23 12:15:00');
+        $this->postJson("/api/properties/{$property->id}/photos", ['photos' => [UploadedFile::fake()->image('living.jpg')]])->assertCreated();
+        $this->getJson('/api/properties')->assertJsonPath('data.0.updated_at', '2026-10-23T12:15:00-03:00');
     }
 }

@@ -6,8 +6,9 @@ import { useMemo, useState } from "react";
 import { Plus } from "lucide-react";
 import { TicketForm } from "@/components/forms/ticket-form";
 import { useToast } from "@/components/toast";
-import { Button, cx, ErrorState, PageHeader, PriorityMark, Select } from "@/components/ui";
+import { Button, cx, ErrorState, PageHeader, PriorityMark, SearchBox, Select } from "@/components/ui";
 import { hace } from "@/lib/format";
+import { matches } from "@/lib/search";
 import { TRADES, type Ticket, type TicketStatus } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 
@@ -30,11 +31,15 @@ export function TicketsBoard() {
   const router = useRouter();
   const nuevo = params.get("nuevo");
   const [category, setCategory] = useState("");
+  const [q, setQ] = useState("");
   const [creating, setCreating] = useState(nuevo !== null);
   const list = useApi<{ data: Ticket[] }>("tickets");
   const toast = useToast();
 
-  const tickets = useMemo(() => (list.data?.data ?? []).filter((t) => !category || t.category.value === category), [list.data, category]);
+  const tickets = useMemo(
+    () => (list.data?.data ?? []).filter((t) => (!category || t.category.value === category) && matches(q, t.title, `#${t.id}`, t.property?.code, t.property?.address, t.tenant?.full_name, t.provider?.name, t.category.label)),
+    [list.data, category, q],
+  );
 
   return (
     <>
@@ -42,25 +47,26 @@ export function TicketsBoard() {
         title="Reclamos"
         subtitle="Lo que tocan timbre los inquilinos. Derivá cada falla al proveedor con un clic."
         actions={
-          <>
-            <Select value={category} onChange={(e) => setCategory(e.target.value)} aria-label="Rubro" className="h-10 w-auto">
-              <option value="">Todos los rubros</option>
-              {TRADES.map((t) => (
-                <option key={t.value} value={t.value}>
-                  {t.label}
-                </option>
-              ))}
-            </Select>
-            <Button variant="primary" onClick={() => setCreating(true)}>
-              <Plus className="size-4" /> Nuevo reclamo
-            </Button>
-          </>
+          <Button variant="primary" onClick={() => setCreating(true)}>
+            <Plus className="size-4" /> Nuevo reclamo
+          </Button>
         }
       />
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <Select value={category} onChange={(e) => setCategory(e.target.value)} aria-label="Rubro" className="h-8 w-auto text-sm">
+          <option value="">Todos los rubros</option>
+          {TRADES.map((t) => (
+            <option key={t.value} value={t.value}>
+              {t.label}
+            </option>
+          ))}
+        </Select>
+        <SearchBox value={q} onChange={setQ} placeholder="Falla, unidad, inquilino o proveedor" className="ml-auto sm:w-72" />
+      </div>
       {list.error && <ErrorState message={list.error.message} onRetry={list.reload} />}
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
         {columns.map((col) => {
-          const items = tickets.filter((t) => t.status.value === col.key).slice(0, col.key === "resuelto" ? 8 : undefined);
+          const items = tickets.filter((t) => t.status.value === col.key).slice(0, col.key === "resuelto" && !q ? 8 : undefined);
           return (
             <section key={col.key} aria-label={col.label} className="flex min-w-0 flex-col">
               <div className={cx("flex items-center justify-between rounded-t-sm px-3 py-2", head[col.key])}>

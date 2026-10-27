@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { PaymentSheet } from "@/components/payment-sheet";
 import { useToast } from "@/components/toast";
-import { Button, cx, Empty, ErrorState, Input, Money, Panel, PriorityMark, Section, SkeletonRows, StagePill, Table, Td, TextLink, Th, TicketPill, WhatsAppLink } from "@/components/ui";
+import { Button, cx, Empty, ErrorState, Money, Panel, PriorityMark, SearchBox, Section, SkeletonRows, StagePill, Table, Td, TextLink, Th, TicketPill, WhatsAppLink } from "@/components/ui";
 import { api } from "@/lib/api";
 import { ars, currentPeriod, fecha, fechaCorta, hace, periodo, shiftPeriod, today } from "@/lib/format";
+import { matches } from "@/lib/search";
 import type { ActivityEvent, Contract, ContractDocument, Inquiry, Ledger, LedgerRow, Proof, Ticket } from "@/lib/types";
 import { OperationTag } from "@/components/inquiry-sheet";
 import { ActivityFeed } from "@/components/activity-feed";
@@ -52,13 +53,11 @@ export default function LedgerPage() {
 
   const rows = useMemo(() => {
     const all = ledger.data?.rows ?? [];
-    const term = q.trim().toLowerCase();
     return all.filter((r) => {
       if (filter === "deuda" && r.days_late === 0) return false;
       if (filter === "pendientes" && (r.stage?.value === "pagada" || r.days_late > 0)) return false;
       if (filter === "aldia" && (r.days_late > 0 || r.stage?.value !== "pagada")) return false;
-      if (!term) return true;
-      return `${r.property.code} ${r.property.address} ${r.tenant.name}`.toLowerCase().includes(term);
+      return matches(q, r.property.code, r.property.address, r.tenant.name);
     });
   }, [ledger.data, filter, q]);
 
@@ -289,10 +288,7 @@ export default function LedgerPage() {
                 </button>
               ))}
             </div>
-            <div className="no-print relative ml-auto w-full sm:w-64">
-              <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-ink-3" aria-hidden />
-              <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar unidad o inquilino" aria-label="Buscar unidad o inquilino" className="h-8 pl-9 text-sm" />
-            </div>
+            <SearchBox value={q} onChange={setQ} placeholder="Buscar unidad o inquilino" className="no-print ml-auto" />
           </div>
 
           <Panel>

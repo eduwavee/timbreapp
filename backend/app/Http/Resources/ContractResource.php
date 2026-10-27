@@ -34,6 +34,8 @@ class ContractResource extends JsonResource
             'notes' => $this->notes,
             'installments' => InstallmentResource::collection($this->whenLoaded('installments')),
             'documents' => $this->whenLoaded('documents', fn () => $this->documents->map(fn ($d) => ContractDocumentController::present($d))),
+            'created_at' => $this->created_at?->toIso8601String(),
+            'updated_at' => $this->updated_at?->toIso8601String(),
         ];
     }
 }

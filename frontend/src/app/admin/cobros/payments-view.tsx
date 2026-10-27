@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Link2 from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -20,6 +20,7 @@ import {
   ErrorState,
   PageHeader,
   Panel,
+  SearchBox,
   SkeletonRows,
   Table,
   Td,
@@ -34,6 +35,7 @@ import {
   periodo,
   shiftPeriod,
 } from "@/lib/format";
+import { matches } from "@/lib/search";
 import type { Payment, Proof } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 
@@ -44,12 +46,22 @@ export function PaymentsView() {
   const [month, setMonth] = useState(currentPeriod());
   const proofs = useApi<{ data: Proof[] }>("proofs");
   const [reviewing, setReviewing] = useState<Proof | null>(null);
+  const [q, setQ] = useState("");
   const pendingCount =
     proofs.data?.data.filter((p) => p.status.value === "pendiente").length ?? 0;
   const list = useApi<{ data: Payment[] }>(`payments?month=${month}`);
   const toast = useToast();
-  const payments = list.data?.data ?? [];
+  const payments = useMemo(() => list.data?.data ?? [], [list.data]);
   const total = payments.reduce((a, p) => a + p.total, 0);
+  const shownPayments = useMemo(
+    () =>
+      payments.filter((p) => {
+        const c = p.installment?.contract;
+        return matches(q, p.receipt_number, String(p.receipt_number).padStart(5, "0"), c?.property?.code, c?.property?.address, c?.tenant?.full_name, p.installment && periodo(p.installment.period), p.method.label);
+      }),
+    [payments, q],
+  );
+  const shownProofs = useMemo(() => (proofs.data?.data ?? []).filter((p) => matches(q, p.tenant?.name, p.installment.property_code, periodo(p.installment.period), p.status.label)), [proofs.data, q]);
   const byMethod = payments.reduce<Record<string, number>>(
     (acc, p) => ({
       ...acc,
@@ -128,7 +140,8 @@ export function PaymentsView() {
           </div>
         }
       />
-      <div className="mb-4 flex gap-1" role="tablist" aria-label="Cobros">
+      <div className="mb-4 flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap gap-1" role="tablist" aria-label="Cobros">
         {[
           { key: "pagos", label: "Pagos registrados" },
           { key: "comprobantes", label: "Comprobantes de inquilinos" },
@@ -165,6 +178,8 @@ export function PaymentsView() {
           </button>
         ))}
       </div>
+        <SearchBox value={q} onChange={setQ} placeholder={tab === "pagos" ? "Recibo, unidad o inquilino" : "Inquilino o unidad"} className="ml-auto sm:w-72" />
+      </div>
 
       {tab === "comprobantes" && (
         <Panel>
@@ -183,7 +198,8 @@ export function PaymentsView() {
               transferencia. Te aparece acá para confirmarla con un clic.
             </Empty>
           )}
-          {!!proofs.data?.data.length && (
+          {!!proofs.data?.data.length && shownProofs.length === 0 && <Empty title="Ningún comprobante coincide con la búsqueda" />}
+          {shownProofs.length > 0 && (
             <Table>
               <thead>
                 <tr>
@@ -199,7 +215,7 @@ export function PaymentsView() {
                 </tr>
               </thead>
               <tbody>
-                {proofs.data.data.map((p) => (
+                {shownProofs.map((p) => (
                   <tr key={p.id} className="hover:bg-paper/70">
                     <Td className="font-semibold whitespace-nowrap">
                       {p.tenant?.name}
@@ -281,7 +297,8 @@ export function PaymentsView() {
               Los pagos se registran desde la Liquidación con “Cobrar”.
             </Empty>
           )}
-          {payments.length > 0 && (
+          {payments.length > 0 && shownPayments.length === 0 && <Empty title="Ningún pago coincide con la búsqueda">Probá con el número de recibo, el código de la unidad o el inquilino.</Empty>}
+          {shownPayments.length > 0 && (
             <Table>
               <thead>
                 <tr>
@@ -299,7 +316,7 @@ export function PaymentsView() {
                 </tr>
               </thead>
               <tbody>
-                {payments.map((p) => {
+                {shownPayments.map((p) => {
                   const c = p.installment?.contract;
                   return (
                     <tr key={p.id} className="hover:bg-paper/70">
