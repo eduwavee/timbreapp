@@ -8,7 +8,7 @@ import { ListingCard } from "@/components/listing-card";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getListing, getListings, getMeta } from "@/lib/api";
-import { facts, isOp, operationFor, price } from "@/lib/format";
+import { facts, isOp, number, operationFor, price } from "@/lib/format";
 import type { Op } from "@/lib/types";
 
 export async function generateMetadata({ params }: PageProps<"/propiedades/[slug]">): Promise<Metadata> {
@@ -40,49 +40,53 @@ export default async function ListingPage({ params, searchParams }: PageProps<"/
   const seen = new Set(related.data.map((l) => l.slug));
   const more = [...related.data, ...others.data.filter((l) => !seen.has(l.slug))].slice(0, 3);
   const paragraphs = (listing.description ?? "").split(/\n+/).filter(Boolean);
+  const rows: [string, string][] = [
+    ["Barrio", `${listing.place}${listing.neighborhood && listing.city !== listing.neighborhood ? `, ${listing.city}` : ""}`],
+    ["Ubicación", listing.address_hint],
+    ["Tipo", listing.type.label],
+    ["Superficie", listing.surface_m2 ? `${number(listing.surface_m2)} m²` : "—"],
+    ["Ambientes", listing.rooms ? (listing.rooms === 1 ? "Monoambiente" : String(listing.rooms)) : "—"],
+    ["Baños", listing.bathrooms ? String(listing.bathrooms) : "—"],
+    ["Cochera", listing.garage ? "Sí" : "No"],
+    ["Antigüedad", listing.age_years === null ? "—" : listing.age_years === 0 ? "A estrenar" : `${listing.age_years} años`],
+    ["Código", listing.code],
+  ];
 
   return (
     <>
-      <SiteHeader ownerPhone={meta.owner_phone} />
-      <main data-op={op} className="pb-24 lg:pb-0">
-        <div className="mx-auto max-w-[1440px] px-3 pt-5 sm:px-6">
-          <Link href={`/propiedades?op=${op}`} className="rotulo inline-flex items-center gap-2 text-[15px] hover:text-op">
-            <Arrow className="size-4" direction="left" /> Volver {op === "venta" ? "a las ventas" : "a los alquileres"}
+      <SiteHeader ownerPhone={meta.owner_phone} current={op} />
+      <main className="flex-1 pb-24 lg:pb-0">
+        <div className="mx-auto max-w-[1440px] px-4 pt-8 sm:px-8 sm:pt-12">
+          <Link href={`/propiedades?op=${op}`} className="dato link-dato inline-flex items-center gap-2">
+            <Arrow className="size-3.5" direction="left" /> Volver {op === "venta" ? "a la venta" : "al alquiler"}
           </Link>
+          <h1 className="titulo mt-10 max-w-[22ch] text-[clamp(36px,5.2vw,84px)] text-balance">{listing.headline}</h1>
+          <p className="dato mt-6 flex flex-wrap gap-x-2 gap-y-1 text-tinta-2">
+            {[listing.place, listing.type.label, ...facts(listing)].map((f, i, all) => (
+              <span key={f} className="whitespace-nowrap">
+                {f}
+                {i < all.length - 1 && <span aria-hidden> ·</span>}
+              </span>
+            ))}
+          </p>
         </div>
 
-        <div className="mx-auto grid max-w-[1440px] gap-8 px-3 pt-4 pb-16 sm:px-6 lg:grid-cols-[minmax(0,1fr)_420px] lg:grid-rows-[auto_1fr]">
-          <div className="flex min-w-0 flex-col gap-8 lg:col-start-1">
-            <Gallery photos={listing.photos} title={listing.headline} reserved={listing.reserved} />
+        <div className="mx-auto max-w-[1440px] px-4 pt-10 sm:px-8 sm:pt-14">
+          <Gallery photos={listing.photos} title={listing.headline} reserved={listing.reserved} />
+        </div>
 
-            <header className="flex flex-col gap-3 border-b-2 border-tinta pb-6">
-              <h1 className="text-[clamp(30px,3.6vw,46px)] leading-[1.08] font-extrabold tracking-[-0.02em] text-balance">{listing.headline}</h1>
-              <p className="text-[18px] text-tinta-2">
-                <span className="font-semibold text-op">{listing.type.label}</span> · {listing.address_hint}, {listing.place}
-                {listing.neighborhood && listing.city !== listing.neighborhood ? `, ${listing.city}` : ""}
-              </p>
-              <ul className="flex flex-wrap gap-2 pt-1">
-                {facts(listing).map((f) => (
-                  <li key={f} className="cartel border-2 border-tinta bg-chapa px-3 pt-1.5 pb-1 text-[26px]">
-                    {f}
-                  </li>
-                ))}
-              </ul>
-            </header>
-          </div>
-
-          <aside className="lg:sticky lg:top-6 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start" aria-label="Precio y consulta">
+        <div className="mx-auto grid max-w-[1440px] gap-14 px-4 pt-14 pb-24 sm:px-8 sm:pt-20 sm:pb-32 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-24">
+          <aside className="lg:sticky lg:top-8 lg:col-start-2 lg:row-start-1 lg:self-start" aria-label="Precio y consulta">
             <InquiryPanel listing={listing} initialOp={op} ownerPhone={meta.owner_phone} />
           </aside>
 
-          <div className="flex min-w-0 flex-col gap-8 lg:col-start-1">
-
+          <div className="flex min-w-0 flex-col gap-16 lg:col-start-1 lg:row-start-1">
             {paragraphs.length > 0 && (
-              <section aria-labelledby="desc-titulo" className="max-w-[68ch]">
-                <h2 id="desc-titulo" className="cartel mb-3 text-[44px]">
+              <section aria-labelledby="desc-titulo">
+                <h2 id="desc-titulo" className="dato mb-6 border-t border-tinta pt-6 text-tinta-2">
                   Cómo es
                 </h2>
-                <div className="flex flex-col gap-3 text-[18px] leading-relaxed text-tinta">
+                <div className="flex max-w-[34ch] flex-col gap-5 text-[clamp(22px,2vw,28px)] leading-[1.3] tracking-[-0.015em]">
                   {paragraphs.map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
@@ -90,15 +94,28 @@ export default async function ListingPage({ params, searchParams }: PageProps<"/
               </section>
             )}
 
+            <section aria-labelledby="ficha-titulo">
+              <h2 id="ficha-titulo" className="dato mb-2 border-t border-tinta pt-6 text-tinta-2">
+                Ficha
+              </h2>
+              <dl className="grid sm:grid-cols-2 sm:gap-x-10">
+                {rows.map(([k, v]) => (
+                  <div key={k} className="flex items-baseline justify-between gap-4 border-b border-filete py-3.5">
+                    <dt className="dato text-tinta-3">{k}</dt>
+                    <dd className="text-right text-[16px] font-semibold">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+
             {listing.amenities.length > 0 && (
               <section aria-labelledby="carac-titulo">
-                <h2 id="carac-titulo" className="cartel mb-3 text-[44px]">
+                <h2 id="carac-titulo" className="dato mb-2 border-t border-tinta pt-6 text-tinta-2">
                   Qué tiene
                 </h2>
-                <ul className="flex flex-wrap gap-2">
+                <ul className="grid sm:grid-cols-2 sm:gap-x-10">
                   {listing.amenities.map((a) => (
-                    <li key={a.value} className="flex items-center gap-2 border-2 border-tinta bg-chapa px-3 py-2 text-[16px] font-semibold">
-                      <span className="size-2.5 bg-op" aria-hidden />
+                    <li key={a.value} className="border-b border-filete py-3.5 text-[16px] font-semibold">
                       {a.label}
                     </li>
                   ))}
@@ -109,12 +126,17 @@ export default async function ListingPage({ params, searchParams }: PageProps<"/
         </div>
 
         {more.length > 0 && (
-          <section aria-labelledby="mas-titulo" className="border-t-2 border-tinta bg-chapa-2">
-            <div className="mx-auto max-w-[1440px] px-3 pt-10 pb-20 sm:px-6">
-              <h2 id="mas-titulo" className="cartel mb-6 text-[48px] sm:text-[64px]">
-                {related.data.length >= 2 ? `Más en ${listing.place}` : "Otras que te pueden gustar"}
-              </h2>
-              <ul className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          <section aria-labelledby="mas-titulo" className="border-t border-tinta">
+            <div className="mx-auto max-w-[1440px] px-4 pt-16 pb-24 sm:px-8 sm:pt-20 sm:pb-32">
+              <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
+                <h2 id="mas-titulo" className="titulo text-[clamp(32px,4vw,56px)]">
+                  {related.data.length >= 2 ? `Más en ${listing.place}` : "Otras que te pueden gustar"}
+                </h2>
+                <Link href={`/propiedades?op=${op}`} className="dato link-dato inline-flex items-center gap-2 pb-1.5">
+                  Ver todas <Arrow className="size-4" />
+                </Link>
+              </div>
+              <ul className="grid gap-x-6 gap-y-12 sm:grid-cols-2 xl:grid-cols-3">
                 {more.map((l) => (
                   <li key={l.slug}>
                     <ListingCard listing={l} op={operationFor(l, op).value} />

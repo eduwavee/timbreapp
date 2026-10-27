@@ -30,6 +30,9 @@ export function facts(l: ListingSummary): string[] {
   return out;
 }
 
+
+
+
 export const VERB: Record<Op, string> = { venta: "Vende", alquiler: "Alquila" };
 export const OP_LABEL: Record<Op, string> = { venta: "Venta", alquiler: "Alquiler" };
 

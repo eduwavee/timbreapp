@@ -1,0 +1,587 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-23T00:00:00Z",
+  "title": "Design System: La Choza",
+  "extensions": {
+    "colorMeta": {
+      "hueso": {
+        "role": "neutral",
+        "displayName": "Hueso",
+        "canonical": "#f1f0ed",
+        "oklch": "oklch(95.5% 0.004 91.4)",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#252523",
+          "#434240",
+          "#62615f",
+          "#838280",
+          "#a6a5a2",
+          "#cac9c7",
+          "#efeeec"
+        ]
+      },
+      "hueso-2": {
+        "role": "neutral",
+        "displayName": "Hueso Hondo",
+        "canonical": "#e7e5e0",
+        "oklch": "oklch(92.2% 0.007 88.6)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#262522",
+          "#43423f",
+          "#63615d",
+          "#84827e",
+          "#a6a5a1",
+          "#cac9c5",
+          "#f0eeeb"
+        ]
+      },
+      "filete": {
+        "role": "neutral",
+        "displayName": "Filete",
+        "canonical": "#d6d4ce",
+        "oklch": "oklch(87.0% 0.008 91.5)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#262522",
+          "#43423e",
+          "#63615c",
+          "#84827d",
+          "#a7a5a0",
+          "#cbc9c4",
+          "#f0eeea"
+        ]
+      },
+      "tinta": {
+        "role": "primary",
+        "displayName": "Tinta",
+        "canonical": "#111110",
+        "oklch": "oklch(17.7% 0.002 106.6)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252524",
+          "#424241",
+          "#616160",
+          "#828281",
+          "#a5a5a4",
+          "#c9c9c8",
+          "#eeeeed"
+        ]
+      },
+      "tinta-2": {
+        "role": "neutral",
+        "displayName": "Tinta Segunda",
+        "canonical": "#55544f",
+        "oklch": "oklch(44.5% 0.008 97.5)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#262522",
+          "#43423e",
+          "#62615d",
+          "#83827d",
+          "#a6a5a0",
+          "#cac9c5",
+          "#efeeea"
+        ]
+      },
+      "tinta-3": {
+        "role": "neutral",
+        "displayName": "Tinta Tercera",
+        "canonical": "#6e6d67",
+        "oklch": "oklch(53.4% 0.009 99.0)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#262522",
+          "#43423e",
+          "#62615c",
+          "#83827c",
+          "#a6a59f",
+          "#cac9c4",
+          "#efefea"
+        ]
+      },
+      "gris-pie": {
+        "role": "neutral",
+        "displayName": "Gris Pie",
+        "canonical": "#a3a29c",
+        "oklch": "oklch(71.1% 0.009 98.9)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#262522",
+          "#43423e",
+          "#62615c",
+          "#83827d",
+          "#a6a5a0",
+          "#cac9c4",
+          "#efefea"
+        ]
+      },
+      "error": {
+        "role": "neutral",
+        "displayName": "Rojo Error",
+        "canonical": "#b42318",
+        "oklch": "oklch(50.0% 0.182 29.5)",
+        "tonalRamp": [
+          "#2b0000",
+          "#530000",
+          "#7e0d06",
+          "#ab2d21",
+          "#d94b3b",
+          "#fa7867",
+          "#ffa391",
+          "#ffcebd"
+        ]
+      },
+      "whatsapp": {
+        "role": "tertiary",
+        "displayName": "Verde WhatsApp",
+        "canonical": "#177f45",
+        "oklch": "oklch(52.6% 0.128 152.8)",
+        "tonalRamp": [
+          "#001300",
+          "#00300d",
+          "#005126",
+          "#1b7340",
+          "#39985c",
+          "#69ba82",
+          "#96ddaa",
+          "#c2ffd3"
+        ]
+      },
+      "whatsapp-hondo": {
+        "role": "tertiary",
+        "displayName": "Verde WhatsApp Hondo",
+        "canonical": "#126536",
+        "oklch": "oklch(44.7% 0.108 152.8)",
+        "tonalRamp": [
+          "#001201",
+          "#002f12",
+          "#124f2b",
+          "#2e7146",
+          "#4a9563",
+          "#75b788",
+          "#9fdaaf",
+          "#cafed7"
+        ]
+      },
+      "franja-ultramar": {
+        "role": "secondary",
+        "displayName": "Franja Ultramar",
+        "canonical": "#3f46c8",
+        "oklch": "oklch(47.4% 0.198 273.6)",
+        "tonalRamp": [
+          "#07003b",
+          "#161266",
+          "#2c3194",
+          "#4550c4",
+          "#6171f5",
+          "#8499ff",
+          "#a9c0ff",
+          "#d1e8ff"
+        ]
+      },
+      "franja-ultramar-letra": {
+        "role": "secondary",
+        "displayName": "Letra sobre Ultramar",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "franja-rosa": {
+        "role": "secondary",
+        "displayName": "Franja Rosa Pálido",
+        "canonical": "#f0d8d2",
+        "oklch": "oklch(90.0% 0.028 34.3)",
+        "tonalRamp": [
+          "#110907",
+          "#2e221f",
+          "#4d3e3a",
+          "#6f5c58",
+          "#927d77",
+          "#b4a09b",
+          "#d7c4c0",
+          "#fbeae6"
+        ]
+      },
+      "franja-rosa-letra": {
+        "role": "secondary",
+        "displayName": "Letra sobre Rosa",
+        "canonical": "#8a2b1d",
+        "oklch": "oklch(43.2% 0.132 31.2)",
+        "tonalRamp": [
+          "#230000",
+          "#480b04",
+          "#6f271c",
+          "#994335",
+          "#c46150",
+          "#e58877",
+          "#ffb0a0",
+          "#ffd9ca"
+        ]
+      },
+      "franja-botella": {
+        "role": "secondary",
+        "displayName": "Franja Verde Botella",
+        "canonical": "#1f3a31",
+        "oklch": "oklch(32.4% 0.037 170.6)",
+        "tonalRamp": [
+          "#030e0a",
+          "#182923",
+          "#324740",
+          "#4e685e",
+          "#6d8a7f",
+          "#91aca2",
+          "#b7d0c6",
+          "#dff4ec"
+        ]
+      },
+      "franja-botella-letra": {
+        "role": "secondary",
+        "displayName": "Letra sobre Botella",
+        "canonical": "#a6e3bd",
+        "oklch": "oklch(86.4% 0.081 156.9)",
+        "tonalRamp": [
+          "#001104",
+          "#062d19",
+          "#204c34",
+          "#3b6e50",
+          "#57916f",
+          "#7fb393",
+          "#a7d6b9",
+          "#d1fae0"
+        ]
+      },
+      "franja-ocre": {
+        "role": "secondary",
+        "displayName": "Franja Ocre",
+        "canonical": "#d9a441",
+        "oklch": "oklch(75.1% 0.130 79.8)",
+        "tonalRamp": [
+          "#1b0400",
+          "#3b1d00",
+          "#5e3900",
+          "#835800",
+          "#aa7800",
+          "#cb9c48",
+          "#ecc27a",
+          "#ffe9aa"
+        ]
+      },
+      "franja-ocre-letra": {
+        "role": "secondary",
+        "displayName": "Letra sobre Ocre",
+        "canonical": "#2b1d05",
+        "oklch": "oklch(24.3% 0.043 78.3)",
+        "tonalRamp": [
+          "#110a01",
+          "#2d2314",
+          "#4c402d",
+          "#6e5f48",
+          "#918066",
+          "#b3a38a",
+          "#d6c7b1",
+          "#faedd9"
+        ]
+      },
+      "franja-agua": {
+        "role": "secondary",
+        "displayName": "Franja Celeste Agua",
+        "canonical": "#d3eaec",
+        "oklch": "oklch(92.1% 0.024 203.1)",
+        "tonalRamp": [
+          "#050d0e",
+          "#1b2829",
+          "#364547",
+          "#536567",
+          "#728789",
+          "#96a9ab",
+          "#bbcdcf",
+          "#e2f2f3"
+        ]
+      },
+      "franja-agua-letra": {
+        "role": "secondary",
+        "displayName": "Letra sobre Celeste",
+        "canonical": "#1d4d57",
+        "oklch": "oklch(39.2% 0.054 213.6)",
+        "tonalRamp": [
+          "#000e13",
+          "#0b2a30",
+          "#244850",
+          "#3f6972",
+          "#5c8b96",
+          "#83adb7",
+          "#abd1da",
+          "#d4f6fe"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Título de página",
+        "purpose": "H1 del inicio sobre la foto, del listado (mezcla 700/400), de la ficha y del 404. Archivo 700, tracking -0.035em, interlínea 0.98."
+      },
+      "headline": {
+        "displayName": "Título de sección",
+        "purpose": "Recién publicadas, Así de simple, Dónde estamos, ¿Tenés algo para vender o alquilar?; también los barrios del índice en clamp(26px, 3.4vw, 44px)."
+      },
+      "statement": {
+        "displayName": "Frase",
+        "purpose": "La frase de qué es La Choza y la descripción de la ficha; 400 con tramos en 700."
+      },
+      "title": {
+        "displayName": "Precio",
+        "purpose": "Precio en tarjeta (28px), acordeón móvil (30px), panel de consulta (clamp(40px, 4vw, 56px)) y barra fija (24px)."
+      },
+      "body": {
+        "displayName": "Lectura",
+        "purpose": "Bajadas y texto corrido, 15 a 18px, Archivo al 104% de ancho con cifras tabulares."
+      },
+      "label": {
+        "displayName": "Dato",
+        "purpose": "Chivo Mono en mayúsculas para datos, navegación, rótulos, etiquetas y botones (14px en botones). Siempre mayúsculas."
+      }
+    },
+    "shadows": [],
+    "scrims": [
+      {
+        "name": "velo-portada",
+        "value": "linear-gradient(180deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,.05) 22%,rgba(0,0,0,.2) 38%,rgba(0,0,0,.62) 62%,rgba(0,0,0,.72) 100%)",
+        "purpose": "Sobre la foto del inicio, para leer el header y el H1 en blanco."
+      },
+      {
+        "name": "velo-franja",
+        "value": "linear-gradient(180deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,0) 38%,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%)",
+        "purpose": "Sobre la foto de la franja abierta del acordeón, para el título arriba y los datos abajo."
+      }
+    ],
+    "focus": {
+      "value": "outline: 2px solid currentColor; outline-offset: 3px",
+      "purpose": "Foco global; los campos además engrosan su línea inferior a 2px."
+    },
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Única curva del sistema."
+      },
+      {
+        "name": "link-dato",
+        "value": "background-size 400ms ease-out-expo",
+        "purpose": "Subrayado de 1px que crece en los links mono al pasar y queda en la página actual."
+      },
+      {
+        "name": "foto",
+        "value": "transform 1200ms ease-out-expo, scale(1.025)",
+        "purpose": "La foto de una tarjeta se acerca apenas al pasar."
+      },
+      {
+        "name": "franja",
+        "value": "flex-grow 900ms ease-out-expo",
+        "purpose": "La franja elegida del acordeón se abre a lo ancho."
+      },
+      {
+        "name": "aparecer",
+        "value": "800ms ease-out-expo, opacity 0 y translateY(10px) a reposo",
+        "purpose": "Entrada del H1 del inicio, del contenido de la franja abierta y de Consulta enviada."
+      },
+      {
+        "name": "flecha",
+        "value": "transform 500ms ease-out-expo, translateX(4px)",
+        "purpose": "La flecha de botones e índice se corre al pasar."
+      },
+      {
+        "name": "movimiento-reducido",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Apaga foto, franja, link-dato y aparecer, y el scroll suave."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      },
+      {
+        "name": "contenedor",
+        "value": "1440px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón principal",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Toda acción principal: tinta con letra hueso, mono en mayúsculas, flecha que se corre al pasar.",
+      "html": "<button class=\"ds-btn\">Me interesa <svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path d=\"M4 12h15m-6-6 6 6-6 6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"/></svg></button>",
+      "css": ".ds-btn{font-family:var(--font-mono,'Chivo Mono Variable',ui-monospace,monospace);font-weight:400;font-size:13px;line-height:1.35;letter-spacing:.02em;text-transform:uppercase;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:12px;height:56px;padding:0 28px;background:var(--tinta,#111110);color:var(--hueso,#f1f0ed);border:0;border-radius:0;cursor:pointer;transition:background-color .15s} .ds-btn svg{transition:transform .5s cubic-bezier(.16,1,.3,1)} .ds-btn:hover{background:var(--tinta-2,#55544f)} .ds-btn:hover svg{transform:translateX(4px)} .ds-btn:focus-visible{outline:2px solid currentColor;outline-offset:3px} .ds-btn:disabled{opacity:.7;cursor:wait}"
+    },
+    {
+      "name": "Botón de contorno",
+      "kind": "button",
+      "refersTo": "button-contorno",
+      "description": "Acción alternativa: borde de 1px en tinta, se llena de tinta al pasar.",
+      "html": "<a class=\"ds-btn-contorno\" href=\"#\">Seguir mirando <svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path d=\"M4 12h15m-6-6 6 6-6 6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"/></svg></a>",
+      "css": ".ds-btn-contorno{font-family:var(--font-mono,'Chivo Mono Variable',ui-monospace,monospace);font-weight:400;font-size:13px;line-height:1.35;letter-spacing:.02em;text-transform:uppercase;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:12px;height:48px;padding:0 24px;border:1px solid var(--tinta,#111110);color:var(--tinta,#111110);background:transparent;border-radius:0;text-decoration:none} .ds-btn-contorno:hover{background:var(--tinta,#111110);color:var(--hueso,#f1f0ed)} .ds-btn-contorno:focus-visible{outline:2px solid currentColor;outline-offset:3px}"
+    },
+    {
+      "name": "Botón WhatsApp",
+      "kind": "button",
+      "refersTo": "button-whatsapp",
+      "description": "Solo el botón post-consulta que abre wa.me.",
+      "html": "<a class=\"ds-btn-wa\" href=\"#\"><svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.6 2 1.1 1 2 1.3 2.3 1.4.3.2.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.8-.1 1.4Z\"/></svg> ¿Apurado? Escribinos vos</a>",
+      "css": ".ds-btn-wa{font-family:var(--font-mono,'Chivo Mono Variable',ui-monospace,monospace);font-weight:400;font-size:13px;line-height:1.35;letter-spacing:.02em;text-transform:uppercase;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:12px;height:48px;padding:0 24px;background:var(--whatsapp,#177f45);color:#fff;border-radius:0;text-decoration:none;transition:background-color .15s} .ds-btn-wa:hover{background:var(--whatsapp-hondo,#126536)} .ds-btn-wa:focus-visible{outline:2px solid currentColor;outline-offset:3px}"
+    },
+    {
+      "name": "Campo de línea",
+      "kind": "input",
+      "refersTo": "input-linea",
+      "description": "Campo sin caja: rótulo mono arriba, línea inferior de 1px que pasa a 2px al enfocar, rojo error si es inválido.",
+      "html": "<label class=\"ds-campo\"><span>WhatsApp</span><input type=\"tel\" placeholder=\"11 6123-4410\"></label>",
+      "css": ".ds-campo{display:flex;flex-direction:column;gap:6px;max-width:320px;font-family:var(--font-sans,'Archivo Variable',ui-sans-serif,system-ui,sans-serif)} .ds-campo span{font-family:var(--font-mono,'Chivo Mono Variable',ui-monospace,monospace);font-weight:400;font-size:13px;line-height:1.35;letter-spacing:.02em;text-transform:uppercase;color:var(--tinta-3,#6e6d67)} .ds-campo input{font-family:var(--font-sans,'Archivo Variable',ui-sans-serif,system-ui,sans-serif);font-size:16px;height:44px;padding:0;border:0;border-bottom:1px solid var(--tinta,#111110);background:transparent;color:var(--tinta,#111110);border-radius:0;outline:none;caret-color:var(--tinta,#111110)} .ds-campo input::placeholder{color:var(--tinta-3,#6e6d67)} .ds-campo input:focus-visible{border-bottom-width:2px} .ds-campo input[aria-invalid=true]{border-bottom-color:var(--error,#b42318)}"
+    },
+    {
+      "name": "Header",
+      "kind": "nav",
+      "refersTo": "",
+      "description": "Marca a la izquierda, navegación en mono a la derecha; subrayado de 1px que crece al pasar y queda en la página actual.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-marca\" href=\"#\">la <span>ch<svg viewBox=\"0 0 20 7\" aria-hidden=\"true\"><path d=\"M1 6.2 10 1l9 5.2\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"square\"/></svg></span>oza</a><nav><a href=\"#\" aria-current=\"page\">Comprar</a><a href=\"#\">Alquilar</a><a href=\"#\">Publicar</a></nav></header>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:24px;height:80px;padding:0 32px;background:var(--hueso,#f1f0ed);color:var(--tinta,#111110);border-bottom:1px solid var(--filete,#d6d4ce)} .ds-marca{font-family:var(--font-sans,'Archivo Variable',ui-sans-serif,system-ui,sans-serif);font-size:30px;font-weight:700;letter-spacing:-.045em;line-height:1;color:inherit;text-decoration:none} .ds-marca span{position:relative} .ds-marca svg{position:absolute;top:-.36em;left:.02em;width:.98em;height:.3em} .ds-nav nav{margin-left:auto;display:flex;gap:32px} .ds-nav nav a{font-family:var(--font-mono,'Chivo Mono Variable',ui-monospace,monospace);font-weight:400;font-size:13px;line-height:1.35;letter-spacing:.02em;text-transform:uppercase;color:inherit;text-decoration:none;padding:8px 0;background-image:linear-gradient(currentColor,currentColor);background-size:0% 1px;background-position:0 100%;background-repeat:no-repeat;transition:background-size .4s cubic-bezier(.16,1,.3,1)} .ds-nav nav a:hover,.ds-nav nav a[aria-current=page]{background-size:100% 1px} .ds-nav a:focus-visible{outline:2px solid currentColor;outline-offset:3px}"
+    },
+    {
+      "name": "Selector de operación",
+      "kind": "chip",
+      "refersTo": "",
+      "description": "Comprar / Alquilar en mono sobre la línea del campo; el elegido en negrita subrayado.",
+      "html": "<div class=\"ds-ops\"><label><input type=\"radio\" name=\"op\" checked><span>Comprar</span></label><label><input type=\"radio\" name=\"op\"><span>Alquilar</span></label></div>",
+      "css": ".ds-ops{display:flex;align-items:center;gap:24px;height:44px;border-bottom:1px solid var(--tinta,#111110)} .ds-ops label{font-family:var(--font-mono,'Chivo Mono Variable',ui-monospace,monospace);font-weight:400;font-size:13px;line-height:1.35;letter-spacing:.02em;text-transform:uppercase;font-size:14px;cursor:pointer} .ds-ops input{position:absolute;opacity:0;width:0;height:0} .ds-ops span{color:var(--tinta-3,#6e6d67)} .ds-ops label:hover span{color:var(--tinta,#111110)} .ds-ops input:checked+span{color:var(--tinta,#111110);font-weight:700;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px} .ds-ops label:has(:focus-visible){outline:2px solid currentColor;outline-offset:2px}"
+    },
+    {
+      "name": "Tarjeta de propiedad",
+      "kind": "card",
+      "refersTo": "",
+      "description": "Foto 4:3 sin marco, línea mono de barrio y operación, precio en título, titular y datos; un filete cierra abajo. La foto escala apenas al pasar.",
+      "html": "<a class=\"ds-card\" href=\"#\"><div class=\"ds-card-foto\"><span class=\"ds-reservada\">Reservada</span><span class=\"ds-fotos\">12 fotos</span></div><div class=\"ds-card-texto\"><div class=\"ds-card-linea\"><span>Palermo · Alquiler</span><span>Depto</span></div><p class=\"ds-card-precio\">$ 650.000</p><h3>Dos ambientes con balcón al contrafrente</h3><p class=\"ds-card-datos\">2 amb. · 48 m² · 1 baño</p></div></a>",
+      "css": ".ds-card{display:flex;flex-direction:column;max-width:420px;color:var(--tinta,#111110);text-decoration:none;font-family:var(--font-sans,'Archivo Variable',ui-sans-serif,system-ui,sans-serif)} .ds-card-foto{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--hueso-2,#e7e5e0);transition:transform 1.2s cubic-bezier(.16,1,.3,1)} .ds-card:hover .ds-card-foto{transform:scale(1.025)} .ds-reservada{font-family:var(--font-mono,'Chivo Mono Variable',ui-monospace,monospace);font-weight:400;font-size:13px;line-height:1.35;letter-spacing:.02em;text-transform:uppercase;position:absolute;top:12px;left:12px;padding:6px 10px;background:var(--tinta,#111110);color:var(--hueso,#f1f0ed)} .ds-fotos{font-family:var(--font-mono,'Chivo Mono Variable',ui-monospace,monospace);font-weight:400;font-size:13px;line-height:1.35;letter-spacing:.02em;text-transform:uppercase;font-size:12px;position:absolute;right:12px;bottom:12px;padding:4px 8px;background:var(--hueso,#f1f0ed)} .ds-card-texto{padding:16px 0 20px;border-bottom:1px solid var(--filete,#d6d4ce)} .ds-card-linea{font-family:var(--font-mono,'Chivo Mono Variable',ui-monospace,monospace);font-weight:400;font-size:13px;line-height:1.35;letter-spacing:.02em;text-transform:uppercase;display:flex;justify-content:space-between;gap:12px;color:var(--tinta-2,#55544f)} .ds-card-precio{margin:12px 0 0;font-size:28px;font-weight:700;letter-spacing:-.03em;line-height:.98;font-variant-numeric:tabular-nums} .ds-card h3{margin:8px 0 0;font-size:17px;font-weight:500;line-height:1.375} .ds-card-datos{font-family:var(--font-mono,'Chivo Mono Variable',ui-monospace,monospace);font-weight:400;font-size:13px;line-height:1.35;letter-spacing:.02em;text-transform:uppercase;margin:12px 0 0;color:var(--tinta-2,#55544f)} .ds-card:focus-visible{outline:2px solid currentColor;outline-offset:3px}"
+    },
+    {
+      "name": "Acordeón de recién publicadas",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "Firma del sistema: franjas verticales de 52px con su par de color y la dirección en mono; la elegida se abre a la foto con velo, título blanco y datos.",
+      "html": "<div class=\"ds-acordeon\"><div class=\"ds-franja on\"><button style=\"background:#3f46c8;color:#fff\" aria-expanded=\"true\"><span>Flores · Venta</span></button><div class=\"ds-panel\"><p class=\"ds-panel-t\">Boyacá al 600</p><div class=\"ds-panel-pie\"><p>Flores<br>Casa<br>3 amb. · 98 m²<br>Venta USD 185.000</p><a href=\"#\">Ver propiedad →</a></div></div></div><div class=\"ds-franja\"><button style=\"background:#f0d8d2;color:#8a2b1d\"><span>Directorio al 1800</span></button></div><div class=\"ds-franja\"><button style=\"background:#1f3a31;color:#a6e3bd\"><span>Azcuénaga al 1200</span></button></div><div class=\"ds-franja\"><button style=\"background:#d9a441;color:#2b1d05\"><span>Juncal al 2400</span></button></div><div class=\"ds-franja\"><button style=\"background:#d3eaec;color:#1d4d57\"><span>Malabia al 900</span></button></div></div>",
+      "css": ".ds-acordeon{display:flex;height:420px} .ds-franja{display:flex;flex:0 0 52px;min-width:0;transition:flex-grow .9s cubic-bezier(.16,1,.3,1)} .ds-franja.on{flex-grow:1} .ds-franja button{font-family:var(--font-mono,'Chivo Mono Variable',ui-monospace,monospace);font-weight:400;font-size:13px;line-height:1.35;letter-spacing:.02em;text-transform:uppercase;font-size:14px;width:52px;flex-shrink:0;display:flex;align-items:flex-end;justify-content:center;padding:0 0 32px;border:0;cursor:pointer;transition:filter .15s} .ds-franja button:hover{filter:brightness(.95)} .ds-franja button:focus-visible{outline:2px solid currentColor;outline-offset:-4px} .ds-franja button span{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap} .ds-panel{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;padding:40px;color:#fff;background:linear-gradient(180deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,0) 38%,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%),#55544f} .ds-panel-t{margin:0;font-family:var(--font-sans,'Archivo Variable',ui-sans-serif,system-ui,sans-serif);font-size:56px;font-weight:700;letter-spacing:-.035em;line-height:.98} .ds-panel-pie{display:flex;justify-content:space-between;align-items:flex-end;gap:32px} .ds-panel-pie p,.ds-panel-pie a{font-family:var(--font-mono,'Chivo Mono Variable',ui-monospace,monospace);font-weight:400;font-size:13px;line-height:1.35;letter-spacing:.02em;text-transform:uppercase;font-size:14px;margin:0;color:#fff;text-decoration:none} @media (prefers-reduced-motion:reduce){.ds-franja{transition:none}}"
+    },
+    {
+      "name": "Índice de barrios",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "Lista tipográfica: nombre del barrio en título grande, ciudad y cantidades en mono, flecha que se corre al pasar; filetes entre filas.",
+      "html": "<ul class=\"ds-barrios\"><li><a href=\"#\">Almagro <small>CABA</small></a><span>1 en venta</span><span class=\"cero\">Sin alquiler</span><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path d=\"M4 12h15m-6-6 6 6-6 6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"/></svg></li><li><a href=\"#\">Lanús Este <small>Lanús</small></a><span class=\"cero\">Sin venta</span><span>1 en alquiler</span><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path d=\"M4 12h15m-6-6 6 6-6 6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"/></svg></li></ul>",
+      "css": ".ds-barrios{list-style:none;margin:0;padding:0;border-top:1px solid var(--tinta,#111110);color:var(--tinta,#111110)} .ds-barrios li{position:relative;display:grid;grid-template-columns:1fr 10rem 10rem 2rem;align-items:baseline;gap:24px;padding:20px 0;border-bottom:1px solid var(--filete,#d6d4ce)} .ds-barrios a{font-family:var(--font-sans,'Archivo Variable',ui-sans-serif,system-ui,sans-serif);font-size:40px;font-weight:700;letter-spacing:-.035em;line-height:.98;color:inherit;text-decoration:none} .ds-barrios a::after{content:'';position:absolute;inset:0} .ds-barrios small,.ds-barrios span{font-family:var(--font-mono,'Chivo Mono Variable',ui-monospace,monospace);font-weight:400;font-size:13px;line-height:1.35;letter-spacing:.02em;text-transform:uppercase} .ds-barrios small{margin-left:12px;vertical-align:middle;color:var(--tinta-3,#6e6d67)} .ds-barrios .cero{color:var(--tinta-3,#6e6d67)} .ds-barrios svg{width:20px;height:20px;transition:transform .5s cubic-bezier(.16,1,.3,1)} .ds-barrios li:hover svg{transform:translateX(4px)} .ds-barrios a:focus-visible{outline:2px solid currentColor;outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "La Desarrolladora Porteña",
+    "overview": "La Choza se presenta como una desarrolladora seria de Buenos Aires, no como un portal de avisos. La foto real manda: aparece a sangre, grande, sin marcos. El texto acompaña grande y calmo, en una grotesca apretada que mezcla negrita y regular en la misma frase. Todo lo que es dato (barrio, operación, ambientes, m², navegación, botones, rótulos) va en una mono chica en mayúsculas, como el rótulo de un plano.\n\nEl suelo es hueso, la tinta casi negra, y las divisiones son filetes de 1px. No hay radios, no hay sombras, no hay viñetas de color. El color aparece en un solo lugar del sistema: las franjas del acordeón de recién publicadas, con una paleta propia (ultramar, rosa pálido, verde botella, ocre, celeste agua). Fuera de ahí, la página es hueso, tinta y foto.\n\nLa densidad es baja y generosa: secciones separadas por 96 a 128px, columnas que respiran, listas que son índices tipográficos con filetes. Rechaza el portal de filtros grises y cualquier disfraz gráfico.",
+    "keyCharacteristics": [
+      "Foto real a sangre como protagonista; el header va transparente sobre ella en el inicio.",
+      "Archivo Variable apretada (700, tracking -0.035em, interlínea 0.98) para títulos; 700 y 400 mezclados en frases y en el H1 del listado.",
+      "Chivo Mono en mayúsculas de 13px para todo dato, navegación, rótulo y botón.",
+      "Hueso, tinta y filetes de 1px; sin radios, sin sombras.",
+      "Color solo en las franjas del acordeón de recién publicadas.",
+      "Movimiento lento y suave con una sola curva (ease-out-expo)."
+    ],
+    "rules": [
+      {
+        "name": "The Color Solo En Las Franjas Rule",
+        "body": "La paleta de franjas vive únicamente en el acordeón de recién publicadas. No aparece en botones, fondos de sección, etiquetas ni estados.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tinta Es La Acción Rule",
+        "body": "Todo botón principal es tinta con letra hueso, y pasa a tinta segunda al pasar el mouse. No hay color de acción.",
+        "section": "colors"
+      },
+      {
+        "name": "The Verde Solo WhatsApp Rule",
+        "body": "El verde aparece solo en el botón post-consulta que abre wa.me. Los demás links a WhatsApp (header, footer, \"Escribinos por WhatsApp\" del inicio) van en tinta, con el ícono.",
+        "section": "colors"
+      },
+      {
+        "name": "The Mezcla 700/400 Rule",
+        "body": "En frases y en el H1 del listado la jerarquía se hace mezclando 700 y 400 de la misma familia (\"9 propiedades\" en negrita, \"en venta.\" en regular), no cambiando de tamaño ni de color.",
+        "section": "typography"
+      },
+      {
+        "name": "The Mono Siempre Mayúscula Rule",
+        "body": "Toda línea en mono va en mayúsculas, sin excepción. La clase de rótulo trae el uppercase; no se pisa.",
+        "section": "typography"
+      },
+      {
+        "name": "The Utilidad Pisa Tamaño Rule",
+        "body": "Las clases de título y de rótulo viven en la capa de componentes para que una utilidad de tamaño o tracking las pise. Se ajusta el tamaño en el lugar; la familia, el peso base y el tracking del sistema se respetan.",
+        "section": "typography"
+      },
+      {
+        "name": "The Pie Abajo Rule",
+        "body": "El body es una columna flex de alto mínimo de pantalla y el main crece; el footer siempre queda pegado abajo, aunque la página tenga poco contenido.",
+        "section": "layout"
+      },
+      {
+        "name": "The Datos Que No Se Parten Rule",
+        "body": "Una línea de datos (barrio · tipo · ambientes · m²) se arma con segmentos que no cortan, y el separador \" ·\" va dentro del segmento anterior. Si la línea pasa a dos renglones, ninguno empieza con un punto.",
+        "section": "layout"
+      },
+      {
+        "name": "The Sin Sombras Rule",
+        "body": "Ningún elemento lleva sombra. Si algo necesita despegarse, se le da fondo opaco o un filete.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Velo Solo Para Leer Rule",
+        "body": "Un degradado solo existe como velo sobre una foto que lleva texto encima. Nunca como fondo, adorno ni botón.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** dejar que la foto real ocupe el lugar grande: a sangre en el inicio, 4:3 en tarjetas, sin marcos.",
+      "**Do** usar tinta (#111110) con letra hueso para toda acción principal, y tinta segunda al pasar.",
+      "**Do** escribir todo dato, rótulo, navegación y botón en Chivo Mono 13 a 14px en mayúsculas.",
+      "**Do** separar con filetes de 1px: tinta para abrir un bloque, filete (#d6d4ce) entre filas.",
+      "**Do** mezclar 700 y 400 de Archivo en una misma frase para marcar lo importante.",
+      "**Do** armar las líneas de datos con segmentos que no cortan y el separador dentro del segmento anterior.",
+      "**Do** usar una sola curva de movimiento (cubic-bezier(0.16, 1, 0.3, 1)) y apagar transiciones y apariciones con movimiento reducido."
+    ],
+    "donts": [
+      "**Don't** poner rótulos, antetítulos ni kickers encima de un título.",
+      "**Don't** usar la paleta de franjas fuera del acordeón de recién publicadas.",
+      "**Don't** usar el verde WhatsApp fuera del botón post-consulta que abre wa.me.",
+      "**Don't** redondear esquinas ni usar sombras.",
+      "**Don't** usar degradados salvo como velo sobre una foto que lleva texto.",
+      "**Don't** escribir una línea en mono en minúsculas.",
+      "**Don't** repetir la misma foto de propiedad en la portada, el acordeón y \"Así de simple\"."
+    ]
+  }
+}

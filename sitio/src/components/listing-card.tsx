@@ -1,51 +1,40 @@
 import Link from "next/link";
-import { facts, operationFor, price } from "@/lib/format";
+import { facts, OP_LABEL, operationFor, price } from "@/lib/format";
 import type { ListingSummary, Op } from "@/lib/types";
 
 /**
- * Una propiedad como chapita: la foto arriba y, abajo, la franja del cartel
- * con el verbo y el precio en el color de la operación.
+ * Una propiedad: la foto grande y, abajo, barrio y operación en mono,
+ * el precio, el título y los datos. Sin marcos ni sombras.
  */
 export function ListingCard({ listing, op, priority }: { listing: ListingSummary; op: Op; priority?: boolean }) {
   const operation = operationFor(listing, op);
-  const both = listing.operations.length > 1;
+  const other = listing.operations.find((o) => o.value !== operation.value);
 
   return (
-    <Link
-      href={`/propiedades/${listing.slug}?op=${operation.value}`}
-      data-op={operation.value}
-      className="group relative flex flex-col border-2 border-tinta bg-chapa transition-transform duration-300 ease-[var(--ease-out-expo)] hover:-translate-y-1"
-    >
-      <div className="relative aspect-[4/3] overflow-hidden border-b-2 border-tinta bg-chapa-2">
+    <Link href={`/propiedades/${listing.slug}?op=${operation.value}`} className="group flex h-full flex-col">
+      <div className="relative aspect-[4/3] overflow-hidden bg-hueso-2">
         {listing.cover ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={listing.cover.url}
-            alt={listing.cover.caption ?? listing.headline}
-            loading={priority ? "eager" : "lazy"}
-            className="size-full object-cover transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.04]"
-          />
+          <img src={listing.cover.url} alt={listing.cover.caption ?? listing.headline} loading={priority ? "eager" : "lazy"} className="foto size-full object-cover" />
         ) : (
-          <div className="flex size-full items-center justify-center text-tinta-3">
-            <span className="rotulo">Sin fotos todavía</span>
-          </div>
+          <div className="dato flex size-full items-center justify-center text-tinta-3">Sin fotos todavía</div>
         )}
-        {listing.reserved && (
-          <span className="faja absolute top-1/2 left-1/2 w-[140%] -translate-x-1/2 -translate-y-1/2 -rotate-[9deg] py-1.5 text-[34px]">Reservado</span>
-        )}
-        {listing.photo_count > 1 && <span className="rotulo absolute right-2 bottom-2 bg-tinta px-2 py-1 text-[12px] text-chapa">{listing.photo_count} fotos</span>}
+        {listing.reserved && <span className="dato absolute top-3 left-3 bg-tinta px-2.5 py-1.5 text-hueso">Reservada</span>}
+        {listing.photo_count > 1 && <span className="dato absolute right-3 bottom-3 bg-hueso px-2 py-1 text-[12px]">{listing.photo_count} fotos</span>}
       </div>
-      <div className="flex items-baseline justify-between gap-3 bg-op px-4 pt-2.5 pb-2 text-chapa">
-        <span className="cartel text-[34px]">{operation.verb}</span>
-        <span className="cartel text-right text-[34px]">{price(operation)}</span>
-      </div>
-      <div className="flex flex-1 flex-col gap-1.5 px-4 pt-3 pb-4">
-        <h3 className="text-[17px] leading-snug font-bold text-balance">{listing.headline}</h3>
-        <p className="text-[14.5px] text-tinta-2">{facts(listing).join(" · ")}</p>
-        <p className="mt-auto pt-1 text-[14px] text-tinta-3">
-          <span className="font-semibold text-tinta">{listing.place}</span> · {listing.address_hint}
+      <div className="flex flex-1 flex-col border-b border-filete pt-4 pb-5">
+        <div className="dato flex items-baseline justify-between gap-3 text-tinta-2">
+          <span>
+            {listing.place} · {OP_LABEL[operation.value]}
+          </span>
+          <span className="shrink-0">{listing.type.label}</span>
+        </div>
+        <p className="titulo mt-3 text-[28px] tracking-[-0.03em]">{price(operation)}</p>
+        <h3 className="mt-2 text-[17px] leading-snug font-medium text-balance">{listing.headline}</h3>
+        <p className="dato mt-3 text-tinta-2">
+          {facts(listing).join(" · ")}
+          {other && <span className="block pt-1">También en {other.value}: {price(other)}</span>}
         </p>
-        {both && <p className="rotulo pt-1 text-[12.5px] text-tinta-2">También en {operation.value === "venta" ? "alquiler" : "venta"}</p>}
       </div>
     </Link>
   );
