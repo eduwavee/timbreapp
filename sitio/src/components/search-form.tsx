@@ -34,10 +34,15 @@ export function SearchForm({ op: initialOp, meta, initial = {}, withOp = false }
   // Con tipo, ambientes o precio no sabemos cuántas quedan: el botón solo dice "Buscar".
   const refined = Boolean(initial.type || initial.rooms || initial.max_price);
 
+  // Con el selector de operación son 6 campos: en una fila recién entran desde xl; antes van en dos filas de 4.
   return (
-    <form action="/propiedades" method="get" className={`grid grid-cols-2 items-end gap-x-5 gap-y-5 lg:gap-x-7 ${withOp ? "lg:grid-cols-[auto_1.4fr_1fr_1fr_1fr_auto]" : "lg:grid-cols-[1.4fr_1fr_1fr_1fr_auto]"}`}>
+    <form
+      action="/propiedades"
+      method="get"
+      className={`grid grid-cols-2 items-end gap-x-5 gap-y-5 lg:gap-x-7 ${withOp ? "md:grid-cols-4 xl:grid-cols-[auto_1.4fr_1fr_1fr_1fr_auto]" : "lg:grid-cols-[1.4fr_1fr_1fr_1fr_auto]"}`}
+    >
       {withOp ? (
-        <fieldset className="col-span-2 lg:col-span-1">
+        <fieldset className="col-span-2 xl:col-span-1">
           <legend className="dato mb-2 text-tinta-3">Operación</legend>
           <div className="flex h-11 items-center gap-6 border-b border-tinta">
             {OPS.map((o) => (
@@ -61,7 +66,7 @@ export function SearchForm({ op: initialOp, meta, initial = {}, withOp = false }
       ) : (
         <input type="hidden" name="op" value={op} />
       )}
-      <label className="col-span-2 flex min-w-0 flex-col gap-2 lg:col-span-1">
+      <label className={`col-span-2 flex min-w-0 flex-col gap-2 ${withOp ? "xl:col-span-1" : "lg:col-span-1"}`}>
         <span className="dato text-tinta-3">Barrio</span>
         <select name="place" value={place} onChange={(e) => setPlace(e.target.value)} className={field} style={selectStyle}>
           <option value="">Todos los barrios</option>

@@ -9,11 +9,11 @@ import { Wordmark } from "./wordmark";
 export function SiteHeader({ ownerPhone, overlay = false, current }: { ownerPhone?: string | null; overlay?: boolean; current?: "venta" | "alquiler" }) {
   return (
     <header className={`${overlay ? "absolute inset-x-0 top-0 text-white" : "relative border-b border-filete text-tinta"} z-20`}>
-      <div className="mx-auto flex h-16 max-w-[1440px] items-center gap-6 px-4 sm:h-20 sm:px-8">
+      <div className="mx-auto flex h-16 max-w-[1440px] items-center gap-4 px-4 sm:h-20 sm:gap-6 sm:px-8">
         <Link href="/" className="text-[26px] sm:text-[30px]" aria-label="Brunito, inicio">
           <Wordmark />
         </Link>
-        <nav aria-label="Principal" className="dato ml-auto flex items-center gap-4 sm:gap-8">
+        <nav aria-label="Principal" className="dato ml-auto flex items-center gap-3 max-[399px]:text-[12px] min-[400px]:gap-4 sm:gap-8">
           <Link href="/propiedades?op=venta" aria-current={current === "venta" ? "page" : undefined} className="link-dato py-2">
             Comprar
           </Link>
@@ -21,7 +21,7 @@ export function SiteHeader({ ownerPhone, overlay = false, current }: { ownerPhon
             Alquilar
           </Link>
           {ownerPhone && (
-            <a href={waLink(ownerPhone, "Hola, quiero publicar una propiedad en Brunito.")} target="_blank" rel="noreferrer" className="link-dato hidden py-2 md:inline">
+            <a href={waLink(ownerPhone, "Hola, quiero publicar una propiedad en Brunito.")} target="_blank" rel="noreferrer" className="link-dato py-2">
               Publicar
             </a>
           )}
