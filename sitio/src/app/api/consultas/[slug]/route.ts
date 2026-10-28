@@ -1,4 +1,21 @@
-import { API_URL, PROXY_HEADERS } from "@/lib/api";
+import { API_URL, DEMO_MODE, PROXY_HEADERS } from "@/lib/api";
+import { demoListing } from "@/lib/demo";
+
+/** En modo demo la consulta se valida como en Laravel, pero no se guarda: no hay Timbre detrás. */
+function demoInquiry(slug: string, body: Record<string, unknown>) {
+  if (!demoListing(slug)) {
+    return Response.json({ message: "Esa propiedad ya no está publicada." }, { status: 404 });
+  }
+  const errors: Record<string, string[]> = {};
+  const text = (key: string) => (typeof body[key] === "string" ? (body[key] as string).trim() : "");
+  if (!text("name")) errors.name = ["Completá nombre."];
+  if (!text("phone")) errors.phone = ["Completá WhatsApp."];
+  else if (text("phone").replace(/\D/g, "").length < 8) errors.phone = ["Revisá WhatsApp: el formato no es válido."];
+  if (text("email") && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text("email"))) errors.email = ["Revisá email: no parece un email válido."];
+  if (text("website")) return Response.json({ message: "No se pudo enviar la consulta." }, { status: 422 });
+  if (Object.keys(errors).length) return Response.json({ message: Object.values(errors)[0][0], errors }, { status: 422 });
+  return Response.json({ data: {} }, { status: 201 });
+}
 
 /**
  * Reenvía el "Me interesa" a Laravel desde el servidor: la URL de la API no queda
@@ -11,6 +28,9 @@ export async function POST(request: Request, ctx: RouteContext<"/api/consultas/[
     body = await request.json();
   } catch {
     return Response.json({ message: "No se pudo leer la consulta." }, { status: 400 });
+  }
+  if (DEMO_MODE) {
+    return demoInquiry(slug, (body ?? {}) as Record<string, unknown>);
   }
 
   try {

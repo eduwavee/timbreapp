@@ -299,19 +299,29 @@ Para volver a los datos de demo: `cd backend && php artisan migrate:fresh --seed
 
 ## Publicar Brunito en Vercel
 
-La web vive en `sitio/` y le pide los datos a la API de Laravel desde el servidor. Para publicarla:
+Brunito está publicada en **https://brunito-one.vercel.app** (proyecto `brunito` en Vercel, *Root Directory* `sitio`). Cada push a `main` la vuelve a publicar.
 
-1. **La API tiene que estar en internet, con HTTPS.** Vercel no llega a tu `localhost`. En `backend/.env` del servidor:
-   - `APP_URL=https://api.tudominio.com.ar`. Las fotos salen de esa dirección; si queda en `http`, el navegador las bloquea en una web `https`.
-   - `SITE_URL=https://tu-web.vercel.app`, para que el panel arme bien los links "ver en la web".
-   - `SITE_PROXY_KEY=` con una clave larga al azar (por ejemplo, `openssl rand -hex 24`).
-2. **En Vercel:** importá el repositorio y elegí `sitio` como *Root Directory*. El framework (Next.js) se detecta solo.
-3. **Variables de entorno en Vercel:**
-   - `LARAVEL_API_URL=https://api.tudominio.com.ar/api`
-   - `SITE_PROXY_KEY=` la misma clave que en Laravel. Con ella, el límite de 6 consultas por minuto se cuenta por visitante y no para todo el sitio junto.
-   - `NEXT_PUBLIC_DEMO=1` solo si querés el aviso de "propiedades de demostración" en el pie.
+### Modo demo (el que está publicado)
 
-Las páginas se arman en cada pedido, así que el build no necesita la API. Los datos se cachean 30 segundos.
+Sin `LARAVEL_API_URL`, Brunito anda sola, sin servidor: lee las propiedades de `sitio/src/data/demo.json` y las fotos de `sitio/public/demo/`. Los filtros y el orden son los mismos que los de la API. El "Me interesa" se valida igual, pero la consulta no se guarda porque no hay Timbre detrás.
+
+Para actualizar las propiedades de la demo, con la API corriendo en tu máquina:
+
+```bash
+cd sitio
+npm run demo:exportar   # vuelve a generar demo.json y public/demo/
+```
+
+Después hacé commit y push.
+
+### Con la API real
+
+Para que las consultas lleguen a Timbre, Brunito necesita la API de Laravel en internet, con HTTPS. `render.yaml` la deja lista para Render (plan gratis) con su base PostgreSQL. En Vercel, cargá:
+
+- `LARAVEL_API_URL=https://tu-api/api`
+- `SITE_PROXY_KEY=`, la misma clave que en Laravel. Con ella, el límite de 6 consultas por minuto se cuenta por visitante y no para todo el sitio junto.
+
+En la API, `APP_URL` tiene que ser `https`; si no, el navegador bloquea las fotos en una web `https`.
 
 ---
 

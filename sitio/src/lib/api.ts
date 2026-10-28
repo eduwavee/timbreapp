@@ -1,7 +1,11 @@
 import "server-only";
+import { demoListing, demoListings, demoMeta } from "./demo";
 import type { Filters, ListingDetail, ListingSummary, Meta } from "./types";
 
-export const API_URL = process.env.LARAVEL_API_URL ?? "http://127.0.0.1:8000/api";
+/** Sin LARAVEL_API_URL (por ejemplo, en Vercel) Brunito anda solo, con los datos de src/data/demo.json. */
+export const DEMO_MODE = !process.env.LARAVEL_API_URL;
+
+export const API_URL = process.env.LARAVEL_API_URL ?? "";
 
 /** Clave compartida con Laravel: le dice a la API que el pedido viene de este servidor. */
 export const PROXY_HEADERS: Record<string, string> = process.env.SITE_PROXY_KEY ? { "X-Site-Key": process.env.SITE_PROXY_KEY } : {};
@@ -23,11 +27,13 @@ async function get<T>(path: string): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-export function getMeta(): Promise<Meta> {
+export async function getMeta(): Promise<Meta> {
+  if (DEMO_MODE) return demoMeta;
   return get<Meta>("meta");
 }
 
-export function getListings(filters: Partial<Filters> & { limit?: number; exclude?: string }): Promise<{ data: ListingSummary[]; total: number }> {
+export async function getListings(filters: Partial<Filters> & { limit?: number; exclude?: string }): Promise<{ data: ListingSummary[]; total: number }> {
+  if (DEMO_MODE) return demoListings(filters);
   const params = new URLSearchParams();
   Object.entries(filters).forEach(([k, v]) => {
     if (v !== undefined && v !== null && v !== "") params.set(k, String(v));
@@ -36,6 +42,7 @@ export function getListings(filters: Partial<Filters> & { limit?: number; exclud
 }
 
 export async function getListing(slug: string): Promise<ListingDetail | null> {
+  if (DEMO_MODE) return demoListing(slug);
   try {
     const res = await get<{ data: ListingDetail }>(`listings/${encodeURIComponent(slug)}`);
     return res.data;

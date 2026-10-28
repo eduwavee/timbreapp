@@ -1,0 +1,1018 @@
+{
+  "exported_at": "2026-10-28T03:35:25.842Z",
+  "meta": {
+    "site_name": "Brunito",
+    "owner_name": "Administración Timbre",
+    "owner_phone": "11 0000-9001",
+    "counts": {
+      "venta": 9,
+      "alquiler": 7
+    },
+    "places": [
+      {
+        "name": "Recoleta",
+        "city": "CABA",
+        "venta": 2,
+        "alquiler": 1
+      },
+      {
+        "name": "Flores",
+        "city": "CABA",
+        "venta": 1,
+        "alquiler": 1
+      },
+      {
+        "name": "La Boca",
+        "city": "CABA",
+        "venta": 1,
+        "alquiler": 1
+      },
+      {
+        "name": "Villa Crespo",
+        "city": "CABA",
+        "venta": 1,
+        "alquiler": 1
+      },
+      {
+        "name": "Lanús Este",
+        "city": "Lanús",
+        "venta": 0,
+        "alquiler": 1
+      },
+      {
+        "name": "Palermo Soho",
+        "city": "CABA",
+        "venta": 1,
+        "alquiler": 0
+      },
+      {
+        "name": "Almagro",
+        "city": "CABA",
+        "venta": 1,
+        "alquiler": 0
+      },
+      {
+        "name": "Avellaneda",
+        "city": "Avellaneda",
+        "venta": 0,
+        "alquiler": 1
+      },
+      {
+        "name": "Lanús Oeste",
+        "city": "Lanús",
+        "venta": 1,
+        "alquiler": 0
+      },
+      {
+        "name": "Caballito",
+        "city": "CABA",
+        "venta": 0,
+        "alquiler": 1
+      },
+      {
+        "name": "Villa del Parque",
+        "city": "CABA",
+        "venta": 1,
+        "alquiler": 0
+      }
+    ],
+    "types": [
+      {
+        "value": "departamento",
+        "label": "Departamento",
+        "count": 8
+      },
+      {
+        "value": "casa",
+        "label": "Casa",
+        "count": 3
+      },
+      {
+        "value": "galpon",
+        "label": "Galpón",
+        "count": 2
+      }
+    ]
+  },
+  "listings": [
+    {
+      "slug": "casa-3-ambientes-flores-boy-640",
+      "code": "BOY-640",
+      "headline": "Casa con patio y terraza propia, para entrar a vivir",
+      "type": {
+        "value": "casa",
+        "label": "Casa"
+      },
+      "operations": [
+        {
+          "value": "venta",
+          "label": "Venta",
+          "verb": "Vende",
+          "currency": "USD",
+          "price": 185000
+        }
+      ],
+      "expenses": null,
+      "rooms": 3,
+      "surface_m2": 98,
+      "bathrooms": 1,
+      "garage": false,
+      "age_years": 70,
+      "neighborhood": "Flores",
+      "city": "CABA",
+      "place": "Flores",
+      "address_hint": "Boyacá al 600",
+      "reserved": false,
+      "published_at": "2026-10-22T10:30:00-03:00",
+      "cover": {
+        "url": "/demo/properties/20/pexels-33537442.jpg",
+        "caption": null
+      },
+      "photo_count": 4,
+      "amenities": [
+        {
+          "value": "patio",
+          "label": "Patio"
+        },
+        {
+          "value": "terraza",
+          "label": "Terraza"
+        },
+        {
+          "value": "parrilla",
+          "label": "Parrilla"
+        },
+        {
+          "value": "luminoso",
+          "label": "Luminoso"
+        },
+        {
+          "value": "mascotas",
+          "label": "Acepta mascotas"
+        }
+      ],
+      "description": "Casa de tres ambientes en lote propio, a metros de la plaza Pueyrredón.\nLiving comedor con paredes de ladrillo a la vista, cocina separada y dos dormitorios.\nPatio con plantas y terraza propia con parrilla. Recién pintada.",
+      "photos": [
+        {
+          "url": "/demo/properties/20/pexels-33537442.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/20/pexels-14419082.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/20/pexels-6510421.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/20/pexels-29353199.jpg",
+          "caption": null
+        }
+      ]
+    },
+    {
+      "slug": "departamento-2-ambientes-caballito-dir-3a",
+      "code": "DIR-3A",
+      "headline": "Dos ambientes a estrenar con escritorio",
+      "type": {
+        "value": "departamento",
+        "label": "Departamento"
+      },
+      "operations": [
+        {
+          "value": "alquiler",
+          "label": "Alquiler",
+          "verb": "Alquila",
+          "currency": "ARS",
+          "price": 600000
+        }
+      ],
+      "expenses": 85000,
+      "rooms": 2,
+      "surface_m2": 47,
+      "bathrooms": 1,
+      "garage": false,
+      "age_years": 0,
+      "neighborhood": "Caballito",
+      "city": "CABA",
+      "place": "Caballito",
+      "address_hint": "Directorio al 1800",
+      "reserved": false,
+      "published_at": "2026-10-22T10:30:00-03:00",
+      "cover": {
+        "url": "/demo/properties/19/pexels-27164969.jpg",
+        "caption": null
+      },
+      "photo_count": 4,
+      "amenities": [
+        {
+          "value": "a_estrenar",
+          "label": "A estrenar"
+        },
+        {
+          "value": "luminoso",
+          "label": "Luminoso"
+        },
+        {
+          "value": "aire",
+          "label": "Aire acondicionado"
+        },
+        {
+          "value": "ascensor",
+          "label": "Ascensor"
+        },
+        {
+          "value": "apto_profesional",
+          "label": "Apto profesional"
+        }
+      ],
+      "description": "Departamento a estrenar con living comedor, dormitorio y rincón de escritorio.\nCocina integrada con artefactos nuevos. Edificio con amenities.",
+      "photos": [
+        {
+          "url": "/demo/properties/19/pexels-27164969.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/19/pexels-15062127.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/19/pexels-35618218.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/19/pexels-16817453.jpg",
+          "caption": null
+        }
+      ]
+    },
+    {
+      "slug": "departamento-monoambiente-recoleta-azc-5",
+      "code": "AZC-5",
+      "headline": "Monoambiente con cocina integrada a dos cuadras de Plaza Rodríguez Peña",
+      "type": {
+        "value": "departamento",
+        "label": "Departamento"
+      },
+      "operations": [
+        {
+          "value": "venta",
+          "label": "Venta",
+          "verb": "Vende",
+          "currency": "USD",
+          "price": 79000
+        },
+        {
+          "value": "alquiler",
+          "label": "Alquiler",
+          "verb": "Alquila",
+          "currency": "ARS",
+          "price": 480000
+        }
+      ],
+      "expenses": 70000,
+      "rooms": 1,
+      "surface_m2": 38,
+      "bathrooms": 1,
+      "garage": false,
+      "age_years": 45,
+      "neighborhood": "Recoleta",
+      "city": "CABA",
+      "place": "Recoleta",
+      "address_hint": "Azcuénaga al 1200",
+      "reserved": false,
+      "published_at": "2026-10-21T10:30:00-03:00",
+      "cover": {
+        "url": "/demo/properties/3/pexels-7511693.jpg",
+        "caption": null
+      },
+      "photo_count": 4,
+      "amenities": [
+        {
+          "value": "luminoso",
+          "label": "Luminoso"
+        },
+        {
+          "value": "ascensor",
+          "label": "Ascensor"
+        },
+        {
+          "value": "apto_credito",
+          "label": "Apto crédito"
+        },
+        {
+          "value": "mascotas",
+          "label": "Acepta mascotas"
+        }
+      ],
+      "description": "Monoambiente amplio y luminoso, contrafrente, sin ruido de la calle.\nCocina integrada con alacenas nuevas y anafe eléctrico. Baño completo con ducha.\nEdificio con portero y laundry en la terraza. Ideal primera vivienda o inversión.",
+      "photos": [
+        {
+          "url": "/demo/properties/3/pexels-7511693.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/3/pexels-7195739.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/3/pexels-19857270.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/3/pexels-10836958.jpg",
+          "caption": null
+        }
+      ]
+    },
+    {
+      "slug": "departamento-3-ambientes-recoleta-jun-9a",
+      "code": "JUN-9A",
+      "headline": "Tres ambientes en piso alto con vista abierta",
+      "type": {
+        "value": "departamento",
+        "label": "Departamento"
+      },
+      "operations": [
+        {
+          "value": "venta",
+          "label": "Venta",
+          "verb": "Vende",
+          "currency": "USD",
+          "price": 235000
+        }
+      ],
+      "expenses": 160000,
+      "rooms": 3,
+      "surface_m2": 78,
+      "bathrooms": 2,
+      "garage": true,
+      "age_years": 25,
+      "neighborhood": "Recoleta",
+      "city": "CABA",
+      "place": "Recoleta",
+      "address_hint": "Juncal al 2400",
+      "reserved": false,
+      "published_at": "2026-10-20T10:30:00-03:00",
+      "cover": {
+        "url": "/demo/properties/11/pexels-2030037.jpg",
+        "caption": null
+      },
+      "photo_count": 4,
+      "amenities": [
+        {
+          "value": "balcon",
+          "label": "Balcón"
+        },
+        {
+          "value": "luminoso",
+          "label": "Luminoso"
+        },
+        {
+          "value": "ascensor",
+          "label": "Ascensor"
+        },
+        {
+          "value": "seguridad",
+          "label": "Seguridad 24 h"
+        },
+        {
+          "value": "aire",
+          "label": "Aire acondicionado"
+        },
+        {
+          "value": "apto_credito",
+          "label": "Apto crédito"
+        }
+      ],
+      "description": "Piso 9 al frente con balcón corrido y vista abierta.\nLiving comedor de 6 metros, dos dormitorios con placard y baño completo más toilette.\nEdificio con seguridad y cochera opcional.",
+      "photos": [
+        {
+          "url": "/demo/properties/11/pexels-2030037.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/11/pexels-6077368.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/11/pexels-7060826.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/11/pexels-7534166.jpg",
+          "caption": null
+        }
+      ]
+    },
+    {
+      "slug": "departamento-2-ambientes-villa-crespo-mal-1",
+      "code": "MAL-1",
+      "headline": "Dos ambientes en PH al frente, sin expensas",
+      "type": {
+        "value": "departamento",
+        "label": "Departamento"
+      },
+      "operations": [
+        {
+          "value": "venta",
+          "label": "Venta",
+          "verb": "Vende",
+          "currency": "USD",
+          "price": 118000
+        },
+        {
+          "value": "alquiler",
+          "label": "Alquiler",
+          "verb": "Alquila",
+          "currency": "ARS",
+          "price": 690000
+        }
+      ],
+      "expenses": null,
+      "rooms": 2,
+      "surface_m2": 50,
+      "bathrooms": 1,
+      "garage": false,
+      "age_years": 60,
+      "neighborhood": "Villa Crespo",
+      "city": "CABA",
+      "place": "Villa Crespo",
+      "address_hint": "Malabia al 900",
+      "reserved": false,
+      "published_at": "2026-10-19T10:30:00-03:00",
+      "cover": {
+        "url": "/demo/properties/14/pexels-8146330.jpg",
+        "caption": null
+      },
+      "photo_count": 5,
+      "amenities": [
+        {
+          "value": "luminoso",
+          "label": "Luminoso"
+        },
+        {
+          "value": "mascotas",
+          "label": "Acepta mascotas"
+        },
+        {
+          "value": "apto_profesional",
+          "label": "Apto profesional"
+        }
+      ],
+      "description": "PH de dos ambientes en planta baja, entrada independiente.\nLiving con piso de madera, dormitorio con placard y baño con lavarropas. Disponible desde diciembre.",
+      "photos": [
+        {
+          "url": "/demo/properties/14/pexels-8146330.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/14/pexels-8146332.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/14/pexels-27626182.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/14/pexels-7546549.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/14/pexels-33317897.jpg",
+          "caption": null
+        }
+      ]
+    },
+    {
+      "slug": "departamento-monoambiente-flores-ave-1",
+      "code": "AVE-1",
+      "headline": "Monoambiente luminoso cerca de la estación Flores",
+      "type": {
+        "value": "departamento",
+        "label": "Departamento"
+      },
+      "operations": [
+        {
+          "value": "alquiler",
+          "label": "Alquiler",
+          "verb": "Alquila",
+          "currency": "ARS",
+          "price": 430000
+        }
+      ],
+      "expenses": 45000,
+      "rooms": 1,
+      "surface_m2": 39,
+      "bathrooms": 1,
+      "garage": false,
+      "age_years": 50,
+      "neighborhood": "Flores",
+      "city": "CABA",
+      "place": "Flores",
+      "address_hint": "Avellaneda al 3000",
+      "reserved": false,
+      "published_at": "2026-10-18T10:30:00-03:00",
+      "cover": {
+        "url": "/demo/properties/22/pexels-8089172.jpg",
+        "caption": null
+      },
+      "photo_count": 3,
+      "amenities": [
+        {
+          "value": "luminoso",
+          "label": "Luminoso"
+        },
+        {
+          "value": "amoblado",
+          "label": "Amoblado"
+        }
+      ],
+      "description": "Monoambiente de 39 m² con kitchenette y baño completo.\nMuy luminoso, ideal estudiante o primera vivienda. Disponible desde diciembre.",
+      "photos": [
+        {
+          "url": "/demo/properties/22/pexels-8089172.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/22/pexels-3754698.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/22/pexels-19866441.jpg",
+          "caption": null
+        }
+      ]
+    },
+    {
+      "slug": "galpon-la-boca-pin-1290",
+      "code": "PIN-1290",
+      "headline": "Galpón de 450 m² con portón para camiones",
+      "type": {
+        "value": "galpon",
+        "label": "Galpón"
+      },
+      "operations": [
+        {
+          "value": "venta",
+          "label": "Venta",
+          "verb": "Vende",
+          "currency": "USD",
+          "price": 380000
+        },
+        {
+          "value": "alquiler",
+          "label": "Alquiler",
+          "verb": "Alquila",
+          "currency": "ARS",
+          "price": 2400000
+        }
+      ],
+      "expenses": null,
+      "rooms": null,
+      "surface_m2": 450,
+      "bathrooms": 1,
+      "garage": true,
+      "age_years": 40,
+      "neighborhood": "La Boca",
+      "city": "CABA",
+      "place": "La Boca",
+      "address_hint": "Pinzón al 1200",
+      "reserved": false,
+      "published_at": "2026-10-17T10:30:00-03:00",
+      "cover": {
+        "url": "/demo/properties/29/pexels-8551121.jpg",
+        "caption": null
+      },
+      "photo_count": 4,
+      "amenities": [],
+      "description": "Galpón con estructura metálica, piso de hormigón alisado y altura libre de 7 metros.\nPortón para camiones, oficina y baño. Trifásica. A dos cuadras de Av. Patricios.",
+      "photos": [
+        {
+          "url": "/demo/properties/29/pexels-8551121.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/29/pexels-236705.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/29/pexels-12771396.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/29/pexels-16924265.jpg",
+          "caption": null
+        }
+      ]
+    },
+    {
+      "slug": "departamento-2-ambientes-avellaneda-uru-1",
+      "code": "URU-1",
+      "headline": "Dos ambientes con balcón en Avellaneda centro",
+      "type": {
+        "value": "departamento",
+        "label": "Departamento"
+      },
+      "operations": [
+        {
+          "value": "alquiler",
+          "label": "Alquiler",
+          "verb": "Alquila",
+          "currency": "ARS",
+          "price": 520000
+        }
+      ],
+      "expenses": 55000,
+      "rooms": 2,
+      "surface_m2": 45,
+      "bathrooms": 1,
+      "garage": false,
+      "age_years": 20,
+      "neighborhood": null,
+      "city": "Avellaneda",
+      "place": "Avellaneda",
+      "address_hint": "Uruguay al 1400",
+      "reserved": false,
+      "published_at": "2026-10-16T10:30:00-03:00",
+      "cover": {
+        "url": "/demo/properties/32/pexels-7546648.jpg",
+        "caption": null
+      },
+      "photo_count": 4,
+      "amenities": [
+        {
+          "value": "balcon",
+          "label": "Balcón"
+        },
+        {
+          "value": "ascensor",
+          "label": "Ascensor"
+        },
+        {
+          "value": "calefaccion",
+          "label": "Calefacción"
+        }
+      ],
+      "description": "Departamento de 45 m² con balcón al frente, a cuatro cuadras de Av. Mitre.\nDormitorio con placard, cocina separada y baño completo.",
+      "photos": [
+        {
+          "url": "/demo/properties/32/pexels-7546648.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/32/pexels-6035368.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/32/pexels-19899059.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/32/pexels-19577805.jpg",
+          "caption": null
+        }
+      ]
+    },
+    {
+      "slug": "galpon-lanus-este-itu-760",
+      "code": "ITU-760",
+      "headline": "Galpón con oficina y entrada de vehículos",
+      "type": {
+        "value": "galpon",
+        "label": "Galpón"
+      },
+      "operations": [
+        {
+          "value": "alquiler",
+          "label": "Alquiler",
+          "verb": "Alquila",
+          "currency": "ARS",
+          "price": 1600000
+        }
+      ],
+      "expenses": null,
+      "rooms": null,
+      "surface_m2": 540,
+      "bathrooms": 2,
+      "garage": true,
+      "age_years": 30,
+      "neighborhood": "Lanús Este",
+      "city": "Lanús",
+      "place": "Lanús Este",
+      "address_hint": "Ituzaingó al 700",
+      "reserved": false,
+      "published_at": "2026-10-14T10:30:00-03:00",
+      "cover": {
+        "url": "/demo/properties/36/pexels-11667731.jpg",
+        "caption": null
+      },
+      "photo_count": 3,
+      "amenities": [],
+      "description": "Galpón de 540 m² con entrada de vehículos, oficina vidriada y dos baños.\nTechos de chapa nuevos y buena iluminación natural.",
+      "photos": [
+        {
+          "url": "/demo/properties/36/pexels-11667731.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/36/pexels-4628583.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/36/pexels-1784543.jpg",
+          "caption": null
+        }
+      ]
+    },
+    {
+      "slug": "departamento-2-ambientes-villa-del-parque-cue-2c",
+      "code": "CUE-2C",
+      "headline": "Dos ambientes reciclado, apto crédito",
+      "type": {
+        "value": "departamento",
+        "label": "Departamento"
+      },
+      "operations": [
+        {
+          "value": "venta",
+          "label": "Venta",
+          "verb": "Vende",
+          "currency": "USD",
+          "price": 105000
+        }
+      ],
+      "expenses": 60000,
+      "rooms": 2,
+      "surface_m2": 54,
+      "bathrooms": 1,
+      "garage": false,
+      "age_years": 40,
+      "neighborhood": "Villa del Parque",
+      "city": "CABA",
+      "place": "Villa del Parque",
+      "address_hint": "Cuenca al 3500",
+      "reserved": false,
+      "published_at": "2026-10-13T10:30:00-03:00",
+      "cover": {
+        "url": "/demo/properties/25/pexels-1484981.jpg",
+        "caption": null
+      },
+      "photo_count": 4,
+      "amenities": [
+        {
+          "value": "apto_credito",
+          "label": "Apto crédito"
+        },
+        {
+          "value": "luminoso",
+          "label": "Luminoso"
+        },
+        {
+          "value": "lavadero",
+          "label": "Lavadero"
+        }
+      ],
+      "description": "Dos ambientes al contrafrente, totalmente reciclado.\nPisos de madera, baño nuevo y cocina con ventana. A metros de la plaza Aristóbulo del Valle.",
+      "photos": [
+        {
+          "url": "/demo/properties/25/pexels-1484981.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/25/pexels-13722887.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/25/pexels-18869571.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/25/pexels-13197873.jpg",
+          "caption": null
+        }
+      ]
+    },
+    {
+      "slug": "casa-4-ambientes-palermo-soho-gur-1980",
+      "code": "GUR-1980",
+      "headline": "Casa de cuatro ambientes en Palermo Soho, se vende con renta",
+      "type": {
+        "value": "casa",
+        "label": "Casa"
+      },
+      "operations": [
+        {
+          "value": "venta",
+          "label": "Venta",
+          "verb": "Vende",
+          "currency": "USD",
+          "price": 420000
+        }
+      ],
+      "expenses": null,
+      "rooms": 4,
+      "surface_m2": 140,
+      "bathrooms": 2,
+      "garage": false,
+      "age_years": 90,
+      "neighborhood": "Palermo Soho",
+      "city": "CABA",
+      "place": "Palermo Soho",
+      "address_hint": "Gurruchaga al 1900",
+      "reserved": false,
+      "published_at": "2026-10-11T10:30:00-03:00",
+      "cover": {
+        "url": "/demo/properties/6/pexels-31139509.jpg",
+        "caption": null
+      },
+      "photo_count": 4,
+      "amenities": [
+        {
+          "value": "patio",
+          "label": "Patio"
+        },
+        {
+          "value": "balcon",
+          "label": "Balcón"
+        },
+        {
+          "value": "luminoso",
+          "label": "Luminoso"
+        },
+        {
+          "value": "calefaccion",
+          "label": "Calefacción"
+        }
+      ],
+      "description": "Casa reciclada en dos plantas sobre lote de 8,66 x 30.\nLiving comedor al frente, cocina comedor, tres dormitorios y patio con plantas.\nSe vende con contrato de alquiler vigente: ideal para inversor.",
+      "photos": [
+        {
+          "url": "/demo/properties/6/pexels-31139509.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/6/pexels-260046.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/6/pexels-8135505.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/6/pexels-14965658.jpg",
+          "caption": null
+        }
+      ]
+    },
+    {
+      "slug": "casa-4-ambientes-lanus-oeste-las-880",
+      "code": "LAS-880",
+      "headline": "Casa de cuatro ambientes con jardín y cochera",
+      "type": {
+        "value": "casa",
+        "label": "Casa"
+      },
+      "operations": [
+        {
+          "value": "venta",
+          "label": "Venta",
+          "verb": "Vende",
+          "currency": "USD",
+          "price": 165000
+        }
+      ],
+      "expenses": null,
+      "rooms": 4,
+      "surface_m2": 130,
+      "bathrooms": 2,
+      "garage": true,
+      "age_years": 35,
+      "neighborhood": "Lanús Oeste",
+      "city": "Lanús",
+      "place": "Lanús Oeste",
+      "address_hint": "Las Heras al 800",
+      "reserved": false,
+      "published_at": "2026-10-08T10:30:00-03:00",
+      "cover": {
+        "url": "/demo/properties/34/pexels-358636.jpg",
+        "caption": null
+      },
+      "photo_count": 4,
+      "amenities": [
+        {
+          "value": "patio",
+          "label": "Patio"
+        },
+        {
+          "value": "parrilla",
+          "label": "Parrilla"
+        },
+        {
+          "value": "luminoso",
+          "label": "Luminoso"
+        },
+        {
+          "value": "apto_credito",
+          "label": "Apto crédito"
+        },
+        {
+          "value": "mascotas",
+          "label": "Acepta mascotas"
+        }
+      ],
+      "description": "Casa en una planta sobre lote propio.\nLiving comedor, cocina comedor, tres dormitorios, jardín con parrilla y cochera cubierta.",
+      "photos": [
+        {
+          "url": "/demo/properties/34/pexels-358636.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/34/pexels-8135496.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/34/pexels-12508071.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/34/pexels-6510421.jpg",
+          "caption": null
+        }
+      ]
+    },
+    {
+      "slug": "departamento-3-ambientes-almagro-bil-2b",
+      "code": "BIL-2B",
+      "headline": "Tres ambientes con cocina abierta, a metros del subte B",
+      "type": {
+        "value": "departamento",
+        "label": "Departamento"
+      },
+      "operations": [
+        {
+          "value": "venta",
+          "label": "Venta",
+          "verb": "Vende",
+          "currency": "USD",
+          "price": 158000
+        }
+      ],
+      "expenses": 95000,
+      "rooms": 3,
+      "surface_m2": 61,
+      "bathrooms": 1,
+      "garage": false,
+      "age_years": 35,
+      "neighborhood": "Almagro",
+      "city": "CABA",
+      "place": "Almagro",
+      "address_hint": "Billinghurst al 800",
+      "reserved": true,
+      "published_at": "2026-10-03T10:30:00-03:00",
+      "cover": {
+        "url": "/demo/properties/4/pexels-11296142.jpg",
+        "caption": null
+      },
+      "photo_count": 4,
+      "amenities": [
+        {
+          "value": "balcon",
+          "label": "Balcón"
+        },
+        {
+          "value": "lavadero",
+          "label": "Lavadero"
+        },
+        {
+          "value": "ascensor",
+          "label": "Ascensor"
+        },
+        {
+          "value": "apto_credito",
+          "label": "Apto crédito"
+        }
+      ],
+      "description": "Departamento de 61 m² con cocina abierta al living y salida a balcón.\nDos dormitorios, baño completo y lavadero independiente. A tres cuadras de la estación Medrano.",
+      "photos": [
+        {
+          "url": "/demo/properties/4/pexels-11296142.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/4/pexels-7511695.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/4/pexels-6934170.jpg",
+          "caption": null
+        },
+        {
+          "url": "/demo/properties/4/pexels-19846354.jpg",
+          "caption": null
+        }
+      ]
+    }
+  ]
+}

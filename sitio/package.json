@@ -6,7 +6,8 @@
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start -p 3001",
-    "lint": "eslint"
+    "lint": "eslint",
+    "demo:exportar": "node scripts/exportar-demo.mjs"
   },
   "dependencies": {
     "@fontsource-variable/archivo": "^5.3.0",
