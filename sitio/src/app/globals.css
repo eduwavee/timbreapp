@@ -113,6 +113,14 @@ textarea {
   transition: flex-grow 900ms var(--ease-out-expo);
 }
 
+/* En el celular las franjas se despliegan hacia abajo y la foto se acomoda al abrir. */
+.franja-fila {
+  transition: grid-template-rows 800ms var(--ease-out-expo);
+}
+.franja-foto {
+  transition: transform 1400ms var(--ease-out-expo);
+}
+
 @keyframes aparecer {
   from {
     opacity: 0;
@@ -206,6 +214,8 @@ textarea {
   }
   .foto,
   .franja,
+  .franja-fila,
+  .franja-foto,
   .link-dato {
     transition: none;
   }

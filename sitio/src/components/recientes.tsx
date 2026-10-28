@@ -104,15 +104,16 @@ export function Recientes({ items }: { items: Reciente[] }) {
                 <span className="truncate">{listing.address_hint}</span>
                 <span className="shrink-0">{listing.place}</span>
               </button>
-              <div id={`${id}-m-${i}`} hidden={!active}>
-                <Link href={`/propiedades/${listing.slug}?op=${operation.value}`} className="block">
+              {/* Se despliega a lo alto (0fr → 1fr); cerrada queda inerte, fuera del foco y del lector. */}
+              <div id={`${id}-m-${i}`} className="franja-fila grid" style={{ gridTemplateRows: active ? "1fr" : "0fr" }} inert={!active}>
+                <Link href={`/propiedades/${listing.slug}?op=${operation.value}`} className="block min-h-0 overflow-hidden">
                   <div className="relative aspect-[4/3] overflow-hidden bg-hueso-2">
                     {listing.cover && (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={listing.cover.url} alt={listing.headline} className="absolute inset-0 size-full object-cover" />
+                      <img src={listing.cover.url} alt={listing.headline} className={`franja-foto absolute inset-0 size-full object-cover ${active ? "" : "scale-[1.08]"}`} />
                     )}
                   </div>
-                  <div className="border-b border-filete py-5">
+                  <div key={active ? "on" : "off"} className={`border-b border-filete py-5 ${active ? "aparecer" : ""}`}>
                     <p className="dato text-tinta-2">
                       {OP_LABEL[operation.value]} · {listing.type.label} · {facts(listing).join(" · ")}
                     </p>
