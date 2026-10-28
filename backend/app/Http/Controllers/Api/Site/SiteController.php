@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 /**
- * API pública de La Choza: lista lo publicado y recibe los "Me interesa", que caen en Timbre.
+ * API pública de Brunito: lista lo publicado y recibe los "Me interesa", que caen en Timbre.
  */
 class SiteController extends Controller
 {

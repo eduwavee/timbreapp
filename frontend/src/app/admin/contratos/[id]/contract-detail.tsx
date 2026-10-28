@@ -4,18 +4,20 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { AdjustmentCard } from "@/components/adjustment-card";
+import { ChangeHistory } from "@/components/change-history";
 import { ContractDocuments } from "@/components/contract-documents";
 import { InstallmentTable } from "@/components/installment-table";
 import { useToast } from "@/components/toast";
 import { Button, ErrorState, Field, FormError, Input, PageHeader, Panel, Section, Select, WhatsAppLink } from "@/components/ui";
 import { api, ApiError } from "@/lib/api";
-import { ars, currentPeriod, fecha } from "@/lib/format";
-import type { Contract } from "@/lib/types";
+import { ars, currentPeriod, fecha, periodo } from "@/lib/format";
+import type { AdjustmentSuggestion, Contract } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
 
 export function ContractDetail() {
   const { id } = useParams<{ id: string }>();
-  const detail = useApi<{ data: Contract }>(`contracts/${id}`);
+  const detail = useApi<{ data: Contract; suggested_adjustment: AdjustmentSuggestion | null }>(`contracts/${id}`);
   const toast = useToast();
   const [pct, setPct] = useState("");
   const [from, setFrom] = useState(currentPeriod());
@@ -25,6 +27,7 @@ export function ContractDetail() {
   if (detail.error) return <ErrorState message={detail.error.status === 404 ? "Ese contrato no existe." : detail.error.message} onRetry={detail.reload} />;
   if (!detail.data) return <div className="skeleton h-64" />;
   const c = detail.data.data;
+  const suggestion = detail.data.suggested_adjustment;
   const installments = [...(c.installments ?? [])].reverse();
   const preview = pct ? Math.round(c.rent_amount * (1 + Number(pct) / 100) * 100) / 100 : null;
 
@@ -116,10 +119,17 @@ export function ContractDetail() {
           </Section>
 
           {c.status.value === "vigente" && (
-            <Section title="Aplicar ajuste">
+            <Section title="Ajuste de alquiler">
               <Panel className="p-4">
+                {suggestion && (
+                  <div className="mb-4 border-b border-rule pb-4">
+                    <AdjustmentCard suggestion={suggestion} onApplied={detail.reload} />
+                  </div>
+                )}
                 <form onSubmit={adjust} className="flex flex-col gap-3">
-                  <p className="text-sm text-ink-2">Cargá el porcentaje del {c.adjustment_type.label} del período. Se actualizan el alquiler y las cuotas sin pagar desde el mes que elijas.</p>
+                  <p className="text-sm text-ink-2">
+                    {suggestion ? "O cargalo a mano." : `Cargá el porcentaje del ${c.adjustment_type.label} del período.`} Se actualizan el alquiler y las cuotas sin pagar desde el mes que elijas.
+                  </p>
                   <FormError message={adjError?.message} />
                   <div className="grid grid-cols-2 gap-3">
                     <Field label="Aumento (%)" error={adjError?.field("percentage")}>
@@ -142,6 +152,27 @@ export function ContractDetail() {
             </Section>
           )}
 
+          {!!c.adjustments?.length && (
+            <Section title="Ajustes aplicados">
+              <Panel>
+                <ul className="divide-y divide-rule text-sm">
+                  {c.adjustments.map((a) => (
+                    <li key={a.id} className="px-4 py-2.5">
+                      <p className="flex justify-between gap-3">
+                        <span className="font-semibold">Desde {periodo(a.from_period).toLowerCase()}</span>
+                        <span className="num text-ink-2">+{a.percentage.toLocaleString("es-AR", { maximumFractionDigits: 2 })} %</span>
+                      </p>
+                      <p className="num text-[13px] text-ink-2">
+                        {ars(a.previous_amount, { short: true })} <ArrowRight className="inline size-3" aria-label="pasó a" /> {ars(a.new_amount, { short: true })}
+                      </p>
+                      {a.basis && <p className="text-[12px] text-ink-3">{a.basis}</p>}
+                    </li>
+                  ))}
+                </ul>
+              </Panel>
+            </Section>
+          )}
+
           <Section title="Estado">
             <Panel className="p-4">
               <Field label="Estado del contrato" hint="Al finalizar o rescindir, la unidad vuelve a quedar disponible.">
@@ -157,6 +188,10 @@ export function ContractDetail() {
           </Section>
         </div>
       </div>
+
+      <Section title="Historial de cambios" className="mt-8 max-w-3xl">
+        <ChangeHistory type="contracts" id={c.id} version={c.updated_at} />
+      </Section>
     </>
   );
 }

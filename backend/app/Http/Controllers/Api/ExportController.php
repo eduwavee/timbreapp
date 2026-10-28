@@ -15,7 +15,8 @@ use OpenSpout\Writer\XLSX\Writer;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
- * Excel del mes para el contador: liquidación, cobros y gastos, una hoja cada uno.
+ * Excel del mes para el contador (liquidación, cobros y gastos, una hoja cada uno)
+ * y el Excel de cualquier listado tal como se ve en pantalla, con sus filtros.
  */
 class ExportController extends Controller
 {
@@ -86,6 +87,56 @@ class ExportController extends Controller
         $writer->close();
 
         return response()->download($path, "timbre-{$month}.xlsx", [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ])->deleteFileAfterSend();
+    }
+
+    /**
+     * Arma el Excel con las columnas y filas que manda el panel: lo que el usuario está viendo.
+     */
+    public function table(Request $request): BinaryFileResponse
+    {
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:80'],
+            'columns' => ['required', 'array', 'min:1', 'max:30'],
+            'columns.*.label' => ['required', 'string', 'max:60'],
+            'columns.*.type' => ['nullable', 'in:text,money,number'],
+            'rows' => ['present', 'array', 'max:5000'],
+            'rows.*' => ['array'],
+        ]);
+
+        $money = new Style(format: '"$" #,##0');
+        $head = new Style(fontBold: true, backgroundColor: 'EEF0EC');
+        $title = new Style(fontBold: true, fontSize: 13);
+        $types = array_map(fn (array $c) => $c['type'] ?? 'text', $data['columns']);
+
+        $options = new Options;
+        $options->setColumnWidthForRange(18, 1, count($types));
+        $path = tempnam(sys_get_temp_dir(), 'timbre').'.xlsx';
+        $writer = new Writer($options);
+        $writer->openToFile($path);
+        $writer->getCurrentSheet()->setName(str($data['title'])->limit(28, '')->toString());
+
+        $writer->addRow(Row::fromValuesWithStyle([$data['title'].' · '.now()->format('d/m/Y H:i')], $title));
+        $writer->addRow(Row::fromValues([]));
+        $writer->addRow(Row::fromValuesWithStyle(array_column($data['columns'], 'label'), $head));
+        foreach ($data['rows'] as $row) {
+            $values = [];
+            $styles = [];
+            foreach ($types as $i => $type) {
+                $value = $row[$i] ?? null;
+                $values[] = $type === 'text' || ! is_numeric($value) ? (string) ($value ?? '') : (float) $value;
+                if ($type === 'money' && is_numeric($value)) {
+                    $styles[$i] = $money;
+                }
+            }
+            $writer->addRow(Row::fromValuesWithStyles($values, $styles));
+        }
+        $writer->close();
+
+        $name = str($data['title'])->slug()->append('-'.now()->format('Y-m-d').'.xlsx')->toString();
+
+        return response()->download($path, $name, [
             'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         ])->deleteFileAfterSend();
     }

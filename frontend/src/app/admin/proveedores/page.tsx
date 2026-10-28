@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { Pencil, Plus } from "lucide-react";
+import { ExportButton } from "@/components/export-button";
 import { useToast } from "@/components/toast";
 import { Button, Empty, ErrorState, Field, FormError, Input, LastChange, PageHeader, Panel, SearchBox, Select, Sheet, SkeletonRows, Textarea, WhatsAppLink } from "@/components/ui";
 import { api, ApiError } from "@/lib/api";
 import { matches, recentFirst } from "@/lib/search";
 import { TRADES, type Provider } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
+import { useUrlState } from "@/lib/use-url-state";
 
 function waLink(phone: string) {
   let d = phone.replace(/\D/g, "").replace(/^0+/, "");
@@ -18,7 +20,7 @@ function waLink(phone: string) {
 export default function ProvidersPage() {
   const list = useApi<{ data: Provider[] }>("providers");
   const [editing, setEditing] = useState<Provider | "new" | null>(null);
-  const [q, setQ] = useState("");
+  const [q, setQ] = useUrlState("q", "");
   const toast = useToast();
 
   const providers = list.data?.data ?? [];
@@ -36,8 +38,19 @@ export default function ProvidersPage() {
         }
       />
       {providers.length > 0 && (
-        <div className="mb-4 flex">
+        <div className="mb-4 flex flex-wrap items-center gap-2">
           <SearchBox value={q} onChange={setQ} placeholder="Nombre, rubro o teléfono" className="ml-auto sm:w-72" />
+          <ExportButton
+            title="Proveedores"
+            rows={groups.flatMap((g) => g.items)}
+            columns={[
+              { label: "Nombre", value: (p) => p.name },
+              { label: "Rubro", value: (p) => p.trade.label },
+              { label: "WhatsApp", value: (p) => p.phone },
+              { label: "Trabajos abiertos", type: "number", value: (p) => p.open_tickets_count },
+              { label: "Notas", value: (p) => p.notes },
+            ]}
+          />
         </div>
       )}
       {list.error && <ErrorState message={list.error.message} onRetry={list.reload} />}

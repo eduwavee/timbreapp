@@ -4,7 +4,7 @@ import "@fontsource-variable/chivo-mono";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: { default: "La Choza · Propiedades en venta y alquiler", template: "%s · La Choza" },
+  title: { default: "Brunito · Propiedades en venta y alquiler", template: "%s · Brunito" },
   description: "Casas, departamentos y galpones en venta y alquiler en CABA y el sur del conurbano. Tocás “Me interesa” y te escribimos por WhatsApp.",
 };
 
@@ -14,7 +14,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es-AR" className="h-full antialiased">
+    <html lang="es-AR" className="h-full antialiased" suppressHydrationWarning>
       <body className="flex min-h-svh flex-col">{children}</body>
     </html>
   );

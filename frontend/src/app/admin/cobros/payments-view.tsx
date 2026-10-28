@@ -11,6 +11,7 @@ import {
   FileSpreadsheet,
   Printer,
 } from "lucide-react";
+import { ExportButton } from "@/components/export-button";
 import { ProofReview } from "@/components/proof-review";
 import { useToast } from "@/components/toast";
 import {
@@ -38,6 +39,7 @@ import {
 import { matches } from "@/lib/search";
 import type { Payment, Proof } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
+import { useUrlState } from "@/lib/use-url-state";
 
 export function PaymentsView() {
   const params = useSearchParams();
@@ -46,7 +48,7 @@ export function PaymentsView() {
   const [month, setMonth] = useState(currentPeriod());
   const proofs = useApi<{ data: Proof[] }>("proofs");
   const [reviewing, setReviewing] = useState<Proof | null>(null);
-  const [q, setQ] = useState("");
+  const [q, setQ] = useUrlState("q", "");
   const pendingCount =
     proofs.data?.data.filter((p) => p.status.value === "pendiente").length ?? 0;
   const list = useApi<{ data: Payment[] }>(`payments?month=${month}`);
@@ -179,6 +181,35 @@ export function PaymentsView() {
         ))}
       </div>
         <SearchBox value={q} onChange={setQ} placeholder={tab === "pagos" ? "Recibo, unidad o inquilino" : "Inquilino o unidad"} className="ml-auto sm:w-72" />
+        {tab === "pagos" ? (
+          <ExportButton
+            title={`Cobros ${month}`}
+            rows={shownPayments}
+            columns={[
+              { label: "Recibo", type: "number", value: (p) => p.receipt_number },
+              { label: "Fecha", value: (p) => fecha(p.paid_on) },
+              { label: "Unidad", value: (p) => p.installment?.contract?.property?.code },
+              { label: "Inquilino", value: (p) => p.installment?.contract?.tenant?.full_name },
+              { label: "Período", value: (p) => p.installment && periodo(p.installment.period) },
+              { label: "Medio", value: (p) => p.method.label },
+              { label: "Mora", type: "money", value: (p) => p.late_fee },
+              { label: "Total", type: "money", value: (p) => p.total },
+            ]}
+          />
+        ) : (
+          <ExportButton
+            title="Comprobantes"
+            rows={shownProofs}
+            columns={[
+              { label: "Inquilino", value: (p) => p.tenant?.name },
+              { label: "Unidad", value: (p) => p.installment.property_code },
+              { label: "Período", value: (p) => periodo(p.installment.period) },
+              { label: "Monto", type: "money", value: (p) => p.amount },
+              { label: "Enviado", value: (p) => fecha(p.created_at) },
+              { label: "Estado", value: (p) => p.status.label },
+            ]}
+          />
+        )}
       </div>
 
       {tab === "comprobantes" && (

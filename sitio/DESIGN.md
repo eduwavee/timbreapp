@@ -1,5 +1,5 @@
 ---
-name: La Choza
+name: Brunito
 description: Web pública de propiedades con el lenguaje de una desarrolladora porteña seria; la foto manda, el texto es grande y calmo, los datos van en mono.
 colors:
   hueso: "#f1f0ed"
@@ -131,13 +131,13 @@ components:
     padding: "6px 10px"
 ---
 
-# Design System: La Choza
+# Design System: Brunito
 
 ## Overview
 
 **Creative North Star: "La Desarrolladora Porteña"**
 
-La Choza se presenta como una desarrolladora seria de Buenos Aires, no como un portal de avisos. La foto real manda: aparece a sangre, grande, sin marcos. El texto acompaña grande y calmo, en una grotesca apretada que mezcla negrita y regular en la misma frase. Todo lo que es dato (barrio, operación, ambientes, m², navegación, botones, rótulos) va en una mono chica en mayúsculas, como el rótulo de un plano.
+Brunito se presenta como una desarrolladora seria de Buenos Aires, no como un portal de avisos. La foto real manda: aparece a sangre, grande, sin marcos. El texto acompaña grande y calmo, en una grotesca apretada que mezcla negrita y regular en la misma frase. Todo lo que es dato (barrio, operación, ambientes, m², navegación, botones, rótulos) va en una mono chica en mayúsculas, como el rótulo de un plano.
 
 El suelo es hueso, la tinta casi negra, y las divisiones son filetes de 1px. No hay radios, no hay sombras, no hay viñetas de color. El color aparece en un solo lugar del sistema: las franjas del acordeón de recién publicadas, con una paleta propia (ultramar, rosa pálido, verde botella, ocre, celeste agua). Fuera de ahí, la página es hueso, tinta y foto.
 
@@ -191,7 +191,7 @@ Cinco pares fondo/letra, en orden: **Ultramar** (#3f46c8 con blanco), **Rosa Pá
 ### Hierarchy
 - **Display** (700, clamp(40px, 6.2vw, 96px), 0.98): el H1 del inicio en blanco sobre la foto, máximo 14ch; el del listado sube a clamp(44px, 6.4vw, 104px) y el del 404 a clamp(44px, 7vw, 112px). El H1 de la ficha va a clamp(36px, 5.2vw, 84px), máximo 22ch, balanceado.
 - **Headline** (700, clamp(40px, 5vw, 76px), 0.98): títulos de sección ("Así de simple.", "Dónde estamos"). "Recién publicadas" va a clamp(36px, 4.4vw, 64px). Los barrios del índice van a clamp(26px, 3.4vw, 44px).
-- **Statement** (400 con tramos en 700, clamp(28px, 3.6vw, 54px), 1.12, -0.025em): la frase de "qué es La Choza", máximo 26ch. La descripción de la ficha usa la misma voz a clamp(22px, 2vw, 28px), interlínea 1.3, máximo 34ch.
+- **Statement** (400 con tramos en 700, clamp(28px, 3.6vw, 54px), 1.12, -0.025em): la frase de "qué es Brunito", máximo 26ch. La descripción de la ficha usa la misma voz a clamp(22px, 2vw, 28px), interlínea 1.3, máximo 34ch.
 - **Title** (700, 28px, -0.03em): el precio en la tarjeta; 30px en el acordeón móvil, clamp(40px, 4vw, 56px) en el panel de consulta, 24px en la barra fija del celular. Debajo, el titular de la propiedad en 17px peso 500, interlínea ajustada.
 - **Body** (400, 16px, 1.5): lectura y bajadas (15 a 18px), cifras tabulares, máximo 44 a 50ch.
 - **Label** (Chivo Mono 400, 13px, 0.02em, mayúsculas): datos, navegación, rótulos de campo, botones (14px), etiquetas sobre foto (12px en el contador de fotos).
@@ -262,12 +262,12 @@ Rectángulos de tinta, sin adorno, con el texto en mono y una flecha fina.
 - **Error / Disabled:** línea en rojo error y mensaje debajo en 14px peso 500 en rojo error.
 
 ### Navigation
-- **Header:** marca "la choza" a la izquierda (26px, 30px desde 640px) y Comprar, Alquilar, Publicar en mono a la derecha; 64px de alto (80px desde 640px). En el inicio va transparente con letra blanca sobre la foto; en el resto, sobre hueso con filete abajo. Publicar se oculta debajo de 768px.
+- **Header:** marca "brunito" a la izquierda (26px, 30px desde 640px) y Comprar, Alquilar, Publicar en mono a la derecha; 64px de alto (80px desde 640px). En el inicio va transparente con letra blanca sobre la foto; en el resto, sobre hueso con filete abajo. Publicar se oculta debajo de 768px.
 - **Links en mono:** un subrayado de 1px que crece de izquierda a derecha en 400ms al pasar y queda completo en la página actual.
 - **Footer:** fondo gris pie, texto tinta; arriba "Volver arriba" y el ©, separados por un filete de tinta; abajo la marca a 34px y columnas de links en mono.
 
 ### Marca
-"la choza" en minúscula, Archivo 700 con tracking -0.045em, con un techo a dos aguas dibujado en trazo recto sobre la "ch". Hereda el color del texto (blanco sobre foto, tinta sobre hueso).
+"brunito" en minúscula, Archivo 700 con tracking -0.045em, con un techo a dos aguas dibujado en trazo recto sobre la "br". Hereda el color del texto (blanco sobre foto, tinta sobre hueso).
 
 ### Acordeón de recién publicadas (componente firma)
 - **Escritorio (desde 1024px):** una fila de franjas verticales de 52px de ancho, alto min(640px, 72vh), cada una con su par de color y la dirección en mono 14px escrita de abajo hacia arriba. La franja abierta cambia el texto a "Barrio · Operación" y se abre a lo ancho (flex-grow en 900ms con ease-out-expo) mostrando la foto con su velo, la dirección como título blanco de clamp(44px, 4.6vw, 72px) arriba, los datos en mono abajo a la izquierda y "Ver propiedad" con flecha abajo a la derecha. El contenido aparece subiendo 10px en 800ms. Al pasar, una franja cerrada baja su brillo al 95%.
@@ -275,7 +275,7 @@ Rectángulos de tinta, sin adorno, con el texto en mono y una flecha fina.
 - **Fotos:** el acordeón abre con la primera propiedad; la foto del inicio y la de "Así de simple" usan otras, nunca la misma.
 
 ### Entrada al inicio (intro)
-Solo en el inicio y una vez por sesión (`sessionStorage` "choza-intro"; un script inline marca `data-intro="visto"` en `html` antes de pintar). Sobre un telón hueso a pantalla completa se dibuja el techo de la marca (trazo en 700ms), "la choza" sube y aparece (800ms, desde 380ms), y a los 1050ms el telón se levanta con `clip-path` (950ms). Debajo, la foto de portada se acerca de 1.08 a 1 (2000ms) y entran el título (desde 1250ms) y la barra de búsqueda (desde 1400ms). Todo con ease-out-expo. En visitas siguientes no hay telón y el resto entra sin demora; con movimiento reducido no hay intro ni animaciones.
+Solo en el inicio y una vez por sesión (`sessionStorage` "brunito-intro"; un script inline marca `data-intro="visto"` en `html` antes de pintar). Sobre un telón hueso a pantalla completa se dibuja el techo de la marca (trazo en 700ms), "la choza" sube y aparece (800ms, desde 380ms), y a los 1050ms el telón se levanta con `clip-path` (950ms). Debajo, la foto de portada se acerca de 1.08 a 1 (2000ms) y entran el título (desde 1250ms) y la barra de búsqueda (desde 1400ms). Todo con ease-out-expo. En visitas siguientes no hay telón y el resto entra sin demora; con movimiento reducido no hay intro ni animaciones.
 
 ### Índice de barrios
 Cada barrio es una fila con el nombre en título grande, la ciudad en mono tinta tercera al lado, y las cantidades en venta y alquiler en mono (atenuadas cuando son cero), con una flecha que se corre 4px al pasar. Toda la fila es el link.

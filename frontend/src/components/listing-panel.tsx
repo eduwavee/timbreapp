@@ -15,7 +15,7 @@ type ListingResponse = { data: Listing | null; amenities: Enum[] };
 const usd = (v: number) => `USD ${new Intl.NumberFormat("es-AR", { maximumFractionDigits: 0 }).format(v)}`;
 
 /**
- * La publicación de la unidad en La Choza, la web de propiedades.
+ * La publicación de la unidad en Brunito, la web de propiedades.
  * Las fotos son las mismas de la ficha: la portada es la primera.
  */
 export function ListingPanel({ property, photoCount }: { property: Property; photoCount: number }) {
@@ -25,7 +25,7 @@ export function ListingPanel({ property, photoCount }: { property: Property; pho
   const l = listing.data?.data;
 
   return (
-    <Section title="Publicación en La Choza" actions={l?.published && <a href={l.public_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-[13px] font-semibold text-ink underline decoration-rule-strong underline-offset-4 hover:decoration-ink">Ver en la web <ExternalLink className="size-3" aria-hidden /></a>}>
+    <Section title="Publicación en Brunito" actions={l?.published && <a href={l.public_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-[13px] font-semibold text-ink underline decoration-rule-strong underline-offset-4 hover:decoration-ink">Ver en la web <ExternalLink className="size-3" aria-hidden /></a>}>
       <Panel>
         {listing.error && (
           <div className="p-4">
@@ -35,7 +35,7 @@ export function ListingPanel({ property, photoCount }: { property: Property; pho
         {!listing.data && !listing.error && <div className="skeleton m-4 h-20" />}
         {listing.data && !l && (
           <Empty title="No está publicada" action={<Button onClick={() => setEditing(true)}><Megaphone className="size-4" aria-hidden /> Publicar en la web</Button>}>
-            Ponela en venta o en alquiler en La Choza. Quien toque &ldquo;Me interesa&rdquo; te aparece en Consultas para atenderlo vos o pasárselo a un colega.
+            Ponela en venta o en alquiler en Brunito. Quien toque &ldquo;Me interesa&rdquo; te aparece en Consultas para atenderlo vos o pasárselo a un colega.
           </Empty>
         )}
         {l && (
@@ -162,7 +162,7 @@ function ListingForm({ property, listing, amenities, onClose, onSaved }: { prope
       open
       onClose={onClose}
       title={listing ? `Publicación de ${property.code}` : `Publicar ${property.code}`}
-      description="Lo que se ve en La Choza. Las fotos son las de la ficha."
+      description="Lo que se ve en Brunito. Las fotos son las de la ficha."
       footer={
         <>
           <Button variant="ghost" onClick={onClose}>

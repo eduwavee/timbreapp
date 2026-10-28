@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ActivityController;
+use App\Http\Controllers\Api\AdjustmentController;
 use App\Http\Controllers\Api\AgendaController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ColleagueController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Api\ContractDocumentController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\ExpenseController;
 use App\Http\Controllers\Api\ExportController;
+use App\Http\Controllers\Api\HistoryController;
 use App\Http\Controllers\Api\InquiryController;
 use App\Http\Controllers\Api\InstallmentController;
 use App\Http\Controllers\Api\LedgerController;
@@ -28,16 +30,16 @@ use App\Http\Controllers\Api\TenantController;
 use App\Http\Controllers\Api\TicketController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:10,1')->name('login');
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:login')->name('login');
 
-// La Choza: web pública. Solo lectura de lo publicado y el "Me interesa".
+// Brunito: web pública. Solo lectura de lo publicado y el "Me interesa".
 Route::prefix('site')->group(function () {
-    Route::middleware('throttle:240,1')->group(function () {
+    Route::middleware('throttle:site')->group(function () {
         Route::get('/meta', [SiteController::class, 'meta']);
         Route::get('/listings', [SiteController::class, 'index']);
         Route::get('/listings/{slug}', [SiteController::class, 'show']);
     });
-    Route::post('/listings/{slug}/inquiries', [SiteController::class, 'inquire'])->middleware('throttle:6,1');
+    Route::post('/listings/{slug}/inquiries', [SiteController::class, 'inquire'])->middleware('throttle:inquiries');
 });
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -57,6 +59,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('tenants', TenantController::class);
         Route::apiResource('contracts', ContractController::class);
         Route::post('/contracts/{contract}/adjust', [ContractController::class, 'adjust']);
+        Route::get('/adjustments', AdjustmentController::class);
+        Route::get('/history/{type}/{id}', HistoryController::class)->whereIn('type', ['properties', 'tenants', 'contracts'])->whereNumber('id');
 
         Route::get('/installments', [InstallmentController::class, 'index']);
         Route::get('/installments/{installment}', [InstallmentController::class, 'show']);
@@ -99,6 +103,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/inquiries/{inquiry}/derive', [InquiryController::class, 'derive']);
 
         Route::get('/exports/month', [ExportController::class, 'month']);
+        Route::post('/exports/table', [ExportController::class, 'table']);
 
         Route::get('/settings', [SettingController::class, 'show']);
         Route::put('/settings', [SettingController::class, 'update']);

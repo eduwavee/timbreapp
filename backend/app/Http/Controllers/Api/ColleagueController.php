@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
- * Vendedores y colegas a quienes se les derivan las consultas de La Choza.
+ * Vendedores y colegas a quienes se les derivan las consultas de Brunito.
  */
 class ColleagueController extends Controller
 {

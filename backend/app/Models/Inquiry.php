@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Alguien tocó "Me interesa" en La Choza.
+ * Alguien tocó "Me interesa" en Brunito.
  */
 #[Fillable(['listing_id', 'property_id', 'operation', 'name', 'phone', 'email', 'message', 'status', 'colleague_id', 'outcome', 'notes', 'contacted_at', 'derived_at', 'closed_at'])]
 class Inquiry extends Model

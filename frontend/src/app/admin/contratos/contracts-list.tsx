@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Plus } from "lucide-react";
+import { ExportButton } from "@/components/export-button";
 import { ContractForm } from "@/components/forms/contract-form";
 import { useToast } from "@/components/toast";
 import { Button, cx, Empty, ErrorState, LastChange, PageHeader, Panel, SearchBox, Select, SkeletonRows, Table, Td, Th } from "@/components/ui";
@@ -11,6 +12,7 @@ import { ars, fecha } from "@/lib/format";
 import { matches, recentFirst } from "@/lib/search";
 import type { Contract } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
+import { useUrlState } from "@/lib/use-url-state";
 
 const tabs = [
   { key: "vigente", label: "Vigentes" },
@@ -23,9 +25,9 @@ export function ContractsList() {
   const params = useSearchParams();
   const router = useRouter();
   const nuevo = params.get("nuevo");
-  const [tab, setTab] = useState("vigente");
-  const [q, setQ] = useState("");
-  const [order, setOrder] = useState<"recientes" | "vencimiento">("recientes");
+  const [tab, setTab] = useUrlState("vista", "vigente");
+  const [q, setQ] = useUrlState("q", "");
+  const [order, setOrder] = useUrlState<"recientes" | "vencimiento">("orden", "recientes");
   const [creating, setCreating] = useState(nuevo !== null);
   const list = useApi<{ data: Contract[] }>("contracts");
   const toast = useToast();
@@ -65,6 +67,20 @@ export function ContractsList() {
           <option value="vencimiento">Por vencimiento</option>
         </Select>
         <SearchBox value={q} onChange={setQ} placeholder="Unidad, calle, inquilino o DNI" className="sm:w-72" />
+        <ExportButton
+          title="Contratos"
+          rows={rows}
+          columns={[
+            { label: "Unidad", value: (c) => c.property?.code },
+            { label: "Dirección", value: (c) => c.property?.address },
+            { label: "Inquilino", value: (c) => c.tenant?.full_name },
+            { label: "Alquiler", type: "money", value: (c) => c.rent_amount },
+            { label: "Ajuste", value: (c) => `${c.adjustment_type.label} cada ${c.adjustment_every_months} meses` },
+            { label: "Inicio", value: (c) => fecha(c.start_date) },
+            { label: "Fin", value: (c) => fecha(c.end_date) },
+            { label: "Estado", value: (c) => c.status.label },
+          ]}
+        />
       </div>
       <Panel>
         {list.error && (

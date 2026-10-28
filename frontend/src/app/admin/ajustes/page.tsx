@@ -32,11 +32,11 @@ const sample: Record<string, string> = {
   ticket: "1",
 };
 
-/** Ejemplo para las consultas que llegan desde La Choza. */
+/** Ejemplo para las consultas que llegan desde Brunito. */
 const inquirySample: Record<string, string> = {
   nombre: "Florencia",
   administracion: "Administración Timbre",
-  sitio: "La Choza",
+  sitio: "Brunito",
   titulo: "Tres ambientes en piso alto con vista abierta",
   direccion: "Juncal 2410, depto 9A, Recoleta",
   operacion: "venta",
@@ -121,7 +121,7 @@ function SettingsForm({ initial }: { initial: Settings }) {
         </Section>
         {template("reminder_template", "Aviso de deuda al inquilino", reminderVars)}
         {template("derivation_template", "Derivación de reclamo al proveedor", derivationVars)}
-        <Section title="La Choza (web de propiedades)">
+        <Section title="Brunito (web de propiedades)">
           <Panel className="grid gap-4 p-4 sm:grid-cols-3">
             <Field label="Nombre de la web" error={error?.field("site_name")} hint="Aparece en los mensajes como {sitio}.">
               {(id, d) => <Input id={id} aria-describedby={d} value={form.site_name} onChange={set("site_name")} required />}

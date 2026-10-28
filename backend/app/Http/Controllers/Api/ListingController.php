@@ -10,7 +10,7 @@ use App\Models\Property;
 use Illuminate\Http\JsonResponse;
 
 /**
- * La publicación de una propiedad en La Choza, editada desde su ficha en Timbre.
+ * La publicación de una propiedad en Brunito, editada desde su ficha en Timbre.
  */
 class ListingController extends Controller
 {

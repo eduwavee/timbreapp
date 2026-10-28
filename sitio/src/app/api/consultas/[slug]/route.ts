@@ -1,4 +1,4 @@
-import { API_URL } from "@/lib/api";
+import { API_URL, PROXY_HEADERS } from "@/lib/api";
 
 /**
  * Reenvía el "Me interesa" a Laravel desde el servidor: la URL de la API no queda
@@ -20,6 +20,7 @@ export async function POST(request: Request, ctx: RouteContext<"/api/consultas/[
         Accept: "application/json",
         "Content-Type": "application/json",
         "X-Forwarded-For": request.headers.get("x-forwarded-for") ?? "",
+        ...PROXY_HEADERS,
       },
       body: JSON.stringify(body),
       cache: "no-store",

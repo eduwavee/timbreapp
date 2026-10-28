@@ -4,7 +4,7 @@
 
 **Gestión de alquileres para dueños que administran sus propias casas, departamentos y galpones.**
 
-Cobranzas, morosidad con aviso por WhatsApp, reclamos derivados al plomero en un clic, un portal para cada inquilino y **La Choza**, la web pública donde se venden y alquilan las propiedades.
+Cobranzas, morosidad con aviso por WhatsApp, reclamos derivados al plomero en un clic, un portal para cada inquilino y **Brunito**, la web pública donde se venden y alquilan las propiedades.
 
 ![Login de Timbre](docs/screenshots/login.png)
 
@@ -30,10 +30,11 @@ El panel está pensado como la **liquidación de expensas** que se pega en el ha
 ## Índice
 
 - [Funcionalidades](#funcionalidades)
-- [La Choza: la web de propiedades](#la-choza-la-web-de-propiedades)
+- [Brunito: la web de propiedades](#brunito-la-web-de-propiedades)
 - [Capturas](#capturas)
 - [Stack y arquitectura](#stack-y-arquitectura)
 - [Instalación](#instalación)
+- [Publicar Brunito en Vercel](#publicar-brunito-en-vercel)
 - [Usuarios de demo](#usuarios-de-demo)
 - [Estructura del proyecto](#estructura-del-proyecto)
 - [API](#api)
@@ -49,22 +50,26 @@ El panel está pensado como la **liquidación de expensas** que se pega en el ha
 
 | Módulo | Qué resuelve |
 |---|---|
+| **Hoy** | Lo que pide acción, en orden: a quién avisar por WhatsApp (nadie le escribió en 7 días), qué vence hoy, los ajustes para aplicar, comprobantes, reclamos y consultas para revisar, y los contratos y documentos que vencen. |
 | **Liquidación del mes** | La pantalla de inicio. Muestra esperado, cobrado y adeudado vencido, y una planilla por unidad con saldo anterior, cuota, pagos, intereses y saldo. **Los morosos van primero**, resaltados, con los botones **Cobrar** y **WhatsApp** en la misma fila. |
 | **Cobros y recibos** | Pagos totales o parciales, interés por mora diario editable, recibos correlativos para imprimir o guardar en PDF, y anulación de pagos. |
 | **Aviso por WhatsApp** | Un clic abre WhatsApp con el mensaje ya escrito: nombre, unidad, saldo, días de atraso y alias para transferir. Queda registrado quién fue avisado y cuándo. Usa links `wa.me`, sin API paga. |
 | **Reclamos** | Tablero Abierto → Derivado → En curso → Resuelto, con fotos, prioridad y una conversación con el inquilino. |
 | **Derivación al proveedor** | **Derivar** abre WhatsApp al plomero, gasista o electricista con la dirección, el inquilino, la falla y la prioridad ya escritos, y marca el reclamo como derivado. |
 | **Comprobantes de pago** | El inquilino sube la captura de la transferencia y vos la revisás. **Confirmar y emitir recibo** registra el pago; si pagó de más, la diferencia queda como mora. También podés rechazarlo con un motivo. |
-| **Propiedades** | Casas, departamentos y galpones con código corto (`AZC-8`), galería de fotos con portada, el resultado del año de cada unidad y su **publicación en La Choza**. |
-| **Consultas de La Choza** | Lo que entra por el "Me interesa" de la web: lo atendés vos por WhatsApp o se lo derivás a un colega con un clic. |
+| **Propiedades** | Casas, departamentos y galpones con código corto (`AZC-8`), galería de fotos con portada, el resultado del año de cada unidad y su **publicación en Brunito**. |
+| **Consultas de Brunito** | Lo que entra por el "Me interesa" de la web: lo atendés vos por WhatsApp o se lo derivás a un colega con un clic. |
 | **Inquilinos** | Ficha con contratos, cuotas, avisos enviados, reclamos y acceso al portal. |
 | **Contratos** | Vigencia, día de vencimiento, ajuste ICL/IPC/fijo, depósito y mora. Al crearlo se generan las cuotas solas, y el ajuste por porcentaje actualiza las cuotas futuras. |
 | **Documentos** | Contrato firmado, DNI, garantía y recibos de sueldo en disco privado. Avisa cuando vence una garantía. |
 | **Agenda del mes** | Calendario de vencimientos de cuotas, ajustes ICL/IPC, fines de contrato y documentos que vencen. |
 | **Gastos y rentabilidad** | ABL, expensas, seguros y arreglos. El costo de un reclamo se carga solo como gasto. Calcula el neto y el margen de cada unidad, por año y mes a mes. |
 | **Exportar para el contador** | Excel del mes con 3 hojas (liquidación, cobros y gastos) y un reporte imprimible en PDF. |
+| **Ajuste ICL / IPC automático** | Timbre trae el ICL del BCRA y el IPC del INDEC todos los días. Cuando a un contrato le toca ajustar, lo propone ya calculado (porcentaje, alquiler nuevo y desde qué mes) y se aplica con un clic. Queda registrado cada ajuste aplicado. |
+| **Historial de cambios** | Cada ficha de propiedad, inquilino y contrato muestra quién la editó, cuándo y qué cambió, con el antes y el después. Incluye la publicación en Brunito. |
+| **Buscadores y Excel de cada vista** | Cada listado tiene su lupita (sin importar tildes; DNI y teléfonos sin puntos) y un botón para bajar a Excel lo que se ve. La búsqueda, los filtros y el orden quedan en la dirección: al volver de una ficha, la vista sigue igual. Lo último agregado o editado va arriba. |
 | **Buscador global** | **Ctrl+K** desde cualquier pantalla busca unidades, inquilinos y reclamos. |
-| **Actividad** | Línea de tiempo de pagos, avisos, derivaciones, reclamos y comprobantes. |
+| **Actividad** | Línea de tiempo de pagos, avisos, derivaciones, reclamos, comprobantes y cambios en las fichas. |
 | **Ajustes** | Datos de la administración, alias para transferir y los textos de los mensajes de WhatsApp, con vista previa. |
 
 ### Para el inquilino (portal)
@@ -77,25 +82,25 @@ El panel está pensado como la **liquidación de expensas** que se pega en el ha
 
 ### Tareas automáticas
 
-Todos los días a las 06:00, `cuotas:generar` crea las cuotas del mes de cada contrato vigente y marca las vencidas.
+Todos los días a las 05:30, `indices:actualizar` trae el ICL y el IPC, y a las 06:00 `cuotas:generar` crea las cuotas del mes de cada contrato vigente y marca las vencidas.
 
 ---
 
-## La Choza: la web de propiedades
+## Brunito: la web de propiedades
 
 <div align="center">
 
-![La Choza](docs/screenshots/la-choza-home.png)
+![Brunito](docs/screenshots/brunito-home.png)
 
 </div>
 
-**La Choza** ("vení a la choza") es la web pública de propiedades que vive en `sitio/` y está unida a Timbre. Se lee como el cartel **VENDE / ALQUILA** que cuelga del balcón: el verbo enorme es el selector de operación y, donde iría el teléfono del cartel, va el buscador.
+**Brunito** es la web pública de propiedades que vive en `sitio/` y está unida a Timbre. Tiene el tono de una desarrolladora porteña seria: la foto manda, el texto es grande y calmo y los datos van en mono.
 
 ### Cómo se une con Timbre
 
 ```mermaid
 flowchart LR
-    V[Visitante<br/>La Choza :3001] -->|elige propiedad<br/>toca Me interesa| S[Next.js sitio<br/>/api/consultas]
+    V[Visitante<br/>Brunito :3001] -->|elige propiedad<br/>toca Me interesa| S[Next.js sitio<br/>/api/consultas]
     S -->|POST /api/site/listings/slug/inquiries| L[Laravel API]
     L --> I[(Consulta<br/>estado: nueva)]
     I --> T[Timbre :3000<br/>aviso en la liquidación<br/>y bandeja Consultas]
@@ -103,7 +108,7 @@ flowchart LR
     T -->|Derivar| W2[WhatsApp al colega<br/>con los datos ya escritos]
 ```
 
-1. **Publicás desde Timbre.** En la ficha de cada propiedad, *Publicación en La Choza*: venta (USD), alquiler (ARS) o las dos, título, descripción, barrio, expensas, baños, antigüedad, características, *visible en la web* y *reservada*. Las fotos son las mismas de la ficha (la portada es la primera).
+1. **Publicás desde Timbre.** En la ficha de cada propiedad, *Publicación en Brunito*: venta (USD), alquiler (ARS) o las dos, título, descripción, barrio, expensas, baños, antigüedad, características, *visible en la web* y *reservada*. Las fotos son las mismas de la ficha (la portada es la primera).
 2. **El visitante busca y consulta.** Listado con filtros (barrio, tipo, ambientes, precio máximo y orden), ficha con galería y el panel-cartel con el formulario *Me interesa*. Al enviarlo se pega la faja amarilla **¡CONSULTA ENVIADA!**.
 3. **Te aparece en Timbre.** Las consultas nuevas salen arriba de la liquidación y en el menú *Consultas* con su contador. Desde ahí:
    - **La atiendo yo:** abre WhatsApp con la respuesta ya escrita y la consulta queda a tu cargo.
@@ -116,7 +121,7 @@ La web nunca muestra datos del inquilino ni el número exacto: solo la altura de
 
 | Ficha con el panel-cartel | Consulta enviada | En el celular |
 |---|---|---|
-| ![](docs/screenshots/la-choza-ficha.png) | ![](docs/screenshots/la-choza-consulta-enviada.png) | ![](docs/screenshots/la-choza-mobile.png) |
+| ![](docs/screenshots/brunito-ficha.png) | ![](docs/screenshots/brunito-consulta-enviada.png) | ![](docs/screenshots/brunito-mobile.png) |
 
 | Aviso en la liquidación | Bandeja de consultas | Derivar a un colega |
 |---|---|---|
@@ -223,7 +228,7 @@ flowchart LR
     L --> P[(PostgreSQL)]
     L --> S[(Storage<br/>público: fotos<br/>privado: DNI, comprobantes)]
     L -.->|links wa.me| W[WhatsApp]
-    C[Scheduler 06:00<br/>cuotas:generar] --> L
+    C[Scheduler<br/>05:30 indices:actualizar<br/>06:00 cuotas:generar] --> L
 ```
 
 - **El token nunca llega al JavaScript del navegador.** Next.js lo guarda en una cookie `httpOnly` y reenvía cada llamada a Laravel desde un route handler (`/api/backend/[...path]`).
@@ -268,7 +273,7 @@ npm install
 cp .env.example .env.local
 ```
 
-### 4. Web La Choza (Next.js)
+### 4. Web Brunito (Next.js)
 
 ```bash
 cd ../sitio
@@ -284,9 +289,29 @@ Desde la raíz:
 ./dev.sh
 ```
 
-Arranca la API en `:8000`, el scheduler, Timbre en `:3000` y La Choza en `:3001`. Abrí **http://localhost:3000** para el panel y **http://localhost:3001** para la web.
+Arranca la API en `:8000`, el scheduler, Timbre en `:3000` y Brunito en `:3001`. Abrí **http://localhost:3000** para el panel y **http://localhost:3001** para la web.
 
-Para volver a los datos de demo: `cd backend && php artisan migrate:fresh --seed`.
+Para volver a los datos de demo: `cd backend && php artisan migrate:fresh --seed`. Para traer los índices sin esperar al scheduler: `php artisan indices:actualizar`.
+
+> Si movés la carpeta del proyecto y las fotos dejan de verse, volvé a correr `php artisan storage:link --force`: el enlace a las fotos guarda la ruta completa.
+
+---
+
+## Publicar Brunito en Vercel
+
+La web vive en `sitio/` y le pide los datos a la API de Laravel desde el servidor. Para publicarla:
+
+1. **La API tiene que estar en internet, con HTTPS.** Vercel no llega a tu `localhost`. En `backend/.env` del servidor:
+   - `APP_URL=https://api.tudominio.com.ar`. Las fotos salen de esa dirección; si queda en `http`, el navegador las bloquea en una web `https`.
+   - `SITE_URL=https://tu-web.vercel.app`, para que el panel arme bien los links "ver en la web".
+   - `SITE_PROXY_KEY=` con una clave larga al azar (por ejemplo, `openssl rand -hex 24`).
+2. **En Vercel:** importá el repositorio y elegí `sitio` como *Root Directory*. El framework (Next.js) se detecta solo.
+3. **Variables de entorno en Vercel:**
+   - `LARAVEL_API_URL=https://api.tudominio.com.ar/api`
+   - `SITE_PROXY_KEY=` la misma clave que en Laravel. Con ella, el límite de 6 consultas por minuto se cuenta por visitante y no para todo el sitio junto.
+   - `NEXT_PUBLIC_DEMO=1` solo si querés el aviso de "propiedades de demostración" en el pie.
+
+Las páginas se arman en cada pedido, así que el build no necesita la API. Los datos se cachean 30 segundos.
 
 ---
 
@@ -329,7 +354,7 @@ timbreapp/
 │       ├── components/           sistema de componentes
 │       ├── lib/                  cliente de API, formatos es-AR y tipos
 │       └── proxy.ts              redirección por sesión y rol
-├── sitio/                        La Choza, la web pública (Next.js 16)
+├── sitio/                        Brunito, la web pública (Next.js 16)
 │   └── src/
 │       ├── app/                  inicio, /propiedades, /propiedades/[slug] y /api/consultas
 │       ├── components/           cartel, buscador, tarjetas, galería y panel de consulta
@@ -373,14 +398,17 @@ Todas las rutas van bajo `/api`, con autenticación Sanctum (Bearer).
 | GET/POST/DELETE | `/contracts/{id}/documents`, `/documents/{id}/file` | documentos privados |
 | GET | `/agenda?month=`, `/activity`, `/search?q=`, `/profitability?year=` | |
 | GET | `/exports/month?month=YYYY-MM` | Excel del mes |
+| POST | `/exports/table` | Excel de un listado tal como se ve (título, columnas y filas) |
+| GET | `/adjustments` | ajustes ICL e IPC para aplicar, ya calculados |
+| GET | `/history/{properties\|tenants\|contracts}/{id}` | historial de cambios de una ficha |
 | GET/PUT | `/settings` | |
-| GET/PUT | `/properties/{id}/listing` | publicación en La Choza |
+| GET/PUT | `/properties/{id}/listing` | publicación en Brunito |
 | GET/PATCH | `/inquiries`, `/inquiries/{id}` | consultas de la web (estado, cierre, notas) |
 | POST | `/inquiries/{id}/contact` | "la atiendo yo": link de WhatsApp al interesado |
 | POST | `/inquiries/{id}/derive` | deriva a un colega y devuelve el link de WhatsApp |
 | CRUD | `/colleagues` | colegas y vendedores |
 
-**Web pública La Choza** (sin sesión, con límite de pedidos)
+**Web pública Brunito** (sin sesión, con límite de pedidos)
 
 | Método | Ruta | |
 |---|---|---|
@@ -409,11 +437,12 @@ createdb gestoria_test   # solo la primera vez
 php artisan test
 ```
 
-Hay 24 tests de feature (121 aserciones) que cubren:
+Hay 34 tests de feature (188 aserciones) que cubren:
 - **Cobranza:** generación de cuotas, pagos parciales, numeración de recibos y mora diaria.
 - **Liquidación:** totales vencidos sin las cuotas que todavía no vencieron y los links de WhatsApp.
 - **Reclamos:** derivación al proveedor.
-- **La Choza:** publicación con slug y precios, filtros de la web pública, "Me interesa" sin duplicados ni spam, propiedades reservadas, atención y derivación de consultas por WhatsApp con el colega sugerido.
+- **Brunito:** publicación con slug y precios, filtros de la web pública, "Me interesa" sin duplicados ni spam, límites contados por visitante (navegar no gasta las consultas), propiedades reservadas, atención y derivación de consultas por WhatsApp con el colega sugerido.
+- **Historial y ajustes:** cambios legibles en propiedades, contratos y publicaciones; nada se anota sin sesión; ICL del BCRA e IPC del INDEC; ajuste sugerido que desaparece al aplicarse; IPC provisorio cuando falta el mes; Excel de cualquier listado.
 - **Permisos del inquilino:** solo ve lo suyo, no entra a rutas de administración y no puede ver archivos ajenos.
 - **Comprobantes:** el flujo completo de comprobante → confirmación → recibo.
 - **Gastos:** el costo de un reclamo se convierte en gasto.
@@ -434,7 +463,7 @@ El diseño se documenta en [`DESIGN.md`](DESIGN.md). Lo esencial:
 - **Una sola familia tipográfica** (Archivo), con rótulos condensados para las columnas.
 - **WhatsApp verde** solo para los botones que abren `wa.me`.
 
-**La Choza** tiene su propio sistema en [`sitio/DESIGN.md`](sitio/DESIGN.md): pared gris fría, chapas blancas, **rojo para la venta y azul para el alquiler** (la variable `--op` cambia con la operación), amarillo solo para las fajas cruzadas, y letra de cartel en Sofia Sans Extra Condensed servida desde el proyecto.
+**Brunito** tiene su propio sistema en [`sitio/DESIGN.md`](sitio/DESIGN.md): fondo hueso, la foto como protagonista, Archivo para el texto y Chivo Mono para los datos, y la marca en minúscula con un techo a dos aguas sobre la "br".
 
 ---
 

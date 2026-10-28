@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-10-23T00:00:00Z",
-  "title": "Design System: La Choza",
+  "title": "Design System: Brunito",
   "extensions": {
     "colorMeta": {
       "hueso": {
@@ -336,7 +336,7 @@
       },
       "statement": {
         "displayName": "Frase",
-        "purpose": "La frase de qué es La Choza y la descripción de la ficha; 400 con tramos en 700."
+        "purpose": "La frase de qué es Brunito y la descripción de la ficha; 400 con tramos en 700."
       },
       "title": {
         "displayName": "Precio",
@@ -504,7 +504,7 @@
   ],
   "narrative": {
     "northStar": "La Desarrolladora Porteña",
-    "overview": "La Choza se presenta como una desarrolladora seria de Buenos Aires, no como un portal de avisos. La foto real manda: aparece a sangre, grande, sin marcos. El texto acompaña grande y calmo, en una grotesca apretada que mezcla negrita y regular en la misma frase. Todo lo que es dato (barrio, operación, ambientes, m², navegación, botones, rótulos) va en una mono chica en mayúsculas, como el rótulo de un plano.\n\nEl suelo es hueso, la tinta casi negra, y las divisiones son filetes de 1px. No hay radios, no hay sombras, no hay viñetas de color. El color aparece en un solo lugar del sistema: las franjas del acordeón de recién publicadas, con una paleta propia (ultramar, rosa pálido, verde botella, ocre, celeste agua). Fuera de ahí, la página es hueso, tinta y foto.\n\nLa densidad es baja y generosa: secciones separadas por 96 a 128px, columnas que respiran, listas que son índices tipográficos con filetes. Rechaza el portal de filtros grises y cualquier disfraz gráfico.",
+    "overview": "Brunito se presenta como una desarrolladora seria de Buenos Aires, no como un portal de avisos. La foto real manda: aparece a sangre, grande, sin marcos. El texto acompaña grande y calmo, en una grotesca apretada que mezcla negrita y regular en la misma frase. Todo lo que es dato (barrio, operación, ambientes, m², navegación, botones, rótulos) va en una mono chica en mayúsculas, como el rótulo de un plano.\n\nEl suelo es hueso, la tinta casi negra, y las divisiones son filetes de 1px. No hay radios, no hay sombras, no hay viñetas de color. El color aparece en un solo lugar del sistema: las franjas del acordeón de recién publicadas, con una paleta propia (ultramar, rosa pálido, verde botella, ocre, celeste agua). Fuera de ahí, la página es hueso, tinta y foto.\n\nLa densidad es baja y generosa: secciones separadas por 96 a 128px, columnas que respiran, listas que son índices tipográficos con filetes. Rechaza el portal de filtros grises y cualquier disfraz gráfico.",
     "keyCharacteristics": [
       "Foto real a sangre como protagonista; el header va transparente sobre ella en el inicio.",
       "Archivo Variable apretada (700, tracking -0.035em, interlínea 0.98) para títulos; 700 y 400 mezclados en frases y en el H1 del listado.",

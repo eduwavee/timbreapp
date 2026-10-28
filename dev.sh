@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Levanta API (8000), scheduler, Timbre (3000) y la web La Choza (3001). Ctrl+C corta todo.
+# Levanta API (8000), scheduler, Timbre (3000) y la web Brunito (3001). Ctrl+C corta todo.
 set -e
 cd "$(dirname "$0")"
 trap 'kill 0' EXIT

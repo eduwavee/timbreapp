@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Vendedor o colega inmobiliario al que se le derivan consultas de La Choza.
+ * Vendedor o colega inmobiliario al que se le derivan consultas de Brunito.
  */
 #[Fillable(['name', 'agency', 'phone', 'zone', 'notes', 'active'])]
 class Colleague extends Model

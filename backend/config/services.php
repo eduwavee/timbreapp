@@ -29,8 +29,10 @@ return [
     ],
 
     'site' => [
-        // Web pública de La Choza (Next.js en sitio/): arma los links "ver en la web" del panel.
+        // Web pública de Brunito (Next.js en sitio/): arma los links "ver en la web" del panel.
         'url' => env('SITE_URL', 'http://localhost:3001'),
+        // Clave compartida con el servidor de Brunito: con ella la API cuenta los límites por visitante.
+        'proxy_key' => env('SITE_PROXY_KEY'),
     ],
 
     'slack' => [

@@ -269,7 +269,7 @@ class DatabaseSeeder extends Seeder
             'message' => 'Recordatorio de saldo pendiente.',
         ])->forceFill(['created_at' => $today->copy()->subDays(4)])->save();
 
-        $this->call(LaChozaSeeder::class);
+        $this->call(BrunitoSeeder::class);
     }
 
     /**

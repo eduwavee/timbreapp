@@ -1,17 +1,19 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { ActivityFeed } from "@/components/activity-feed";
 import { cx, Empty, ErrorState, PageHeader, Panel, SearchBox, SkeletonRows } from "@/components/ui";
 import { matches } from "@/lib/search";
 import type { ActivityEvent } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
+import { useUrlState } from "@/lib/use-url-state";
 
 const filters: { key: string; label: string; kinds: ActivityEvent["kind"][] }[] = [
   { key: "todo", label: "Todo", kinds: [] },
   { key: "plata", label: "Pagos y comprobantes", kinds: ["pago", "comprobante"] },
   { key: "avisos", label: "Avisos y derivaciones", kinds: ["aviso", "derivacion"] },
   { key: "reclamos", label: "Reclamos", kinds: ["reclamo", "resuelto"] },
+  { key: "cambios", label: "Cambios en fichas", kinds: ["cambio"] },
 ];
 
 function dayLabel(iso: string) {
@@ -27,8 +29,8 @@ function dayLabel(iso: string) {
 
 export default function ActivityPage() {
   const feed = useApi<{ data: ActivityEvent[] }>("activity?limit=100");
-  const [filter, setFilter] = useState("todo");
-  const [q, setQ] = useState("");
+  const [filter, setFilter] = useUrlState("ver", "todo");
+  const [q, setQ] = useUrlState("q", "");
 
   const days = useMemo(() => {
     const kinds = filters.find((f) => f.key === filter)!.kinds;
@@ -62,7 +64,7 @@ export default function ActivityPage() {
       )}
       {feed.data && days.length === 0 && (
         <Panel>
-          {q ? <Empty title="Nada coincide con la búsqueda">Se busca entre los últimos 100 movimientos.</Empty> : <Empty title="Nada por acá todavía">Cuando cobres, avises o entre un reclamo, queda registrado.</Empty>}
+          {q ? <Empty title="Nada coincide con la búsqueda">Se busca entre los últimos 100 movimientos.</Empty> : <Empty title="Nada por acá todavía">Cuando cobres, avises, edites una ficha o entre un reclamo, queda registrado.</Empty>}
         </Panel>
       )}
       <div className="flex max-w-3xl flex-col gap-6">

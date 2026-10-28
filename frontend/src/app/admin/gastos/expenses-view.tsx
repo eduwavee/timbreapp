@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import { ExportButton } from "@/components/export-button";
 import { ExpenseForm } from "@/components/forms/expense-form";
 import { useToast } from "@/components/toast";
 import { Button, cx, Empty, ErrorState, Money, PageHeader, Panel, SearchBox, Section, Select, SkeletonRows, Table, Td, Th } from "@/components/ui";
@@ -11,6 +12,7 @@ import { ars, currentPeriod, fecha, periodo, shiftPeriod } from "@/lib/format";
 import { matches } from "@/lib/search";
 import { EXPENSE_CATEGORIES, type Expense } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
+import { useUrlState } from "@/lib/use-url-state";
 
 type Profit = {
   year: number;
@@ -26,8 +28,8 @@ export function ExpensesView() {
   const tab = params.get("tab") === "rentabilidad" ? "rentabilidad" : "gastos";
   const [month, setMonth] = useState(currentPeriod());
   const [year, setYear] = useState(new Date().getFullYear());
-  const [category, setCategory] = useState("");
-  const [q, setQ] = useState("");
+  const [category, setCategory] = useUrlState("rubro", "");
+  const [q, setQ] = useUrlState("q", "");
   const [editing, setEditing] = useState<Expense | "new" | null>(params.get("nuevo") ? "new" : null);
   const list = useApi<{ data: Expense[] }>(tab === "gastos" ? `expenses?month=${month}` : null);
   const profit = useApi<Profit>(tab === "rentabilidad" ? `profitability?year=${year}` : null);
@@ -67,6 +69,33 @@ export function ExpensesView() {
           ))}
         </div>
         <SearchBox value={q} onChange={setQ} placeholder={tab === "gastos" ? "Unidad o detalle del gasto" : "Unidad o calle"} className="ml-auto" />
+        {tab === "gastos" ? (
+          <ExportButton
+            title={`Gastos ${month}`}
+            rows={expenses}
+            columns={[
+              { label: "Fecha", value: (e) => fecha(e.spent_on) },
+              { label: "Unidad", value: (e) => e.property.code },
+              { label: "Rubro", value: (e) => e.category.label },
+              { label: "Detalle", value: (e) => e.description },
+              { label: "Monto", type: "money", value: (e) => e.amount },
+            ]}
+          />
+        ) : (
+          <ExportButton
+            title={`Rentabilidad ${year}`}
+            rows={units}
+            columns={[
+              { label: "Unidad", value: (r) => r.property.code },
+              { label: "Dirección", value: (r) => r.property.address },
+              { label: "Tipo", value: (r) => r.property.type },
+              { label: "Cobrado", type: "money", value: (r) => r.income },
+              { label: "Gastos", type: "money", value: (r) => r.expenses },
+              { label: "Neto", type: "money", value: (r) => r.net },
+              { label: "Margen %", type: "number", value: (r) => r.margin },
+            ]}
+          />
+        )}
         <div className="flex items-center gap-1">
           <Button size="sm" className="w-8 px-0" onClick={() => (tab === "gastos" ? setMonth((m) => shiftPeriod(m, -1)) : setYear((y) => y - 1))} aria-label="Anterior">
             <ChevronLeft className="size-4" />

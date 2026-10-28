@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { Pencil } from "lucide-react";
+import { ChangeHistory } from "@/components/change-history";
 import { TenantForm } from "@/components/forms/tenant-form";
 import { InstallmentTable } from "@/components/installment-table";
 import { useToast } from "@/components/toast";
@@ -147,6 +148,10 @@ export function TenantDetail() {
           </Section>
         </div>
       </div>
+
+      <Section title="Historial de cambios" className="mt-8 max-w-3xl">
+        <ChangeHistory type="tenants" id={t.id} version={t.updated_at} />
+      </Section>
 
       {editing && (
         <TenantForm

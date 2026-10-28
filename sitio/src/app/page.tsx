@@ -67,7 +67,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
           </div>
         </section>
 
-        <section aria-label="Qué es La Choza" className="mx-auto max-w-[1440px] px-4 pt-20 pb-24 sm:px-8 sm:pt-28 sm:pb-32">
+        <section aria-label="Qué es Brunito" className="mx-auto max-w-[1440px] px-4 pt-20 pb-24 sm:px-8 sm:pt-28 sm:pb-32">
           <p className="max-w-[26ch] text-[clamp(28px,3.6vw,54px)] leading-[1.12] tracking-[-0.025em] text-balance">
             Publicamos <strong className="font-bold">casas, departamentos y galpones</strong> en {citiesText}. Elegís uno, tocás <strong className="font-bold">Me interesa</strong> y te escribimos por WhatsApp para ir a verlo.
           </p>
@@ -135,7 +135,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
             </div>
             {meta.owner_phone && (
               <a
-                href={waLink(meta.owner_phone, "Hola, quiero publicar una propiedad en La Choza.")}
+                href={waLink(meta.owner_phone, "Hola, quiero publicar una propiedad en Brunito.")}
                 target="_blank"
                 rel="noreferrer"
                 className="dato flex h-14 items-center justify-center gap-3 bg-tinta px-7 text-[14px] text-hueso transition-colors hover:bg-tinta-2"

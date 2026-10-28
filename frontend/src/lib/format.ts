@@ -49,6 +49,17 @@ export function hace(date: string | null | undefined): string {
   return fecha(date);
 }
 
+/** Días enteros desde una fecha hasta ahora. */
+export function diasDesde(date: string): number {
+  return Math.floor((Date.now() - parse(date).getTime()) / 86_400_000);
+}
+
+/** "Martes 27 de octubre" */
+export function hoyLargo(): string {
+  const s = new Date().toLocaleDateString("es-AR", { weekday: "long", day: "numeric", month: "long" }).replace(",", "");
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 /** true si pasó hace menos de 24 h. */
 export function esReciente(date: string): boolean {
   return Date.now() - parse(date).getTime() < 86_400_000;

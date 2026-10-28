@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ContractRequest;
 use App\Http\Resources\ContractResource;
 use App\Models\Contract;
-use App\Models\Property;
+use App\Services\Adjustments;
 use App\Services\Billing;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -45,7 +45,7 @@ class ContractController extends Controller
             }
 
             $contract = Contract::query()->create($data + ['status' => ContractStatus::Active]);
-            Property::query()->whereKey($contract->property_id)->update(['status' => PropertyStatus::Occupied]);
+            $contract->property->update(['status' => PropertyStatus::Occupied]);
             $billing->generateForContract($contract);
             $billing->refreshStatuses();
 
@@ -55,9 +55,11 @@ class ContractController extends Controller
         return ContractResource::make($contract->load('property', 'tenant'));
     }
 
-    public function show(Contract $contract): ContractResource
+    public function show(Contract $contract, Adjustments $adjustments): ContractResource
     {
-        return ContractResource::make($contract->load(['property', 'tenant', 'installments.payments', 'installments.contract', 'documents']));
+        $contract->load(['property', 'tenant', 'installments.payments', 'installments.contract', 'documents', 'adjustments']);
+
+        return ContractResource::make($contract)->additional(['suggested_adjustment' => $adjustments->suggestionFor($contract)]);
     }
 
     public function update(ContractRequest $request, Contract $contract): ContractResource
@@ -65,7 +67,7 @@ class ContractController extends Controller
         DB::transaction(function () use ($request, $contract) {
             $contract->update($request->validated());
             if ($contract->status !== ContractStatus::Active) {
-                Property::query()->whereKey($contract->property_id)->update(['status' => PropertyStatus::Available]);
+                $contract->property->update(['status' => PropertyStatus::Available]);
             }
         });
 
@@ -81,10 +83,18 @@ class ContractController extends Controller
             'percentage' => ['required_without:new_amount', 'nullable', 'numeric', 'between:-50,500'],
             'new_amount' => ['required_without:percentage', 'nullable', 'numeric', 'min:1'],
             'from_period' => ['required', 'date_format:Y-m'],
+            'basis' => ['nullable', 'string', 'max:120'],
         ]);
 
         DB::transaction(function () use ($contract, $data) {
-            $amount = $data['new_amount'] ?? round((float) $contract->rent_amount * (1 + $data['percentage'] / 100), 2);
+            $previous = (float) $contract->rent_amount;
+            $amount = $data['new_amount'] ?? round($previous * (1 + $data['percentage'] / 100), 2);
+            $contract->adjustments()->updateOrCreate(['from_period' => $data['from_period'].'-01'], [
+                'previous_amount' => $previous,
+                'new_amount' => $amount,
+                'percentage' => $previous > 0 ? round(($amount / $previous - 1) * 100, 3) : 0,
+                'basis' => $data['basis'] ?? null,
+            ]);
             $contract->update(['rent_amount' => $amount]);
             $contract->installments()
                 ->whereDate('period', '>=', $data['from_period'].'-01')

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Plus } from "lucide-react";
+import { ExportButton } from "@/components/export-button";
 import { TicketForm } from "@/components/forms/ticket-form";
 import { useToast } from "@/components/toast";
 import { Button, cx, ErrorState, PageHeader, PriorityMark, SearchBox, Select } from "@/components/ui";
@@ -11,6 +12,7 @@ import { hace } from "@/lib/format";
 import { matches } from "@/lib/search";
 import { TRADES, type Ticket, type TicketStatus } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
+import { useUrlState } from "@/lib/use-url-state";
 
 const columns: { key: TicketStatus; label: string; hint: string }[] = [
   { key: "abierto", label: "Abiertos", hint: "Esperan que los derives" },
@@ -30,8 +32,8 @@ export function TicketsBoard() {
   const params = useSearchParams();
   const router = useRouter();
   const nuevo = params.get("nuevo");
-  const [category, setCategory] = useState("");
-  const [q, setQ] = useState("");
+  const [category, setCategory] = useUrlState("rubro", "");
+  const [q, setQ] = useUrlState("q", "");
   const [creating, setCreating] = useState(nuevo !== null);
   const list = useApi<{ data: Ticket[] }>("tickets");
   const toast = useToast();
@@ -62,6 +64,21 @@ export function TicketsBoard() {
           ))}
         </Select>
         <SearchBox value={q} onChange={setQ} placeholder="Falla, unidad, inquilino o proveedor" className="ml-auto sm:w-72" />
+        <ExportButton
+          title="Reclamos"
+          rows={tickets}
+          columns={[
+            { label: "N°", type: "number", value: (t) => t.id },
+            { label: "Falla", value: (t) => t.title },
+            { label: "Unidad", value: (t) => t.property?.code },
+            { label: "Inquilino", value: (t) => t.tenant?.full_name },
+            { label: "Rubro", value: (t) => t.category.label },
+            { label: "Prioridad", value: (t) => t.priority.label },
+            { label: "Estado", value: (t) => t.status.label },
+            { label: "Proveedor", value: (t) => t.provider?.name },
+            { label: "Costo", type: "money", value: (t) => t.cost },
+          ]}
+        />
       </div>
       {list.error && <ErrorState message={list.error.message} onRetry={list.reload} />}
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">

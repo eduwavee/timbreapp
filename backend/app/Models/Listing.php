@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\ListingOperation;
 use App\Enums\PropertyType;
+use App\Models\Concerns\RecordsChanges;
 use Database\Factories\ListingFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Touches;
@@ -15,14 +16,43 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 /**
- * Publicación de una propiedad en La Choza: venta (USD), alquiler (ARS) o las dos.
+ * Publicación de una propiedad en Brunito: venta (USD), alquiler (ARS) o las dos.
  */
 #[Fillable(['property_id', 'slug', 'headline', 'description', 'neighborhood', 'for_sale', 'sale_price', 'for_rent', 'rent_price', 'expenses', 'bathrooms', 'garage', 'age_years', 'amenities', 'published_at', 'reserved_at'])]
 #[Touches('property')]
 class Listing extends Model
 {
     /** @use HasFactory<ListingFactory> */
-    use HasFactory;
+    use HasFactory, RecordsChanges;
+
+    protected function historyFields(): array
+    {
+        return [
+            'headline' => ['Título', 'text'],
+            'description' => ['Descripción', 'text'],
+            'neighborhood' => ['Barrio', 'text'],
+            'for_sale' => ['En venta', 'bool'],
+            'sale_price' => ['Precio de venta', 'usd'],
+            'for_rent' => ['En alquiler', 'bool'],
+            'rent_price' => ['Precio de alquiler', 'money'],
+            'expenses' => ['Expensas', 'money'],
+            'bathrooms' => ['Baños', 'text'],
+            'garage' => ['Cochera', 'bool'],
+            'age_years' => ['Antigüedad (años)', 'text'],
+            'published_at' => ['Visible en la web', 'flag'],
+            'reserved_at' => ['Reservada', 'flag'],
+        ];
+    }
+
+    protected function historySubject(): Model
+    {
+        return $this->property;
+    }
+
+    protected function historyPrefix(): string
+    {
+        return 'Publicación · ';
+    }
 
     public const AMENITIES = [
         'luminoso' => 'Luminoso',

@@ -5,10 +5,10 @@ primary_target: "sitio"
 related_targets: []
 ---
 
-# Surface: La Choza (web pública de propiedades)
+# Surface: Brunito (web pública de propiedades)
 
 Scope: toda la app Next.js en `sitio/`. Modo: Persuade. Visitante: alguien que busca depto o casa para comprar o alquilar, casi siempre desde el celular. Acción: elegir una propiedad y tocar "Me interesa"; la consulta cae en Timbre y el dueño la atiende o la deriva a un colega por WhatsApp.
-Marca: La Choza ("vení a la choza"), voseo, humor de barrio. Hermana de Timbre, mundo visual propio.
+Marca: Brunito, voseo, humor de barrio. Hermana de Timbre, mundo visual propio.
 
 ## Direction contract
 
@@ -18,7 +18,7 @@ OWN-WORLD: Pared de revoque gris frío #E6E7E2 de fondo, chapas esmaltadas blanc
 
 STORY: El visitante ve el cartel, elige VENDE o ALQUILA, busca por barrio y ambientes, abre una propiedad, mira fotos y datos, toca "Me interesa", deja su WhatsApp y ve caer la faja CONSULTA ENVIADA.
 
-FIRST VIEWPORT: Barra fina con la marca La Choza a la izquierda. Debajo, el cartel ocupa casi todo el ancho: el verbo VENDE / ALQUILA a 18-22vw es el selector de operación (dos pestañas), debajo la línea del cartel con el buscador (barrio, tipo, ambientes) y el botón "Ver N propiedades". Al pie del viewport asoma la fila "Recién colgados".
+FIRST VIEWPORT: Barra fina con la marca Brunito a la izquierda. Debajo, el cartel ocupa casi todo el ancho: el verbo VENDE / ALQUILA a 18-22vw es el selector de operación (dos pestañas), debajo la línea del cartel con el buscador (barrio, tipo, ambientes) y el botón "Ver N propiedades". Al pie del viewport asoma la fila "Recién colgados".
 
 FORM: Cartel de inmobiliaria colgado del balcón, candidato 1 de 7 en mi lista ordenada (elegido por el usuario como pick sobre el asignado 5), seed:c9c26bd80fae28fe. Movimiento distintivo: al cambiar de operación la chapa se balancea colgada de sus alambres y el color de la página pasa de rojo a azul; al enviar una consulta se pega la faja amarilla en diagonal sobre el formulario.
 

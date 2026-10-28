@@ -59,6 +59,7 @@ export type Contract = {
   notes: string | null;
   installments?: Installment[];
   documents?: ContractDocument[];
+  adjustments?: ContractAdjustment[];
   created_at: string;
   updated_at: string;
 };
@@ -219,7 +220,7 @@ export type ContractDocument = {
 
 export type Photo = { id: number; url: string; caption: string | null };
 
-export type ActivityEvent = { kind: "pago" | "aviso" | "derivacion" | "reclamo" | "resuelto" | "comprobante" | "consulta"; at: string; title: string; detail: string; href: string | null };
+export type ActivityEvent = { kind: "pago" | "aviso" | "derivacion" | "reclamo" | "resuelto" | "comprobante" | "consulta" | "cambio"; at: string; title: string; detail: string; href: string | null };
 
 export type AgendaEvent = { date: string; kind: "vencimiento" | "fin_contrato" | "ajuste" | "documento"; title: string; detail: string; tone: "ok" | "debt" | "ink" | "stamp"; href: string; units: string[] };
 
@@ -242,7 +243,7 @@ export const DOCUMENT_KINDS: Enum[] = [
   { value: "otro", label: "Otro" },
 ];
 
-/* ───────────── La Choza (web pública) ───────────── */
+/* ───────────── Brunito (web pública) ───────────── */
 
 export type Listing = {
   id: number;
@@ -308,3 +309,26 @@ export const INQUIRY_STATUSES: { value: InquiryStatus; label: string }[] = [
   { value: "derivada", label: "Derivadas" },
   { value: "cerrada", label: "Cerradas" },
 ];
+
+/** Una entrada del historial de una ficha: el alta o una edición con el antes y el después. */
+export type ChangeEntry = { id: number; event: "alta" | "cambio"; changes: { label: string; from: string; to: string }[]; user: string | null; at: string };
+
+export type ContractAdjustment = { id: number; from_period: string; previous_amount: number; new_amount: number; percentage: number; basis: string | null; created_at: string };
+
+/** Un ajuste ICL o IPC que toca aplicar, ya calculado con los índices oficiales. */
+export type AdjustmentSuggestion = {
+  contract_id: number;
+  property: { id: number; code: string; address: string };
+  tenant: { id: number; name: string };
+  index: string;
+  every_months: number;
+  date: string;
+  days: number;
+  from_period: string;
+  previous_amount: number;
+  ready: boolean;
+  percentage: number | null;
+  new_amount: number | null;
+  provisional: boolean;
+  basis: string | null;
+};

@@ -30,7 +30,7 @@ export function OperationTag({ operation }: { operation: Inquiry["operation"] })
 type Detail = { data: Inquiry; suggested_colleague_id: number | null; same_person: { data: Inquiry[] } | Inquiry[] };
 
 /**
- * Una consulta de La Choza: quién es, qué propiedad pidió y las dos salidas,
+ * Una consulta de Brunito: quién es, qué propiedad pidió y las dos salidas,
  * atenderla uno mismo o pasársela a un colega, las dos por WhatsApp.
  */
 export function InquirySheet({ id, onClose, onChanged }: { id: number | null; onClose: () => void; onChanged: () => void }) {
@@ -102,7 +102,7 @@ export function InquirySheet({ id, onClose, onChanged }: { id: number | null; on
       open={id !== null}
       onClose={onClose}
       title={inquiry ? `Consulta de ${inquiry.name}` : "Consulta"}
-      description={inquiry && <span>Entró por La Choza {hace(inquiry.created_at)}</span>}
+      description={inquiry && <span>Entró por Brunito {hace(inquiry.created_at)}</span>}
       footer={
         inquiry &&
         (closed ? (

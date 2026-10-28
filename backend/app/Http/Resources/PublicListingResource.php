@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Lo que ve cualquiera en La Choza: sin inquilinos, sin número exacto ni datos internos.
+ * Lo que ve cualquiera en Brunito: sin inquilinos, sin número exacto ni datos internos.
  *
  * @mixin Listing
  */

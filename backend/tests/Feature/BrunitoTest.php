@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
-class LaChozaTest extends TestCase
+class BrunitoTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -163,5 +163,37 @@ class LaChozaTest extends TestCase
         Carbon::setTestNow('2026-10-23 12:15:00');
         $this->postJson("/api/properties/{$property->id}/photos", ['photos' => [UploadedFile::fake()->image('living.jpg')]])->assertCreated();
         $this->getJson('/api/properties')->assertJsonPath('data.0.updated_at', '2026-10-23T12:15:00-03:00');
+    }
+
+    public function test_browsing_the_site_does_not_use_up_the_me_interesa_limit(): void
+    {
+        $listing = Listing::factory()->create();
+
+        for ($i = 0; $i < 10; $i++) {
+            $this->getJson('/api/site/meta')->assertOk();
+        }
+
+        $this->postJson("/api/site/listings/{$listing->slug}/inquiries", ['operation' => 'alquiler', 'name' => 'Lucía', 'phone' => '11 6123-4499'])
+            ->assertCreated();
+    }
+
+    public function test_behind_the_site_server_each_visitor_has_their_own_limit(): void
+    {
+        config(['services.site.proxy_key' => 'clave-del-sitio']);
+        $listing = Listing::factory()->create();
+        $url = "/api/site/listings/{$listing->slug}/inquiries";
+        $from = fn (string $ip, string $key = 'clave-del-sitio') => ['X-Site-Key' => $key, 'X-Forwarded-For' => $ip];
+
+        for ($i = 0; $i < 6; $i++) {
+            $this->postJson($url, [], $from('190.0.0.1'))->assertUnprocessable();
+        }
+        $this->postJson($url, [], $from('190.0.0.1'))->assertTooManyRequests();
+        $this->postJson($url, [], $from('190.0.0.2'))->assertUnprocessable();
+
+        // Sin la clave no se le cree la IP: cuenta la del servidor que llama, que ya agotó sus intentos.
+        for ($i = 0; $i < 6; $i++) {
+            $this->postJson($url, [], $from('190.0.0.3', 'otra'));
+        }
+        $this->postJson($url, [], $from('190.0.0.4', 'otra'))->assertTooManyRequests();
     }
 }

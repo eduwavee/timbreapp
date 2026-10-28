@@ -2,17 +2,19 @@
 
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Users } from "lucide-react";
+import { ExportButton } from "@/components/export-button";
 import { InquiryPill, InquirySheet, OperationTag } from "@/components/inquiry-sheet";
 import { ButtonLink, cx, Empty, ErrorState, PageHeader, Panel, SearchBox, SkeletonRows, Table, Td, Th } from "@/components/ui";
-import { hace } from "@/lib/format";
+import { fecha, hace } from "@/lib/format";
 import { matches } from "@/lib/search";
 import { INQUIRY_STATUSES, type Inquiry, type InquiryStatus } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
+import { useUrlState } from "@/lib/use-url-state";
 
 /**
- * Bandeja de las consultas que llegan desde La Choza, ordenada como la planilla:
+ * Bandeja de las consultas que llegan desde Brunito, ordenada como la planilla:
  * lo nuevo primero, con el marcador amarillo sobre lo que pide acción.
  */
 export function InquiriesBoard() {
@@ -20,8 +22,8 @@ export function InquiriesBoard() {
   const router = useRouter();
   const pathname = usePathname();
   const list = useApi<{ data: Inquiry[] }>("inquiries");
-  const [tab, setTab] = useState<InquiryStatus | "todas">("nueva");
-  const [q, setQ] = useState("");
+  const [tab, setTab] = useUrlState<InquiryStatus | "todas">("estado", "nueva");
+  const [q, setQ] = useUrlState("q", "");
   const openId = params.get("id") ? Number(params.get("id")) : null;
 
   const all = useMemo(() => list.data?.data ?? [], [list.data]);
@@ -41,7 +43,7 @@ export function InquiriesBoard() {
     <>
       <PageHeader
         title="Consultas"
-        subtitle={list.data ? `${count("nueva")} nuevas desde La Choza · ${all.length} en total` : "Cargando…"}
+        subtitle={list.data ? `${count("nueva")} nuevas desde Brunito · ${all.length} en total` : "Cargando…"}
         actions={
           <ButtonLink href="/admin/colegas">
             <Users className="size-4" aria-hidden /> Colegas
@@ -64,6 +66,20 @@ export function InquiriesBoard() {
           ))}
         </div>
         <SearchBox value={q} onChange={setQ} placeholder="Nombre, teléfono o código" className="ml-auto" />
+        <ExportButton
+          title="Consultas"
+          rows={rows}
+          columns={[
+            { label: "Fecha", value: (i) => fecha(i.created_at) },
+            { label: "Interesado", value: (i) => i.name },
+            { label: "Teléfono", value: (i) => i.phone },
+            { label: "Email", value: (i) => i.email },
+            { label: "Unidad", value: (i) => i.property?.code },
+            { label: "Operación", value: (i) => i.operation.label },
+            { label: "Estado", value: (i) => i.status.label },
+            { label: "Mensaje", value: (i) => i.message },
+          ]}
+        />
       </div>
 
       <Panel>
@@ -76,7 +92,7 @@ export function InquiriesBoard() {
         {list.data && rows.length === 0 && (
           <Empty title={all.length ? (tab === "nueva" ? "No hay consultas nuevas" : "Nada en esta pestaña") : "Todavía no llegaron consultas"}>
             {all.length
-              ? "Cuando alguien toque “Me interesa” en La Choza, aparece acá primero."
+              ? "Cuando alguien toque “Me interesa” en Brunito, aparece acá primero."
               : "Publicá una propiedad desde su ficha y las consultas de la web caen en esta bandeja."}
           </Empty>
         )}

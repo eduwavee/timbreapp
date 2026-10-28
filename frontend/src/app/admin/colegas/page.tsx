@@ -2,12 +2,14 @@
 
 import { useMemo, useState } from "react";
 import { Pencil, Plus } from "lucide-react";
+import { ExportButton } from "@/components/export-button";
 import { useToast } from "@/components/toast";
 import { Button, Empty, ErrorState, Field, FormError, Input, LastChange, PageHeader, Panel, SearchBox, Sheet, SkeletonRows, Textarea, WhatsAppLink } from "@/components/ui";
 import { api, ApiError } from "@/lib/api";
 import { matches, recentFirst } from "@/lib/search";
 import type { Colleague } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
+import { useUrlState } from "@/lib/use-url-state";
 
 function waLink(phone: string) {
   let d = phone.replace(/\D/g, "").replace(/^0+/, "");
@@ -15,12 +17,12 @@ function waLink(phone: string) {
   return `https://wa.me/549${d}`;
 }
 
-/** Vendedores y colegas: a ellos se les derivan las consultas de La Choza. */
+/** Vendedores y colegas: a ellos se les derivan las consultas de Brunito. */
 export default function ColleaguesPage() {
   const list = useApi<{ data: Colleague[] }>("colleagues");
   const [editing, setEditing] = useState<Colleague | "new" | null>(null);
   const toast = useToast();
-  const [q, setQ] = useState("");
+  const [q, setQ] = useUrlState("q", "");
   const colleagues = useMemo(() => list.data?.data ?? [], [list.data]);
   const shown = useMemo(
     () =>
@@ -35,7 +37,7 @@ export default function ColleaguesPage() {
       <PageHeader
         back={{ href: "/admin/consultas", label: "Consultas" }}
         title="Colegas"
-        subtitle="Vendedores e inmobiliarias amigas. Les pasás las consultas de La Choza con un clic."
+        subtitle="Vendedores e inmobiliarias amigas. Les pasás las consultas de Brunito con un clic."
         actions={
           <Button variant="primary" onClick={() => setEditing("new")}>
             <Plus className="size-4" /> Nuevo colega
@@ -43,8 +45,19 @@ export default function ColleaguesPage() {
         }
       />
       {colleagues.length > 0 && (
-        <div className="mb-3 flex">
+        <div className="mb-3 flex flex-wrap items-center gap-2">
           <SearchBox value={q} onChange={setQ} placeholder="Nombre, inmobiliaria o zona" className="ml-auto sm:w-72" />
+          <ExportButton
+            title="Colegas"
+            rows={shown}
+            columns={[
+              { label: "Nombre", value: (c) => c.name },
+              { label: "Inmobiliaria", value: (c) => c.agency },
+              { label: "Zona", value: (c) => c.zone },
+              { label: "WhatsApp", value: (c) => c.phone },
+              { label: "Consultas en curso", type: "number", value: (c) => c.open_inquiries_count },
+            ]}
+          />
         </div>
       )}
       {list.error && <ErrorState message={list.error.message} onRetry={list.reload} />}

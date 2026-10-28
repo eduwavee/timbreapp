@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Pencil, Plus } from "lucide-react";
+import { ChangeHistory } from "@/components/change-history";
 import { PropertyForm } from "@/components/forms/property-form";
 import { ListingPanel } from "@/components/listing-panel";
 import { PhotoGallery } from "@/components/photo-gallery";
@@ -198,6 +199,10 @@ export function PropertyDetail() {
         </Section>
         </div>
       </div>
+
+      <Section title="Historial de cambios" className="mt-8 max-w-3xl">
+        <ChangeHistory type="properties" id={p.id} version={p.updated_at} />
+      </Section>
 
       <div className="mt-10 border-t border-rule pt-4">
         <Button variant="danger" size="sm" onClick={remove}>

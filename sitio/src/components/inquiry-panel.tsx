@@ -92,7 +92,7 @@ export function InquiryPanel({ listing, initialOp, ownerPhone }: { listing: List
             </p>
             {ownerPhone && (
               <a
-                href={waLink(ownerPhone, `Hola, acabo de consultar por ${listing.headline} (${listing.code}) en La Choza.`)}
+                href={waLink(ownerPhone, `Hola, acabo de consultar por ${listing.headline} (${listing.code}) en Brunito.`)}
                 target="_blank"
                 rel="noreferrer"
                 className="dato mt-2 flex h-12 items-center justify-center gap-3 bg-whatsapp text-[14px] text-white transition-colors hover:bg-whatsapp-hondo"

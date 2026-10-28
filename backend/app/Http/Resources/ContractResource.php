@@ -34,6 +34,15 @@ class ContractResource extends JsonResource
             'notes' => $this->notes,
             'installments' => InstallmentResource::collection($this->whenLoaded('installments')),
             'documents' => $this->whenLoaded('documents', fn () => $this->documents->map(fn ($d) => ContractDocumentController::present($d))),
+            'adjustments' => $this->whenLoaded('adjustments', fn () => $this->adjustments->map(fn ($a) => [
+                'id' => $a->id,
+                'from_period' => $a->from_period->format('Y-m'),
+                'previous_amount' => (float) $a->previous_amount,
+                'new_amount' => (float) $a->new_amount,
+                'percentage' => (float) $a->percentage,
+                'basis' => $a->basis,
+                'created_at' => $a->created_at->toIso8601String(),
+            ])),
             'created_at' => $this->created_at?->toIso8601String(),
             'updated_at' => $this->updated_at?->toIso8601String(),
         ];

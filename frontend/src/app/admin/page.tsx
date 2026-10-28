@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ExportButton } from "@/components/export-button";
 import { PaymentSheet } from "@/components/payment-sheet";
 import { useToast } from "@/components/toast";
 import { Button, cx, Empty, ErrorState, Money, Panel, PriorityMark, SearchBox, Section, SkeletonRows, StagePill, Table, Td, TextLink, Th, TicketPill, WhatsAppLink } from "@/components/ui";
@@ -14,6 +15,7 @@ import { OperationTag } from "@/components/inquiry-sheet";
 import { ActivityFeed } from "@/components/activity-feed";
 import { ProofReview } from "@/components/proof-review";
 import { useApi } from "@/lib/use-api";
+import { useUrlState } from "@/lib/use-url-state";
 
 type OpenTicket = Ticket & { suggested_provider: { id: number; name: string; whatsapp_url: string } | null };
 
@@ -46,8 +48,8 @@ export default function LedgerPage() {
   const inquiries = useApi<{ data: Inquiry[] }>("inquiries?status=nueva");
   const [reviewing, setReviewing] = useState<Proof | null>(null);
   const toast = useToast();
-  const [filter, setFilter] = useState<(typeof filters)[number]["key"]>("todas");
-  const [q, setQ] = useState("");
+  const [filter, setFilter] = useUrlState<(typeof filters)[number]["key"]>("ver", "todas");
+  const [q, setQ] = useUrlState("q", "");
   const [paying, setPaying] = useState<number | null>(null);
   const [stamped, setStamped] = useState<Set<number>>(new Set());
 
@@ -185,9 +187,9 @@ export default function LedgerPage() {
         </Section>
       )}
 
-      {/* Consultas de la web: alguien tocó "Me interesa" en La Choza. */}
+      {/* Consultas de la web: alguien tocó "Me interesa" en Brunito. */}
       {!!inquiries.data?.data.length && (
-        <Section className="no-print mb-6" title={`Consultas nuevas de La Choza (${inquiries.data.data.length})`} actions={<TextLink href="/admin/consultas">Todas las consultas</TextLink>}>
+        <Section className="no-print mb-6" title={`Consultas nuevas de Brunito (${inquiries.data.data.length})`} actions={<TextLink href="/admin/consultas">Todas las consultas</TextLink>}>
           <ul className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
             {inquiries.data.data.slice(0, 6).map((iq) => (
               <li key={iq.id} className="flex flex-col justify-between gap-3 rounded-sm border border-rule bg-sheet p-3">
@@ -289,6 +291,22 @@ export default function LedgerPage() {
               ))}
             </div>
             <SearchBox value={q} onChange={setQ} placeholder="Buscar unidad o inquilino" className="no-print ml-auto" />
+            <ExportButton
+              title={`Liquidación ${period}`}
+              rows={rows}
+              columns={[
+                { label: "Unidad", value: (r) => r.property.code },
+                { label: "Dirección", value: (r) => r.property.address },
+                { label: "Inquilino", value: (r) => r.tenant.name },
+                { label: "Saldo anterior", type: "money", value: (r) => r.previous_balance },
+                { label: "Cuota", type: "money", value: (r) => r.month_amount },
+                { label: "Pagado", type: "money", value: (r) => r.month_paid },
+                { label: "Intereses", type: "money", value: (r) => r.late_fees },
+                { label: "Saldo", type: "money", value: (r) => r.total_due },
+                { label: "Días de atraso", type: "number", value: (r) => r.days_late },
+                { label: "Etapa", value: (r) => r.stage?.label },
+              ]}
+            />
           </div>
 
           <Panel>

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ContractStatus;
+use App\Models\Concerns\RecordsChanges;
 use Database\Factories\TenantFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -16,7 +17,21 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Tenant extends Model
 {
     /** @use HasFactory<TenantFactory> */
-    use HasFactory;
+    use HasFactory, RecordsChanges;
+
+    protected function historyFields(): array
+    {
+        return [
+            'first_name' => ['Nombre', 'text'],
+            'last_name' => ['Apellido', 'text'],
+            'document' => ['DNI / CUIT', 'text'],
+            'phone' => ['WhatsApp', 'text'],
+            'email' => ['Email', 'text'],
+            'guarantor_name' => ['Garante', 'text'],
+            'guarantor_phone' => ['Teléfono del garante', 'text'],
+            'notes' => ['Notas', 'text'],
+        ];
+    }
 
     public function contracts(): HasMany
     {

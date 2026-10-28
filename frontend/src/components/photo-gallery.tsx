@@ -65,7 +65,7 @@ export function PhotoGallery({ propertyId, photos, onChanged }: { propertyId: nu
         >
           <ImagePlus className="size-6 text-ink-3" aria-hidden />
           <span className="font-semibold">{uploading ? "Subiendo…" : "Agregar fotos de la unidad"}</span>
-          <span className="max-w-sm text-[13px] text-ink-2">Fachada, ambientes y estado de entrega. Sirven para los reclamos y son las que se ven en La Choza si la publicás.</span>
+          <span className="max-w-sm text-[13px] text-ink-2">Fachada, ambientes y estado de entrega. Sirven para los reclamos y son las que se ven en Brunito si la publicás.</span>
         </button>
       ) : (
         <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">

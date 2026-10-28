@@ -15,7 +15,7 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Validation\Rule;
 
 /**
- * Consultas que llegan desde La Choza: el dueño las atiende él o se las pasa a un colega.
+ * Consultas que llegan desde Brunito: el dueño las atiende él o se las pasa a un colega.
  */
 class InquiryController extends Controller
 {

@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
-import { Activity, Building2, CalendarDays, ClipboardList, FileText, HandCoins, LogOut, Megaphone, Menu, ReceiptText, Search, Settings, TrendingUp, Users, Wrench, X } from "lucide-react";
+import { Activity, Building2, CalendarDays, ClipboardList, FileText, HandCoins, ListTodo, LogOut, Megaphone, Menu, ReceiptText, Search, Settings, TrendingUp, Users, Wrench, X } from "lucide-react";
 import { CommandPalette } from "./command-palette";
 import { api } from "@/lib/api";
 import { ToastProvider } from "./toast";
 import { cx, TimbreMark } from "./ui";
 
 const nav = [
+  { href: "/admin/hoy", label: "Hoy", icon: ListTodo },
   { href: "/admin", label: "Liquidación", icon: ReceiptText, exact: true },
   { href: "/admin/agenda", label: "Agenda", icon: CalendarDays },
   { href: "/admin/cobros", label: "Cobros", icon: HandCoins, badge: "proofs" as const },

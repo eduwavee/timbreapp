@@ -15,10 +15,10 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Demo de La Choza: publicaciones con fotos de Pexels (licencia libre), colegas y consultas.
+ * Demo de Brunito: publicaciones con fotos de Pexels (licencia libre), colegas y consultas.
  * Las personas y teléfonos son ficticios (serie 11 0000-xxxx).
  */
-class LaChozaSeeder extends Seeder
+class BrunitoSeeder extends Seeder
 {
     /**
      * [código, barrio, título, descripción, venta USD, alquiler ARS, expensas, baños, cochera, antigüedad, amenities, fotos, reservada, días publicada]
@@ -43,7 +43,7 @@ class LaChozaSeeder extends Seeder
 
     public function run(): void
     {
-        Setting::query()->updateOrCreate(['key' => 'site_name'], ['value' => 'La Choza']);
+        Setting::query()->updateOrCreate(['key' => 'site_name'], ['value' => 'Brunito']);
 
         $colleagues = collect([
             ['Marta Iglesias', 'Iglesias Propiedades (CUCICBA 6120)', '11 0000-9101', 'Palermo, Recoleta y Belgrano', 'Trabaja ventas de USD 150.000 para arriba.'],

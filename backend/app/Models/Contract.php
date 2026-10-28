@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\AdjustmentType;
 use App\Enums\ContractStatus;
+use App\Models\Concerns\RecordsChanges;
 use Database\Factories\ContractFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,23 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Contract extends Model
 {
     /** @use HasFactory<ContractFactory> */
-    use HasFactory;
+    use HasFactory, RecordsChanges;
+
+    protected function historyFields(): array
+    {
+        return [
+            'start_date' => ['Inicio', 'date'],
+            'end_date' => ['Fin', 'date'],
+            'rent_amount' => ['Alquiler', 'money'],
+            'due_day' => ['Día de vencimiento', 'text'],
+            'adjustment_type' => ['Ajuste', 'text'],
+            'adjustment_every_months' => ['Ajusta cada (meses)', 'text'],
+            'deposit' => ['Depósito', 'money'],
+            'late_fee_daily_pct' => ['Mora diaria', 'pct'],
+            'status' => ['Estado', 'text'],
+            'notes' => ['Notas', 'text'],
+        ];
+    }
 
     protected function casts(): array
     {
@@ -43,6 +60,11 @@ class Contract extends Model
     public function documents(): HasMany
     {
         return $this->hasMany(ContractDocument::class)->latest();
+    }
+
+    public function adjustments(): HasMany
+    {
+        return $this->hasMany(ContractAdjustment::class)->latest('from_period');
     }
 
     public function installments(): HasMany

@@ -3,18 +3,21 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Plus } from "lucide-react";
+import { ExportButton } from "@/components/export-button";
 import { TenantForm } from "@/components/forms/tenant-form";
 import { useToast } from "@/components/toast";
 import { Button, cx, Empty, ErrorState, LastChange, Money, PageHeader, Panel, SearchBox, Select, SkeletonRows, Table, Td, Th, WhatsAppLink } from "@/components/ui";
 import { matches, recentFirst } from "@/lib/search";
 import type { Tenant } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
+import { useUrlState } from "@/lib/use-url-state";
 
 export default function TenantsPage() {
   const list = useApi<{ data: Tenant[] }>("tenants");
-  const [q, setQ] = useState("");
-  const [onlyDebt, setOnlyDebt] = useState(false);
-  const [order, setOrder] = useState<"recientes" | "apellido">("recientes");
+  const [q, setQ] = useUrlState("q", "");
+  const [debt, setDebt] = useUrlState<"" | "1">("deuda", "");
+  const onlyDebt = debt === "1";
+  const [order, setOrder] = useUrlState<"recientes" | "apellido">("orden", "recientes");
   const [creating, setCreating] = useState(false);
   const toast = useToast();
 
@@ -37,7 +40,7 @@ export default function TenantsPage() {
       />
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <button
-          onClick={() => setOnlyDebt((v) => !v)}
+          onClick={() => setDebt(onlyDebt ? "" : "1")}
           aria-pressed={onlyDebt}
           className={cx("h-8 rounded-sm border px-3 text-[13px] font-semibold", onlyDebt ? "border-debt bg-debt text-white" : "border-rule-strong bg-sheet text-ink-2 hover:border-ink")}
         >
@@ -48,6 +51,19 @@ export default function TenantsPage() {
           <option value="apellido">Por apellido</option>
         </Select>
         <SearchBox value={q} onChange={setQ} placeholder="Nombre, DNI, teléfono o unidad" className="ml-auto sm:w-72" />
+        <ExportButton
+          title="Inquilinos"
+          rows={rows}
+          columns={[
+            { label: "Inquilino", value: (t) => t.full_name },
+            { label: "DNI / CUIT", value: (t) => t.document },
+            { label: "Unidad", value: (t) => t.active_contract?.property?.code },
+            { label: "WhatsApp", value: (t) => t.phone },
+            { label: "Email", value: (t) => t.email },
+            { label: "Deuda vencida", type: "money", value: (t) => t.balance },
+            { label: "Portal", value: (t) => (t.has_portal_access ? "Activo" : "") },
+          ]}
+        />
       </div>
       <Panel>
         {list.error && (

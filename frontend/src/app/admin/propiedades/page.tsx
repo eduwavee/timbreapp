@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Plus } from "lucide-react";
+import { ExportButton } from "@/components/export-button";
 import { PropertyForm } from "@/components/forms/property-form";
 import { useToast } from "@/components/toast";
 import { Button, cx, Empty, ErrorState, LastChange, Money, PageHeader, Panel, SearchBox, Select, SkeletonRows, StatusTag, Table, Td, Th } from "@/components/ui";
@@ -10,6 +11,7 @@ import { ars } from "@/lib/format";
 import { matches, recentFirst } from "@/lib/search";
 import type { Property } from "@/lib/types";
 import { useApi } from "@/lib/use-api";
+import { useUrlState } from "@/lib/use-url-state";
 
 const types = [
   { value: "", label: "Todas" },
@@ -19,10 +21,10 @@ const types = [
 ];
 
 export default function PropertiesPage() {
-  const [type, setType] = useState("");
-  const [status, setStatus] = useState("");
-  const [q, setQ] = useState("");
-  const [order, setOrder] = useState<"recientes" | "codigo">("recientes");
+  const [type, setType] = useUrlState("tipo", "");
+  const [status, setStatus] = useUrlState("estado", "");
+  const [q, setQ] = useUrlState("q", "");
+  const [order, setOrder] = useUrlState<"recientes" | "codigo">("orden", "recientes");
   const [creating, setCreating] = useState(false);
   const list = useApi<{ data: Property[] }>("properties");
   const toast = useToast();
@@ -72,6 +74,21 @@ export default function PropertiesPage() {
           <option value="codigo">Por código</option>
         </Select>
         <SearchBox value={q} onChange={setQ} placeholder="Código, calle o inquilino" className="ml-auto" />
+        <ExportButton
+          title="Propiedades"
+          rows={rows}
+          columns={[
+            { label: "Código", value: (p) => p.code },
+            { label: "Dirección", value: (p) => p.address },
+            { label: "Localidad", value: (p) => p.city },
+            { label: "Tipo", value: (p) => p.type.label },
+            { label: "Inquilino", value: (p) => p.active_contract?.tenant?.full_name },
+            { label: "Alquiler", type: "money", value: (p) => p.active_contract?.rent_amount },
+            { label: "Deuda vencida", type: "money", value: (p) => p.balance },
+            { label: "Estado", value: (p) => p.status.label },
+            { label: "Reclamos abiertos", type: "number", value: (p) => p.open_tickets_count },
+          ]}
+        />
       </div>
 
       <Panel>

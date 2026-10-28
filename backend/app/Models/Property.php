@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\ContractStatus;
 use App\Enums\PropertyStatus;
 use App\Enums\PropertyType;
+use App\Models\Concerns\RecordsChanges;
 use Database\Factories\PropertyFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -17,7 +18,23 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Property extends Model
 {
     /** @use HasFactory<PropertyFactory> */
-    use HasFactory;
+    use HasFactory, RecordsChanges;
+
+    protected function historyFields(): array
+    {
+        return [
+            'code' => ['Código', 'text'],
+            'type' => ['Tipo', 'text'],
+            'street' => ['Calle', 'text'],
+            'number' => ['Número', 'text'],
+            'unit' => ['Unidad', 'text'],
+            'city' => ['Localidad', 'text'],
+            'surface_m2' => ['Superficie (m²)', 'text'],
+            'rooms' => ['Ambientes', 'text'],
+            'status' => ['Estado', 'text'],
+            'notes' => ['Notas', 'text'],
+        ];
+    }
 
     protected function casts(): array
     {

@@ -109,7 +109,7 @@ class WhatsApp
     }
 
     /**
-     * Respuesta del dueño a quien consultó en La Choza.
+     * Respuesta del dueño a quien consultó en Brunito.
      *
      * @return array{phone: string, message: string, url: string}
      */
