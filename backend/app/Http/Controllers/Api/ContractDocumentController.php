@@ -35,7 +35,7 @@ class ContractDocumentController extends Controller
         $document = $contract->documents()->create([
             'kind' => $data['kind'],
             'name' => ($data['name'] ?? null) ?: $file->getClientOriginalName(),
-            'path' => $file->store("contracts/{$contract->id}", 'local'),
+            'path' => $file->store("contracts/{$contract->id}"),
             'mime' => $file->getMimeType() ?? 'application/octet-stream',
             'size' => $file->getSize(),
             'expires_on' => $data['expires_on'] ?? null,
@@ -49,12 +49,12 @@ class ContractDocumentController extends Controller
         $extension = pathinfo($document->path, PATHINFO_EXTENSION);
         $name = str($document->name)->endsWith('.'.$extension) ? $document->name : $document->name.'.'.$extension;
 
-        return Storage::disk('local')->response($document->path, $name);
+        return Storage::disk()->response($document->path, $name);
     }
 
     public function destroy(ContractDocument $document): JsonResponse
     {
-        Storage::disk('local')->delete($document->path);
+        Storage::disk()->delete($document->path);
         $document->delete();
 
         return response()->json(['ok' => true]);

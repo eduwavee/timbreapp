@@ -80,7 +80,7 @@ class PaymentProofController extends Controller
         $user = $request->user();
         abort_if(! $user->isAdmin() && $proof->tenant_id !== $user->tenant_id, 403);
 
-        return Storage::disk('local')->response($proof->path);
+        return Storage::disk()->response($proof->path);
     }
 
     /**

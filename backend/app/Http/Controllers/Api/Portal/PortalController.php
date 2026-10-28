@@ -124,7 +124,7 @@ class PortalController extends Controller
             'paid_on' => $data['paid_on'],
             'method' => $data['method'],
             'note' => $data['note'] ?? null,
-            'path' => $request->file('file')->store("proofs/{$tenant->id}", 'local'),
+            'path' => $request->file('file')->store("proofs/{$tenant->id}"),
             'status' => ProofStatus::Pending,
         ]);
 
